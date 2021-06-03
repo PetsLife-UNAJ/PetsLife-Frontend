@@ -4,7 +4,7 @@ const port = 3000;
 const path = require("path");
 
 app.use(express.static(__dirname + "/src"));
-app.use("/js", express.static(path.join(__dirname + "/js")));
+app.use("js", express.static(path.join(__dirname + "js")));
 
 //Ejemplo
 app.use("/home", (req, res) => {
@@ -26,6 +26,12 @@ app.use("/add-mascota", (req, res) => {
 app.use("/add-producto", (req, res) => {
   res.sendFile(
     path.join(__dirname, "/src/pages/store/add-producto.html")
+  );
+});
+
+app.use("/producto/:id", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/store/producto.html")
   );
 });
 

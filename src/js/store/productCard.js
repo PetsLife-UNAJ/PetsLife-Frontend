@@ -14,7 +14,8 @@ const ProductCard = (data) => {
                 <a class="text-decoration-none" style="color: #333" href="producto/${data.productoId}">
                     <p class="card-title fs-4">${data.nombre}</p>
                 </a>
-                <p class="card-text fw-bold">$ ${data.precio}</p>
+                
+                <p class="card-text fw-bold">$ ${data.precio.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</p>
                 </div>
             </div>
             </div>
