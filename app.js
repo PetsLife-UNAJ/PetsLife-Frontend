@@ -22,6 +22,7 @@ app.use("/add-mascota", (req, res) => {
   );
 });
 
+
 // ---------------------------- STORE ----------------------------
 app.use("/add-producto", (req, res) => {
   res.sendFile(
@@ -50,3 +51,4 @@ app.use("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}/home`);
 });
+
