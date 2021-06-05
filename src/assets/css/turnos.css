@@ -1,10 +1,11 @@
-#time-input {
-  width: 117px;
+#input-hour {
+  width: 165px;
 }
 #date-input {
-  width: 217px;
+  width: 290px;
 }
 #btn-form-turno {
   width: 134px;
-  margin-left: 100px;
+  margin-left: 85px;
 }
+
