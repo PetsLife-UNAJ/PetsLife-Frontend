@@ -109,7 +109,7 @@ $(document).ready(function(){
                         </div>
                         </div>
                         <div class="col-md-5 d-flex justify-content-center align-items-center">
-                        <img class="img-mascota" src="${element.imagen}" alt="">
+                        <img class="img-mascota rounded-3 border border-secondary shadow p-1 mb-5 bg-body rounded" src="${element.imagen}" alt="">
                         </div>
                     </div>
                     </div>
