@@ -22,7 +22,6 @@ const getTurnos = async () => {
     (fechaActual.getMonth() + 1) +
     '-' +
     fechaActual.getDate();
-  console.log(fechaQuery);
 
   return await fetch(`https://localhost:44314/api/Turno?fecha=${fechaQuery}`)
     .then((res) => res.json())
