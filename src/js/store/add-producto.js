@@ -2,16 +2,7 @@ var formulario = document.getElementById('formulario-mercaderia');
 
 formulario.addEventListener('submit', function(e){
     e.preventDefault(); 
-    /*
-    var datos = new FormData(formulario);
-    console.log(datos)
-    console.log(datos.get('nombre'))
-    console.log(datos.get('categoria'))
-    console.log(datos.get('imagen'))
-    console.log(datos.get('descripcion'))
-    console.log(datos.get('rating'))
-    console.log(datos.get('cantidadStock'))
-*/
+
     let nombre = formulario.elements.nombre.value;
     let categoria = formulario.elements.categoria.value;
     let imagen = formulario.elements.imagen.value;
@@ -19,10 +10,8 @@ formulario.addEventListener('submit', function(e){
     let rating = formulario.elements.rating.value;
     let stock = formulario.elements.cantidadStock.value;
     let precio = formulario.elements.precio.value;
-    let tienda = formulario.elements.tiendaId.value;
+    //let tienda = formulario.elements.tiendaId.value;
 
-    console.log(categoria)
-    console.log(stock)
     let datos = {
         nombre: nombre,
         categoria: categoria,
@@ -31,7 +20,7 @@ formulario.addEventListener('submit', function(e){
         rating: rating,
         cantidadStock: stock,
         precio: precio,
-        tiendaId: tienda
+        //tiendaId: tienda
     }
     
     let datosJson = JSON.stringify(datos)
@@ -44,21 +33,38 @@ formulario.addEventListener('submit', function(e){
             headers:{
                 'Content-Type': 'application/json;charset=UTF-8'
                 }
-        }).then(res => res.json())
-            .then(data => {
-                console.log(data)
-            })
+        }).then((response) => {
+            response.json();
+            console.log(response)
+            if(response.status === 201){
+                formulario.innerHTML = `   <div class="card text-center p-0 my-2 ">
+                <div class="card-header bg-transparent text-success border-0">
+                  <i class="far fa-check-circle display-4 d-block"></i>
+                  <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
+                </div>
+                <div class="card-body">
+                  <p class="card-text lead">El Producto se ha registrado con éxito.</p>
+                  <a href="/home" class="btn btn-primary m-auto">Ir al menu </a>
+                  <a href="/add-producto" class="btn btn-primary m-auto">Cargar otro Producto </a>
+                </div>
+              </div> `;
+            }
+            if (response.status == 400) {
+                formulario.innerHTML = ` <div class="card text-center p-0 my-2 ">
+                <div class="card-header bg-transparent text-danger border-0">
+                <i class="fas fa-exclamation-triangle"></i>
+                  <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
+                </div>
+                <div class="card-body">
+                  <p class="card-text lead">El Producto no se ha registrado.</p>
+                  <a href="/home" class="btn btn-danger m-auto">Ir al menu </a>
+                  <a href="/add-producto" class="btn btn-danger m-auto">Cargar otro Producto </a>
+                </div>
+              </div>  `;
+              }
+        }).then(data => console.log(data))
+        
     } catch (error) {
         console.log(error)
     }
 })
-
-
-
-
-
-
-
-    /*
-
-*/
