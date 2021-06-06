@@ -41,7 +41,12 @@ app.use("/store", (req, res) => {
     path.join(__dirname, "/src/pages/store/store.html")
   );
 });
-
+// ----------------------------Adoptions----------------------------
+app.use("/adoptions", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/adoption/adoptions.html")
+  );
+});
 // ---------------------------------------------------------------
 
 app.use("/", (req, res) => {
