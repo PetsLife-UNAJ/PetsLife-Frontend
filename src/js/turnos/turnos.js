@@ -14,6 +14,15 @@ const getMascotasByClienteId = (clienteId) => {
     });
 };
 
+const getTurnos = async () => {
+  return await fetch('https://localhost:44314/api/Turno')
+    .then((res) => res.json())
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => console.log(err));
+};
+
 const createTurno = (datos) => {
   fetch('https://localhost:44314/api/Turno', {
     method: 'POST',
@@ -55,8 +64,42 @@ const createTurno = (datos) => {
     });
 };
 
+const listarTurnos = async () => {
+  let listaTurnos = await getTurnos();
+  console.log(listaTurnos);
+  const place = document.getElementById('rows-turnos');
+
+  for (const turno of listaTurnos) {
+    let element = document.createElement('div');
+    element.className = 'row justify-content-center row-cols-auto  text-center  ';
+
+    let hora = new Date(turno.horaInicio);
+    let minutos = hora.getMinutes();
+    if (hora.getMinutes() == 0) {
+      minutos = '00';
+    }
+
+    let horario = hora.getHours() + ':' + minutos;
+
+    element.innerHTML = `
+    <div class="col-1 border border-dark p-2">${horario}</div>
+    <div class="col-1 border border-dark p-2">${turno.mascotaNombre}</div>
+    <div class="col-2 border border-dark p-2">${turno.veterinarioNombre} ${turno.veterinarioApellido}</div>
+    <div class="col-1 border border-dark p-2">${turno.matricula}</div>
+    <div class="col-2 border border-dark p-2">${turno.consultorioNumero}</div>
+    <div class="col-2 border border-dark p-2">${turno.clienteNombre} ${turno.clienteApellido}</div>
+    <div class="col-1 border border-dark p-0">${turno.clienteTelefono}</div>
+
+
+`;
+
+    place.appendChild(element);
+  }
+};
+
 window.onload = (e) => {
   getMascotasByClienteId(3);
+  listarTurnos();
 };
 
 const formTurno = document.getElementById('formTurno');
