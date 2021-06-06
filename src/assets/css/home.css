@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,400,900');
 
+body,a,input,label,button,ul,textarea,div,h4{
+  cursor: url(../images/patita.png), auto !important;
+}
+
 body{
   margin: 0;
   padding: 0;

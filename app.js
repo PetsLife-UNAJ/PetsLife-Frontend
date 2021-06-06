@@ -22,6 +22,14 @@ app.use("/add-mascota", (req, res) => {
   );
 });
 
+<<<<<<< HEAD
+=======
+app.use("/veterinaria", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/clinic-history/clinic-history.html")
+  );
+});
+>>>>>>> dev
 
 // ---------------------------- STORE ----------------------------
 app.use("/add-producto", (req, res) => {

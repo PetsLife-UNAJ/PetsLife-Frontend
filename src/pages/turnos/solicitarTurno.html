@@ -23,12 +23,17 @@
         <div class="row">
           <div class="form-group input-group mb-3 mt-3 p-0">
             <div class="input-group-prepend">
-              <label class="input-group-text" for="inputSelect"
-                >Seleccione su mascota</label
-              >
+              <label class="input-group-text" for="inputSelect">
+                Seleccione su mascota
+              </label>
             </div>
-            <select class="custom-select" id="inputSelect" name="selectMascota">
-              <option selected>Seleccionar...</option>
+            <select
+              class="custom-select"
+              id="inputSelect"
+              name="selectMascota"
+              required
+            >
+              <option selected disabled>Seleccionar</option>
             </select>
           </div>
         </div>
@@ -36,19 +41,45 @@
         <div class="form-group row mb-3 fw-bold">
           <label for="date-input" class="">Fecha</label>
 
-          <input class="form-control" name="fecha" type="date" />
+          <input
+            class="form-control"
+            name="fecha"
+            type="date"
+            id="date-input"
+            required
+          />
         </div>
 
         <div class="form-group row">
-          <label for="time-input" min="09:00" max="18:00" class=" fw-bold">Horario</label>
+          <label for="time-input" class="fw-bold">Horario</label>
 
-          <input
-            class="form-control "
-            name="hora"
-            type="time"
-            value="13:45:00"
-          />
-          <small class="small">El horario es de 9hs a 18hs cada 30 minutos.</small>    
+          <select class="form-control" name="hora" id="input-hour" required>
+            <option disabled selected>Seleccione</option>
+            <option value="09:00">09:00</option>
+            <option value="09:30">09:30</option>
+            <option value="10:00">10:00</option>
+            <option value="10:30">10:30</option>
+            <option value="11:00">11:00</option>
+            <option value="11:30">11:30</option>
+            <option value="12:00">12:00</option>
+            <option value="12:30">12:30</option>
+            <option value="13:00">13:00</option>
+            <option value="13:30">13:30</option>
+            <option value="14:00">14:00</option>
+            <option value="14:30">14:30</option>
+            <option value="15:00">15:00</option>
+            <option value="15:30">15:30</option>
+            <option value="16:00">16:00</option>
+            <option value="16:30">16:30</option>
+            <option value="17:00">17:00</option>
+            <option value="17:30">17:30</option>
+            <option value="18:00">18:00</option>
+          </select>
+
+          <small class="small p-0">
+            <span style="color: red">*</span>
+            Horario de 9hs a 18hs.
+          </small>
         </div>
         <div class="row">
           <button type="submit" class="btn btn-primary mt-3" id="btn-form-turno">

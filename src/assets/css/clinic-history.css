@@ -1,0 +1,104 @@
+.section.head {
+  height: 223px;
+  background: url(https://puppis.vteximg.com.br/arquivos/backvet.jpg) center 0;
+  position: relative;
+  text-align: center;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-top: 72px;
+  color: #fff;
+}
+
+.icn.heart {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 176px;
+  width: 111px;
+  height: 95px;
+  margin: auto;
+  background-position: -124px -794px;
+}
+
+.icn {
+  background: url(https://puppis.vteximg.com.br/arquivos/spritevresize.png);
+}
+
+.section.peluqueriaMap > .text {
+  text-align: center;
+  font-size: 19px;
+  line-height: 27px;
+  color: #7a7a7a;
+  padding-bottom: 20px;
+}
+
+.section.services {
+    height: 200px;
+    padding-top: 60px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.section .title.orange {
+    font-size: 33px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.orange {
+    color: #f6c327;
+}
+
+.section.services .service-info.res-desktop {
+    margin-top: 40px;
+    display: inline-block;
+}
+
+.section.offices {
+    background: #f2f2f2;
+    height: 566px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    padding-top: 56px;
+    text-align: center;
+}
+
+.mainContent .center {
+    width: 987px;
+    margin: auto;
+}
+
+.center {
+    width: 980px;
+    margin: auto;
+}
+
+.title {
+    font-weight: 600;
+}
+
+.section.offices .title {
+    font-size: 33px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+.section.offices .subpages {
+    line-height: 27px;
+    font-size: 19px;
+    margin-top: 20px;
+    color: #7a7a7a;
+}
+
+.blue {
+    color: #0058a4;
+}
+
+.services{
+    padding-top: 10px;
+}

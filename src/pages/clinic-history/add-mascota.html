@@ -8,47 +8,75 @@
     <title>Document</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../assets/css/mascota.css" />
 </head>
 
 <body>
-    <div class="conteiner">
-        <div class="row">
-            <div class="col-md-4">
-                <form>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput">Nombre</label>
-                        <input type="text" class="form-control" maxlength="50" id="nombre">
+    <main class="container-inline">
+        <div class="header">
+            <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">PetsLife</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <form class="d-flex">
+                            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Clientes</a>
+                                </li>
+                            </ul>
+                        </form>
                     </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput2">Edad</label>
-                        <input type="text" class="form-control" maxlength="2" id="edad">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput2">Peso</label>
-                        <input type="email" class="form-control" maxlength="2" id="edad">
-                    </div>
-                    <div class="form-group">
-                        <label for="formGroupExampleInput2">Peso</label>
-                        <input type="email" class="form-control" maxlength="2" id="edad">
-                    </div>
-                    <div class="form-group">
-                        <select class="form-select" aria-label="Default select example" id="cliente">
-                            <option selected>Seleccione un cliente</option>
-                            <option value="1">39412873 - Jose</option>
-                            <option value="2">39874653 - Julian</option>
-                            <option value="3">98746531 - Carlos</option>
-                        </select>
-                    </div>
-                </form>
-                <div class="text-right mt-2">
-                    <button type="button" class="btn btn-primary btn-sm">Guardar</button>
-                    <button type="button" class="btn btn-secondary btn-sm">Limpiar</button>
                 </div>
-
+            </nav>
+        </div>
+        <div class="content">
+            <div class="bg-light p-5 rounded">
+                <div class="row align-items-center">
+                    <div class="col-md-10 mx-auto col-lg-5">
+                        <form id="formMascota" class="p-4 p-md-5 border rounded-3 bg-light" method="POST">
+                            <div class="form-group">
+                                <label for="formGroupExampleInput">Nombre</label>
+                                <input type="text" class="form-control" maxlength="50" id="nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Edad</label>
+                                <input type="number" class="form-control" maxlength="2" id="edad">
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2">Peso</label>
+                                <input type="number" class="form-control" maxlength="2" id="peso">
+                            </div>
+                            <div class="form-group">
+                                <label for="formGroupExampleInput2"></label>
+                                <select class="form-select" aria-label="Default select example" id="cliente">
+                                    <option selected>Seleccione un cliente</option>
+                                </select>
+                            </div>
+                            <div class="text-right mt-2" id="items-button">
+                                <button type="reset" class="btn btn-secondary btn-sm">Limpiar</button>
+                                <button type="submit" class="btn btn-primary btn-sm">Guardar</button>    
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
+        <div class="footer">
+            <footer class="container-inline">
+                <nav class="navbar navbar-dark bg-dark mt-5 fixed-bottom">
+                    <div class="navbar-expand m-auto navbar-text">© 2021 FullStack, Inc.<i class="fa fa-heart"></i> by <a href="#">Back to top</a>
+                    </div>
+                  </nav>                  
+            </footer>
+        </div>
+    </main>
 </body>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
     crossorigin="anonymous"></script>
@@ -58,5 +86,6 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js"
     integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT"
     crossorigin="anonymous"></script>
+<script type="module" src="../../js/clinic-history/mascota.js"></script>
 
 </html>
