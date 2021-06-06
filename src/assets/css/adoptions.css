@@ -1,6 +1,18 @@
 
-.color1{
-    color: #6f42c1;
+.color1 {
+    color: black;
+}
+.color2 {
+    color: white;
+}
+.img-mascota{
+    width: 300px;
+    height: 200px;
+}
+.iconoCentral{
+    width: 140px;
+    height: 140px;
+    display: block;
 }
 .bd-placeholder-img {
     width: 100%;
