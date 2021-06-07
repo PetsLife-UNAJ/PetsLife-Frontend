@@ -49,11 +49,10 @@ const createTurno = (datos) => {
           </div>
           <div class="card-body">
             <p class="card-text lead">El Turno se ha sido registrado con éxito.</p>
-            <a  data-bs-dismiss="modal" class="btn btn-primary m-auto">Ir al menu </a>
+            <a href="javascript:location.reload()" class="btn btn-primary m-auto">Ir al menu </a>
           </div>
         </div>`;
-      }
-      if (response.status == 400) {
+      } else {
         formTurno.innerHTML = ` <div class="card text-center p-0 my-2 ">
         <div class="card-header bg-transparent text-danger border-0">
         <i class="fas fa-exclamation-triangle"></i>
@@ -61,14 +60,23 @@ const createTurno = (datos) => {
         </div>
         <div class="card-body">
           <p class="card-text lead">El Turno no se ha sido registrado.</p>
-          <a  data-bs-dismiss="modal" class="btn btn-danger m-auto">Ir al menu </a>
+          <a href="javascript:location.reload()" class="btn btn-danger m-auto">Ir al menu </a>
         </div>
       </div>`;
       }
     })
 
     .catch((err) => {
-      console.log(err);
+      formTurno.innerHTML = ` <div class="card text-center p-0 my-2 ">
+      <div class="card-header bg-transparent text-danger border-0">
+      <i class="fas fa-exclamation-triangle"></i>
+        <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
+      </div>
+      <div class="card-body">
+        <p class="card-text lead">El Turno no se ha sido registrado.</p>
+        <a href="javascript:location.reload()" class="btn btn-danger m-auto">Ir al menu </a>
+      </div>
+    </div>`;
     });
 };
 
