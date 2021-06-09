@@ -102,3 +102,8 @@
 .services {
   padding-top: 10px;
 }
+
+.modal-listado-content {
+  width: 635px;
+  margin-left: -77px;
+}
