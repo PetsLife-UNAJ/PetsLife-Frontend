@@ -14,7 +14,7 @@ const createClient = (datos) => {
             </div>
             <div class="card-body">
               <p class="card-text lead">El cliente se ha sido registrado con éxito.</p>
-              <a href="/home" class="btn btn-primary m-auto">Ir al menu </a>
+              <a href="/veterinaria" class="btn btn-primary m-auto">Ir al menu </a>
             </div>
           </div>`;
         }
@@ -25,8 +25,8 @@ const createClient = (datos) => {
             <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
           </div>
           <div class="card-body">
-            <p class="card-text lead">El cliente no se ha sido registrado.</p>
-            <a href="/home" class="btn btn-danger m-auto">Ir al menu </a>
+            <p class="card-text lead">El cliente no se ha registrado.</p>
+            <a href="/veterinaria" class="btn btn-danger m-auto">Ir al menu </a>
           </div>
         </div>`;
         }
