@@ -1,0 +1,35 @@
+
+
+.color1 {
+    color: black;
+    font-family: helvetica;
+}
+.color2 {
+    color: white;
+    font-family: helvetica;
+}
+.img-mascota{
+    width: 300px;
+    height: 200px;
+}
+.iconoCentral{
+    width: 140px;
+    height: 140px;
+    display: block;
+}
+.bd-placeholder-img {
+    width: 100%;
+    height: 650px;
+    float: center;
+    font-size: 1.125rem;
+    text-anchor: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+}
+
+@media (min-width: 768px) {
+    .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+    }
+}

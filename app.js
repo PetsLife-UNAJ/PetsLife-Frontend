@@ -22,11 +22,13 @@ app.use("/add-mascota", (req, res) => {
   );
 });
 
+
 app.use("/veterinaria", (req, res) => {
   res.sendFile(
     path.join(__dirname, "/src/pages/clinic-history/clinic-history.html")
   );
 });
+
 
 // ---------------------------- STORE ----------------------------
 app.use("/add-producto", (req, res) => {
@@ -46,6 +48,19 @@ app.use("/store", (req, res) => {
     path.join(__dirname, "/src/pages/store/store.html")
   );
 });
+// ----------------------------Adoptions----------------------------
+app.use("/add-Adoptable", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/adoption/addAdoptable.html")
+  );
+});
+
+app.use("/adoptions", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/adoption/adoptions.html")
+  );
+});
+
 
 // ---------------------------------------------------------------
 
@@ -56,3 +71,4 @@ app.use("/", (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}/home`);
 });
+
