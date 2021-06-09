@@ -36,6 +36,7 @@ const createClient = (datos) => {
       });
 };
 
+
 var formCliente = document.getElementById("formCliente");
 
 formCliente.onsubmit = (e) => {
