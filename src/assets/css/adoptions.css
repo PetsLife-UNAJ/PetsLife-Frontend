@@ -1,9 +1,12 @@
 
+
 .color1 {
     color: black;
+    font-family: helvetica;
 }
 .color2 {
     color: white;
+    font-family: helvetica;
 }
 .img-mascota{
     width: 300px;

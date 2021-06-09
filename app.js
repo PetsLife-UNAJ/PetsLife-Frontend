@@ -49,17 +49,19 @@ app.use("/store", (req, res) => {
   );
 });
 // ----------------------------Adoptions----------------------------
+app.use("/add-Adoptable", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/adoption/addAdoptable.html")
+  );
+});
+
 app.use("/adoptions", (req, res) => {
   res.sendFile(
     path.join(__dirname, "/src/pages/adoption/adoptions.html")
   );
 });
 
-app.use("/addAdoptable", (req, res) => {
-  res.sendFile(
-    path.join(__dirname, "/src/pages/adoption/addAdoptable.html")
-  );
-});
+
 // ---------------------------------------------------------------
 
 app.use("/", (req, res) => {

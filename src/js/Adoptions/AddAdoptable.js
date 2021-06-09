@@ -38,9 +38,10 @@ $(document).ready(function(){
                 "TipoAnimalId" : tipo
             };
             console.log(MascotaDTO);
-            debugger
+            
             $.ajax({
                 type : 'POST',
+                async : false,
                 url : "https://localhost:44363/api/Mascota",
                 data : JSON.stringify(MascotaDTO),
                 dataType : "json",
@@ -55,7 +56,7 @@ $(document).ready(function(){
                     alert("Creado con exito")
                 },
                 error : function(response){
-                    aconsole.log(response)
+                    console.log(response)
                 }
             });
 
