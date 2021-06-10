@@ -62,6 +62,12 @@ app.use("/adoptions", (req, res) => {
 });
 
 
+app.use("/cart", (req, res) => {
+    res.sendFile(
+        path.join(__dirname, "/src/pages/store/carrito.html")
+    );
+});
+
 // ---------------------------------------------------------------
 
 app.use("/", (req, res) => {
