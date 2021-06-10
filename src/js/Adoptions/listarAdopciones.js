@@ -16,22 +16,26 @@ $(document).ready(function () {
                 $("#ListaAdoptables").append(
                     `<hr class="featurette-divider">
                             <div class="row featurette ">
+                            <div class = " d-flex justify-content-end"><p>Mascota id:</p><p id = "${element.mascotaId}" class = "ps-1"> ${element.mascotaId}</p></div>
                                 <div class="col-md-7 order-md-2">
                                 <div class="d-flex bd-highlight">
+                                
                                     <div class="p-2 flex-shrink-1 bd-highlight"><h2 class="text-muted">Datos Adoptante</h2></div>
                                     
                                     
                                     
                                 </div>
                                 <div>
+                                    
                                     <p class="p-2 flex-shrink-1 bd-highlight">Nombre y apellido: ${element.nombre} ${element.apellido}</p>
                                     <p class="p-2 flex-shrink-1 bd-highlight">DNI              : ${element.dni}</p>
-                                    <p class="p-2 flex-shrink-1 bd-highlight">Contacto         : ${element.telefono} // ${element.email}</p>
-                                    <p class="p-2 flex-shrink-1 bd-highlight">ID de la mascota : ${element.mascotaId}</p>
+                                    <p class="p-2 flex-shrink-1 bd-highlight">Telefono         : ${element.telefono}</p>
+                                    <p class="p-2 flex-shrink-1 bd-highlight">Correo           : ${element.email}</p>
+                                    <p class="p-2 flex-shrink-1 bd-highlight">Direccion        : ${element.direccion}</p>
                                 </div>
                                     
                                 
-                                <div class="ps-1 mt-3 mb-3  justify-content">
+                                <div class="ps-1 mt-2 mb-4">
                                     <button type="button" class="btn btn-primary " data-bs-toggle="modal" data-bs-target="#info-masc-${element.mascotaId}">
                                     Datos Mascota
                                     </button>
@@ -42,37 +46,59 @@ $(document).ready(function () {
                                 
                                 <!-- Button trigger modal -->
                                 
-                                
                                 <!-- Modal -->
-                                <div class="modal fade" id="info-masc-${element.mascotaId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                <div class="modal fade bd-example-modal-lg" id="info-masc-${element.mascotaId}" tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-lg modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title" id="exampleModalLabel">Datos Mascota</h4>
-                                                
-                                                
+                                                <h5 class="title" id="exampleModalLabel" style="font-size:35px; font-family= sans-serif;">Datos de ${mascota.nombre}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                
                                             </div>
                                             <div class="modal-body">
-                                                    <div class="col-md-10">
-                                                        <p class="p-2 flex-shrink-1 bd-highlight">Nombre      : ${mascota.nombre} </p>
-                                                        <p class="p-2 flex-shrink-1 bd-highlight">Historia    : ${mascota.historia} </p>
-                                                        <p class="p-2 flex-shrink-1 bd-highlight">Tipo animal : ${mascota.tipoAnimal} </p>
-                                                        <p class="p-2 flex-shrink-1 bd-highlight">Edad        : ${mascota.edad} </p>
-                                                        <p class="p-2 flex-shrink-1 bd-highlight">Peso        : ${mascota.peso} </p>
-                                                        <p class="p-2 flex-shrink-1 bd-highlight">Estado      : ${mascota.adoptado} </p>
-                                                    </div>     
+                                            <form class="row g-3 needs-validation" novalidate>
+                                            <div class="col-md-4">
+                                                <label for="adop_name" class="form-label">Id de mascota</label>
+                                                <input type="text" class="form-control"  value="${id_masc}" readonly>
+                                                <div class="valid-feedback">
+                                                Looks good!
                                                 </div>
-                                            <div class="modal-body">
-                                            
                                             </div>
                                             
-                                        </div>
+                                            <div class="col-md-4">
+                                                <label for="adop_apellido" class="form-label">Tipo animal</label>
+                                                <input type="text" class="form-control"  value="${mascota.tipoAnimal}" readonly>
+                                                <div class="valid-feedback">
+                                                Looks good!
+                                                </div>
+                                            </div>
+                                            <div class="col-md-10"  >
+                                            
+                                                <label for="adop_dni" class="label" style="font-size:18px">Historia de ${mascota.nombre} </label>
+                                                <p class="lead ps-2">${mascota.historia}</p>
+                                                
+                                                <div class="valid-feedback">
+                                                Looks good!
+                                                </div>
+                                            </div>
+                                            <p></p>
+                                            <div class="col-md-5">
+                                                <img class="img-mascota rounded-3 border border-secondary shadow p-1 mb-5 bg-body rounded" src="${mascota.imagen}"">
+                                            </div>
+                                            
+                                            
+                                            <div class="col-12">
+                                                <button class="btn btn-primary" id="btn-actualizar${element.mascotaId}">Postularme</button>
+                                            </div>
+                                            </form> 
+                                        
+                                            </div>
+                                            
+                                        
                                     </div>
                                 </div>
+                                </div>
                                 <div class="modal fade" id="aceptar-adop-${element.mascotaId}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
+                                    <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h4 class="modal-title" id="exampleModalLabel"> Actualizar mascota</h4>
@@ -83,16 +109,19 @@ $(document).ready(function () {
                                             </div>
                                             <div class="modal-body">
                                             <form class="row g-3 needs-validation" novalidate>
-                                            <div class="col-md-3">
+                                            <div class="col-md-5">
                                                 <label for="mascota_adoptado" class="form-label">Estado adopcion</label>
-                                                <input type="text" class="form-control" id="mascota_adoptado" value="false" required>
+                                                <select id="mascota_adoptado" class="form-control col-auto" required>
+                                                    <option label="No adoptado"> No aprobado</option>
+                                                    <option label="Aprobado">Aprobado</option>
+                                                </select>
                                                 <div class="invalid-feedback">
                                                 Please provide a valid zip.
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="mascotass" class="form-label">Id Mascota</label>
-                                                <input type="text" class="form-control" id="mascota_id" value="${element.mascotaId}" required>
+                                                <input type="text" class="form-control" id="mascota_id" value="${element.mascotaId}" readonly>
                                                 <div class="invalid-feedback">
                                                 Please provide a valid zip.
                                                 </div>
@@ -155,9 +184,17 @@ $(document).ready(function () {
                         dataType: "json",
                         contentType: "application/json",
                         data: JSON.stringify(data),
-                        success: function () {
-                            alert('Exitoso!');
-                        },
+                        beforeSend: function () {
+                            console.log(this.data);
+                            console.log("enviando...");
+                          },
+                          success: function (response) {
+                            console.log(response);
+                            alert("Creado con exito")
+                          },
+                          error: function (response) {
+                            console.log(response)
+                          }
                     });
                     
                     
