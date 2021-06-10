@@ -22,7 +22,6 @@ app.use("/add-mascota", (req, res) => {
   );
 });
 
-
 app.use("/veterinaria", (req, res) => {
   res.sendFile(
     path.join(__dirname, "/src/pages/clinic-history/clinic-history.html")
@@ -58,6 +57,12 @@ app.use("/add-Adoptable", (req, res) => {
 app.use("/adoptions", (req, res) => {
   res.sendFile(
     path.join(__dirname, "/src/pages/adoption/adoptions.html")
+  );
+});
+
+app.use("/lista-Adopciones", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/adoption/adopciones.html")
   );
 });
 
