@@ -47,12 +47,19 @@ const EnableVeterinaria = async () => {
 
                 </tbody>
             </table>
+            <div class="spinner-border" role="status" id="loadingSpinner"></div>
         </div>
     `
     var turnosTableBody = document.getElementById("turnosTableBody")
+    var spinner = document.getElementById("loadingSpinner")
 
     var turnosJson = await getTurnos()
-    // falta validar
+    spinner.remove()
+
+    if (turnosJson === null) {
+        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los turnos de la base de datos</div>')
+        return
+    }
 
     turnosJson.forEach((turnoJson) => {
         turnosTableBody.insertAdjacentHTML('beforeend', GetTurnoTable(turnoJson))
@@ -116,11 +123,19 @@ const EnableTienda = async () => {
 
             </tbody>
         </table>
+        <div class="spinner-border" role="status" id="loadingSpinner"></div>
     </div>
     `
     var tiendaTableBody = document.getElementById("tiendaTableBody")
+    var spinner = document.getElementById("loadingSpinner")
+
     var productosJson = await getProductos()
-    // falta validar
+    spinner.remove()
+
+    if (productosJson === null) {
+        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
+        return
+    }
 
     productosJson.forEach((productoJson) => {
         tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson))
