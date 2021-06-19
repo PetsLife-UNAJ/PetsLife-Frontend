@@ -41,6 +41,19 @@ app.use('/producto/:id', (req, res) => {
 app.use('/store', (req, res) => {
   res.sendFile(path.join(__dirname, '/src/pages/store/store.html'));
 });
+
+app.use("/cart", (req, res) => {
+  res.sendFile(
+      path.join(__dirname, "/src/pages/store/carrito.html")
+  );
+});
+
+// ------------------------ ADMINISTRATION ------------------------
+
+app.use('/administracion', (req, res) => {
+  res.sendFile(path.join(__dirname, '/src/pages/administration.html'));
+});
+
 // ----------------------------Adoptions----------------------------
 app.use("/add-Adoptable", (req, res) => {
   res.sendFile(
@@ -58,13 +71,6 @@ app.use("/lista-Adopciones", (req, res) => {
   res.sendFile(
     path.join(__dirname, "/src/pages/adoption/adopciones.html")
   );
-});
-
-
-app.use("/cart", (req, res) => {
-    res.sendFile(
-        path.join(__dirname, "/src/pages/store/carrito.html")
-    );
 });
 
 // ---------------------------------------------------------------

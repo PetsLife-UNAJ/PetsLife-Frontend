@@ -1,0 +1,22 @@
+
+.d-noborder {
+    border-width: 0 0 0px !important;
+}
+
+.d-pointer {
+    cursor: pointer;
+}
+
+.active {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.btn-light:hover, .btn-light:focus, .btn-light:active, .btn-light.active, .open>.dropdown-toggle.btn-light {
+    color: #fff;
+    background-color: #54b488;
+}
+
+td {
+    word-break:break-all;
+}
