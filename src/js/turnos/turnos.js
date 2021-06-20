@@ -1,3 +1,16 @@
+import {getCliente} from '../clinic-history/mascota.js';
+
+let clienteActual;
+
+const getClienteSesion = async () => {
+  return await fetch('https://localhost:44314/api/Cliente/3')
+    .then((response) => response.json())
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => console.log(err));
+};
+
 const getMascotasByClienteId = (clienteId) => {
   fetch(`https://localhost:44314/api/Cliente/${clienteId}`)
     .then((response) => response.json())
@@ -31,11 +44,13 @@ const getTurnos = async () => {
     .catch((err) => console.log(err));
 };
 
-const createTurno = (datos) => {
+const createTurno = (data) => {
+  let turnojson = JSON.stringify(data);
+
   fetch('https://localhost:44314/api/Turno', {
     method: 'POST',
     headers: {'Content-Type': 'application/json;charset=UTF-8'},
-    body: datos
+    body: turnojson
   })
     .then((response) => {
       response.json();
@@ -49,9 +64,31 @@ const createTurno = (datos) => {
           </div>
           <div class="card-body">
             <p class="card-text lead">El Turno se ha sido registrado con éxito.</p>
+            <p class="card-text lead">Revise su casilla de email.</p>
             <a href="javascript:location.reload()" class="btn btn-primary m-auto">Ir al menu </a>
           </div>
         </div>`;
+
+        let turnoMessage = {
+          message: `
+            <h1>Su turno ha sido confirmado.</h1>
+            <p>Datos de su turno:</p>
+            <h4>${data.fecha}</h4>
+            <h4>${data.horaInicio}</h4>
+            <p>Lo esperamos.</p>           
+          `,
+          email: clienteActual.email
+        };
+        let turnoMessageJson = JSON.stringify(turnoMessage);
+
+        fetch('http://localhost:3000/send-email', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json;charset=UTF-8'},
+          body: turnoMessageJson
+        })
+          .then((res) => res.json())
+          .then((response) => console.log(response))
+          .catch((err) => console.log(err));
       } else {
         formTurno.innerHTML = ` <div class="card text-center p-0 my-2 ">
         <div class="card-header bg-transparent text-danger border-0">
@@ -67,6 +104,7 @@ const createTurno = (datos) => {
     })
 
     .catch((err) => {
+      console.log(err);
       formTurno.innerHTML = ` <div class="card text-center p-0 my-2 ">
       <div class="card-header bg-transparent text-danger border-0">
       <i class="fas fa-exclamation-triangle"></i>
@@ -87,7 +125,8 @@ const listarTurnos = async () => {
 
   for (const turno of listaTurnos) {
     let element = document.createElement('div');
-    element.className = 'row justify-content-center row-cols-auto  text-center   ';
+    element.className =
+      'row justify-content-center row-cols-auto  text-center fs-6  align-content-center ';
 
     let hora = new Date(turno.horaInicio);
     let minutos = hora.getMinutes();
@@ -98,13 +137,12 @@ const listarTurnos = async () => {
     let horario = hora.getHours() + ':' + minutos;
 
     element.innerHTML = `
-    <div class="col-1 border border-dark p-2">${horario}</div>
-    <div class="col-1 border border-dark p-2">${turno.mascotaNombre}</div>
+    <div class="col-2 border border-dark p-2">${horario}</div>
+    <div class="col-2 border border-dark p-2">${turno.mascotaNombre}</div>
     <div class="col-2 border border-dark p-2">${turno.veterinarioNombre} ${turno.veterinarioApellido}</div>
-    <div class="col-1 border border-dark p-2">${turno.matricula}</div>
-    <div class="col-2 border border-dark p-2">${turno.consultorioNumero}</div>
     <div class="col-2 border border-dark p-2">${turno.clienteNombre} ${turno.clienteApellido}</div>
-    <div class="col-1 border border-dark p-0 "><div class="mt-2">${turno.clienteTelefono}</div></div>
+    <div class="col-2 border border-dark p-1 "><div class="mt-2">${turno.clienteTelefono}</div></div>
+    <div class="col-2 border border-dark p-2">${turno.consultorioNumero}</div>
 
 
 `;
@@ -113,9 +151,11 @@ const listarTurnos = async () => {
   }
 };
 
-window.onload = (e) => {
+window.onload = async (e) => {
+  clienteActual = await getClienteSesion();
   getMascotasByClienteId(3);
   listarTurnos();
+  getCliente();
 };
 
 const formTurno = document.getElementById('formTurno');
@@ -131,6 +171,6 @@ formTurno.onsubmit = (e) => {
     mascotaId: mascotaId,
     horaInicio: hora
   };
-  let turnojson = JSON.stringify(turno);
-  createTurno(turnojson);
+
+  createTurno(turno);
 };

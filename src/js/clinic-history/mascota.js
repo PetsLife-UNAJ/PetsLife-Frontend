@@ -1,4 +1,4 @@
-const getCliente = () => {
+export const getCliente = () => {
     fetch(`https://localhost:44314/api/Cliente`)
       .then((response) => response.json())
       .then((clientes) => {
