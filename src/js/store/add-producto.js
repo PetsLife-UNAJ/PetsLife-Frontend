@@ -1,4 +1,4 @@
-var formulario = document.getElementById('formulario-mercaderia');
+var formulario = document.getElementById('formulario-producto');
 
 formulario.addEventListener('submit', function(e){
     e.preventDefault(); 
