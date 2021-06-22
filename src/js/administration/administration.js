@@ -166,13 +166,8 @@ const GetProductoTable = (productoJson) => {
                         <i class="bi bi-three-dots-vertical d-pointer" id="tresPuntos"></i>
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-<<<<<<< HEAD
-                        <li><a class="dropdown-item d-pointer" id="btn-${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
-                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer borrar" id=${productoJson.productoId}><i class="bi bi-trash"></i> Eliminar</a></li>
-=======
                         <li><a class="dropdown-item d-pointer" id="botonupdate" data-productoid="${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
                         <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
->>>>>>> 2222547fa5922f7ce6640f74abcb8d57a8645df6
                     </ul>
                 </div>
             </td>
@@ -247,7 +242,7 @@ formActualizar.addEventListener('submit', function (e) {
             response.json();
             console.log(response)
             if (response.status === 204) {
-                formulario.innerHTML = `   <div class="card text-center p-0 my-2 ">
+                formActualizar.innerHTML = `   <div class="card text-center p-0 my-2 ">
                     <div class="card-header bg-transparent text-success border-0">
                         <i class="far fa-check-circle display-4 d-block"></i>
                         <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
@@ -260,7 +255,7 @@ formActualizar.addEventListener('submit', function (e) {
                   </div> `;
             }
             if (response.status == 400) {
-                formulario.innerHTML = ` <div class="card text-center p-0 my-2 ">
+                formActualizar.innerHTML = ` <div class="card text-center p-0 my-2 ">
                     <div class="card-header bg-transparent text-danger border-0">
                     <i class="fas fa-exclamation-triangle"></i>
                         <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
