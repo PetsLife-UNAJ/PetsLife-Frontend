@@ -138,8 +138,12 @@ const EnableTienda = async () => {
     }
 
     productosJson.forEach((productoJson) => {
-        tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson))
-    })
+        tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
+        var deleteElem = document.getElementById(productoJson.productoId)
+        deleteElem.onclick = () => {
+            eliminarProducto(deleteElem.id);
+        }
+    });
 }
 
 
@@ -161,8 +165,8 @@ const GetProductoTable = (productoJson) => {
                         <i class="bi bi-three-dots-vertical d-pointer"></i>
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item d-pointer" id="${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
-                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
+                        <li><a class="dropdown-item d-pointer" id="btn-${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
+                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer borrar" id=${productoJson.productoId}><i class="bi bi-trash"></i> Eliminar</a></li>
                     </ul>
                 </div>
             </td>
@@ -173,28 +177,28 @@ const GetProductoTable = (productoJson) => {
 // Cargo las categorias al form
 document.addEventListener('DOMContentLoaded', () => {
     mostrarCategoria();
-  });
-  
-  const mostrarCategoria = async () => {
-    try {
-      const res = await fetch('http://localhost:27459/api/Categoria');
-      const data = await res.json();
-      console.log(data);
-      selectCategoria(data);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
-  const selectCategoria = data => {
-    data.forEach(opciones => {
-      var categoria = document.getElementById('categoria');
-      let element = document.createElement('option');
-      element.value = opciones.categoriaId;
-      element.innerHTML = opciones.descripcion;
-      categoria.appendChild(element);
     });
-  }
+
+    const mostrarCategoria = async () => {
+    try {
+        const res = await fetch('http://localhost:27459/api/Categoria');
+        const data = await res.json();
+        console.log(data);
+        selectCategoria(data);
+    } catch (error) {
+        console.log(error);
+        }
+    }
+
+    const selectCategoria = data => {
+    data.forEach(opciones => {
+        var categoria = document.getElementById('categoria');
+        let element = document.createElement('option');
+        element.value = opciones.categoriaId;
+        element.innerHTML = opciones.descripcion;
+        categoria.appendChild(element);
+    });
+}
   //Envio el form
     var formActualizar = document.getElementById('formActualizar-producto');
 
@@ -237,35 +241,54 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(response.status === 204){
                     formulario.innerHTML = `   <div class="card text-center p-0 my-2 ">
                     <div class="card-header bg-transparent text-success border-0">
-                      <i class="far fa-check-circle display-4 d-block"></i>
-                      <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
+                        <i class="far fa-check-circle display-4 d-block"></i>
+                        <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
                     </div>
                     <div class="card-body">
-                      <p class="card-text lead">El Producto se ha registrado con éxito.</p>
-                      <a href="/home" class="btn btn-primary m-auto">Ir al menu </a>
-                      <a href="/add-producto" class="btn btn-primary m-auto">Cargar otro Producto </a>
+                        <p class="card-text lead">El Producto se ha registrado con éxito.</p>
+                        <a href="/home" class="btn btn-primary m-auto">Ir al menu </a>
+                        <a href="/add-producto" class="btn btn-primary m-auto">Cargar otro Producto </a>
                     </div>
-                  </div> `;
+                </div> `;
                 }
                 if (response.status == 400) {
                     formulario.innerHTML = ` <div class="card text-center p-0 my-2 ">
                     <div class="card-header bg-transparent text-danger border-0">
                     <i class="fas fa-exclamation-triangle"></i>
-                      <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
+                        <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
                     </div>
                     <div class="card-body">
-                      <p class="card-text lead">El Producto no se ha registrado.</p>
-                      <a href="/home" class="btn btn-danger m-auto">Ir al menu </a>
-                      <a href="/add-producto" class="btn btn-danger m-auto">Cargar otro Producto </a>
+                        <p class="card-text lead">El Producto no se ha actualizado.</p>
+                        <a href="/home" class="btn btn-danger m-auto">Ir al menu </a>
+                        <a href="/add-producto" class="btn btn-danger m-auto">Cargar otro Producto </a>
                     </div>
-                  </div>  `;
-                  }
+                </div>  `;
+                }
             }).then(data => console.log(data))
             
         } catch (error) {
             console.log(error)
         }
     });
+
+        // Eliminar Producto
+        const eliminarProducto = async (id) => {
+            try {
+                const response = await fetch('http://localhost:27459/api/Producto/'+id , {
+                    method: 'DELETE'
+                });
+                if (response.status === 204) {
+                    alert('Se elimino correctamente el producto');
+                    EnableTienda();
+                }
+                else{
+                    alert('No se pudo eliminar el producto')
+                }
+                
+            } catch (error) {
+                
+            }
+        }
 
 
 // ----------------------------------------------------------------------------------
