@@ -19,4 +19,33 @@
 
 td {
     word-break:break-all;
+    
+}
+input{
+margin:4%;
+
+}
+
+.bi-three-dots-vertical:hover {
+    color:#517bd4;
+    }
+.bg-danger{
+background-color:#dc7235 !important;
+
+}
+.bg-danger:hover{
+    
+   transition: background-color 1s ease-out;
+    background-color:#dc3535 !important;
+    
+    }
+.modal-content{
+
+    
+    width: 650px;
+}
+.modal-body{
+
+    
+    width: 635px;
 }
