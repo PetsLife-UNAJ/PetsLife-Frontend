@@ -7,13 +7,13 @@ var msTienda = document.getElementById("msTienda")
 var msAdopciones = document.getElementById("msAdopciones")
 var msName = document.getElementById("msName")
 
-window.onload = async() => {
-    msVeterinaria.onclick = ()  => {EnableVeterinaria()}
-    msTienda.onclick = ()       => {EnableTienda()}
-    msAdopciones.onclick = ()   => {EnableAdopciones()}
+window.onload = async () => {
+    msVeterinaria.onclick = () => { EnableVeterinaria() }
+    msTienda.onclick = () => { EnableTienda() }
+    msAdopciones.onclick = () => { EnableAdopciones() }
 
-    msBody.innerHTML = 
-    `
+    msBody.innerHTML =
+        `
         <div class="h1 text-center"><i class="bi bi-arrow-left"></i> Selecciona un microservicio</div>
     `
 }
@@ -94,6 +94,7 @@ const GetTurnoTable = (turnoJson) => {
     )
 }
 
+//Lo que falta hacer es pasar el id del producto a la url del put, los botoncitos de editar y eliminar tienen los ids de los productos. Pensaba sacarlo de ahi
 // ----------------------------------------------------------------------------------
 
 // ----------------------------------- Tienda ---------------------------------------
@@ -148,20 +149,20 @@ const GetProductoTable = (productoJson) => {
         `
         <tr>
             <th scope="row">${productoJson.productoId}</th>
-            <td>${productoJson.nombre}</td>
+            <td style="margin:10%">${productoJson.nombre}</td>
             <td>${productoJson.categoria}</td>
             <td>${productoJson.imagen}</td>
             <td>${productoJson.descripcion}</td>
             <td>${productoJson.rating}</td>
             <td>${productoJson.cantidadStock}</td>
-            <td>${productoJson.precio}</td>
+            <td>${productoJson.precio}$</td>
             <td>
                 <div class="dropdown">
                     <div id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-three-dots-vertical d-pointer"></i>
+                        <i class="bi bi-three-dots-vertical d-pointer" id="tresPuntos"></i>
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item d-pointer" id="${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
+                        <li><a class="dropdown-item d-pointer" id="botonupdate" data-productoid="${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
                         <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
                     </ul>
                 </div>
@@ -173,69 +174,71 @@ const GetProductoTable = (productoJson) => {
 // Cargo las categorias al form
 document.addEventListener('DOMContentLoaded', () => {
     mostrarCategoria();
-  });
-  
-  const mostrarCategoria = async () => {
+});
+
+const mostrarCategoria = async () => {
     try {
-      const res = await fetch('http://localhost:27459/api/Categoria');
-      const data = await res.json();
-      console.log(data);
-      selectCategoria(data);
+        const res = await fetch('http://localhost:27459/api/Categoria');
+        const data = await res.json();
+        console.log(data);
+        selectCategoria(data);
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
-  }
-  
-  const selectCategoria = data => {
+}
+
+const selectCategoria = data => {
     data.forEach(opciones => {
-      var categoria = document.getElementById('categoria');
-      let element = document.createElement('option');
-      element.value = opciones.categoriaId;
-      element.innerHTML = opciones.descripcion;
-      categoria.appendChild(element);
+        var categoria = document.getElementById('categoria');
+        let element = document.createElement('option');
+        element.value = opciones.categoriaId;
+        element.innerHTML = opciones.descripcion;
+        categoria.appendChild(element);
     });
-  }
-  //Envio el form
-    var formActualizar = document.getElementById('formActualizar-producto');
+}
+//Envio el form
+var formActualizar = document.getElementById('formActualizar-producto');
 
 
-    formActualizar.addEventListener('submit', function(e){
-        e.preventDefault(); 
+formActualizar.addEventListener('submit', function (e) {
+    e.preventDefault();
+    let boton=document.getElementById('botonupdate');
+    let idProducto=(boton.dataset.productoid);
+    console.log(idProducto+"asdasd");
+    let nombre = formActualizar.elements.nombre.value;
+    let categoria = formActualizar.elements.categoria.value;
+    let imagen = formActualizar.elements.imagen.value;
+    let descripcion = formActualizar.elements.descripcion.value;
+    let rating = formActualizar.elements.rating.value;
+    let stock = formActualizar.elements.cantidadStock.value;
+    let precio = formActualizar.elements.precio.value;
 
-        let nombre = formActualizar.elements.nombre.value;
-        let categoria = formActualizar.elements.categoria.value;
-        let imagen = formActualizar.elements.imagen.value;
-        let descripcion = formActualizar.elements.descripcion.value;
-        let rating = formActualizar.elements.rating.value;
-        let stock = formActualizar.elements.cantidadStock.value;
-        let precio = formActualizar.elements.precio.value;
-    
-        let datos = {
-            nombre: nombre,
-            categoria: categoria,
-            imagen: imagen,
-            descripcion: descripcion,
-            rating: rating,
-            cantidadStock: stock,
-            precio: precio,
-        }
-        
-        let datosJson = JSON.stringify(datos)
-        console.log(datosJson)
-        
-        try {
-            fetch('http://localhost:27459/api/Producto', {
-                method: 'PUT',
-                body: datosJson,
-                
-                headers:{
-                    'Content-Type': 'application/json;charset=UTF-8'
-                    }
-            }).then((response) => {
-                response.json();
-                console.log(response)
-                if(response.status === 204){
-                    formulario.innerHTML = `   <div class="card text-center p-0 my-2 ">
+    let datos = {
+        nombre: nombre,
+        categoria: categoria,
+        imagen: imagen,
+        descripcion: descripcion,
+        rating: rating,
+        cantidadStock: stock,
+        precio: precio,
+    }
+
+    let datosJson = JSON.stringify(datos)
+    console.log(datosJson)
+
+    try {
+        fetch('http://localhost:27459/api/Producto/'+idProducto, {
+            method: 'PUT',
+            body: datosJson,
+
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        }).then((response) => {
+            response.json();
+            console.log(response)
+            if (response.status === 204) {
+                formulario.innerHTML = `   <div class="card text-center p-0 my-2 ">
                     <div class="card-header bg-transparent text-success border-0">
                       <i class="far fa-check-circle display-4 d-block"></i>
                       <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
@@ -246,9 +249,9 @@ document.addEventListener('DOMContentLoaded', () => {
                       <a href="/add-producto" class="btn btn-primary m-auto">Cargar otro Producto </a>
                     </div>
                   </div> `;
-                }
-                if (response.status == 400) {
-                    formulario.innerHTML = ` <div class="card text-center p-0 my-2 ">
+            }
+            if (response.status == 400) {
+                formulario.innerHTML = ` <div class="card text-center p-0 my-2 ">
                     <div class="card-header bg-transparent text-danger border-0">
                     <i class="fas fa-exclamation-triangle"></i>
                       <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
@@ -259,13 +262,13 @@ document.addEventListener('DOMContentLoaded', () => {
                       <a href="/add-producto" class="btn btn-danger m-auto">Cargar otro Producto </a>
                     </div>
                   </div>  `;
-                  }
-            }).then(data => console.log(data))
-            
-        } catch (error) {
-            console.log(error)
-        }
-    });
+            }
+        }).then(data => console.log(data))
+
+    } catch (error) {
+        console.log(error)
+    }
+});
 
 
 // ----------------------------------------------------------------------------------
