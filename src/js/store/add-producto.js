@@ -1,5 +1,31 @@
 var formulario = document.getElementById('formulario-producto');
 
+
+document.addEventListener('DOMContentLoaded', () => {
+  mostrarCategoria();
+});
+
+const mostrarCategoria = async () => {
+  try {
+    const res = await fetch('http://localhost:27459/api/Categoria');
+    const data = await res.json();
+    console.log(data);
+    selectCategoria(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+const selectCategoria = data => {
+  data.forEach(opciones => {
+    var categoria = document.getElementById('categoria');
+    let element = document.createElement('option');
+    element.value = opciones.categoriaId;
+    element.innerHTML = opciones.descripcion;
+    categoria.appendChild(element);
+  });
+}
+
 formulario.addEventListener('submit', function(e){
     e.preventDefault(); 
 
@@ -67,4 +93,4 @@ formulario.addEventListener('submit', function(e){
     } catch (error) {
         console.log(error)
     }
-})
+});
