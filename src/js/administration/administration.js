@@ -183,15 +183,9 @@ const GetProductoTable = (productoJson) => {
 // Cargo las categorias al form
 document.addEventListener('DOMContentLoaded', () => {
     mostrarCategoria();
-<<<<<<< HEAD
-    });
-
-    const mostrarCategoria = async () => {
-=======
 });
 
 const mostrarCategoria = async () => {
->>>>>>> 2222547fa5922f7ce6640f74abcb8d57a8645df6
     try {
         const res = await fetch('http://localhost:27459/api/Categoria');
         const data = await res.json();
@@ -199,17 +193,10 @@ const mostrarCategoria = async () => {
         selectCategoria(data);
     } catch (error) {
         console.log(error);
-<<<<<<< HEAD
-        }
-    }
-
-    const selectCategoria = data => {
-=======
     }
 }
 
 const selectCategoria = data => {
->>>>>>> 2222547fa5922f7ce6640f74abcb8d57a8645df6
     data.forEach(opciones => {
         var categoria = document.getElementById('categoria');
         let element = document.createElement('option');
@@ -218,49 +205,6 @@ const selectCategoria = data => {
         categoria.appendChild(element);
     });
 }
-<<<<<<< HEAD
-  //Envio el form
-    var formActualizar = document.getElementById('formActualizar-producto');
-
-
-    formActualizar.addEventListener('submit', function(e){
-        e.preventDefault(); 
-
-        let nombre = formActualizar.elements.nombre.value;
-        let categoria = formActualizar.elements.categoria.value;
-        let imagen = formActualizar.elements.imagen.value;
-        let descripcion = formActualizar.elements.descripcion.value;
-        let rating = formActualizar.elements.rating.value;
-        let stock = formActualizar.elements.cantidadStock.value;
-        let precio = formActualizar.elements.precio.value;
-    
-        let datos = {
-            nombre: nombre,
-            categoria: categoria,
-            imagen: imagen,
-            descripcion: descripcion,
-            rating: rating,
-            cantidadStock: stock,
-            precio: precio,
-        }
-        
-        let datosJson = JSON.stringify(datos)
-        console.log(datosJson)
-        
-        try {
-            fetch('http://localhost:27459/api/Producto', {
-                method: 'PUT',
-                body: datosJson,
-                
-                headers:{
-                    'Content-Type': 'application/json;charset=UTF-8'
-                    }
-            }).then((response) => {
-                response.json();
-                console.log(response)
-                if(response.status === 204){
-                    formulario.innerHTML = `   <div class="card text-center p-0 my-2 ">
-=======
 //Envio el form
 var formActualizar = document.getElementById('formActualizar-producto');
 
@@ -304,7 +248,6 @@ formActualizar.addEventListener('submit', function (e) {
             console.log(response)
             if (response.status === 204) {
                 formulario.innerHTML = `   <div class="card text-center p-0 my-2 ">
->>>>>>> 2222547fa5922f7ce6640f74abcb8d57a8645df6
                     <div class="card-header bg-transparent text-success border-0">
                         <i class="far fa-check-circle display-4 d-block"></i>
                         <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
@@ -314,17 +257,10 @@ formActualizar.addEventListener('submit', function (e) {
                         <a href="/home" class="btn btn-primary m-auto">Ir al menu </a>
                         <a href="/add-producto" class="btn btn-primary m-auto">Cargar otro Producto </a>
                     </div>
-<<<<<<< HEAD
-                </div> `;
-                }
-                if (response.status == 400) {
-                    formulario.innerHTML = ` <div class="card text-center p-0 my-2 ">
-=======
                   </div> `;
             }
             if (response.status == 400) {
                 formulario.innerHTML = ` <div class="card text-center p-0 my-2 ">
->>>>>>> 2222547fa5922f7ce6640f74abcb8d57a8645df6
                     <div class="card-header bg-transparent text-danger border-0">
                     <i class="fas fa-exclamation-triangle"></i>
                         <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
@@ -334,16 +270,6 @@ formActualizar.addEventListener('submit', function (e) {
                         <a href="/home" class="btn btn-danger m-auto">Ir al menu </a>
                         <a href="/add-producto" class="btn btn-danger m-auto">Cargar otro Producto </a>
                     </div>
-<<<<<<< HEAD
-                </div>  `;
-                }
-            }).then(data => console.log(data))
-            
-        } catch (error) {
-            console.log(error)
-        }
-    });
-=======
                   </div>  `;
             }
         }).then(data => console.log(data))
@@ -352,7 +278,6 @@ formActualizar.addEventListener('submit', function (e) {
         console.log(error)
     }
 });
->>>>>>> 2222547fa5922f7ce6640f74abcb8d57a8645df6
 
         // Eliminar Producto
         const eliminarProducto = async (id) => {
