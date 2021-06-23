@@ -94,7 +94,7 @@ const GetTurnoTable = (turnoJson) => {
     )
 }
 
-//Lo que falta hacer es pasar el id del producto a la url del put, los botoncitos de editar y eliminar tienen los ids de los productos. Pensaba sacarlo de ahi
+
 // ----------------------------------------------------------------------------------
 
 // ----------------------------------- Tienda ---------------------------------------
@@ -105,6 +105,7 @@ const EnableTienda = async () => {
 
     msBody.innerHTML = `
     <div>
+    <a class="btn btn-primary" href="/add-producto" role="button">Agregar Producto</a>
         <table class="table table-hover table-borderless mt-4 caption-top">
         <caption>Listado de Productos</caption>
             <thead>
@@ -143,6 +144,10 @@ const EnableTienda = async () => {
         var deleteElem = document.getElementById(productoJson.productoId)
         deleteElem.onclick = () => {
             eliminarProducto(deleteElem.id);
+        };
+        var editElement = document.getElementById('edit-'+productoJson.productoId);
+        editElement.onclick = () => {
+            editarProducto(productoJson.productoId);
         }
     });
 }
@@ -159,14 +164,14 @@ const GetProductoTable = (productoJson) => {
             <td>${productoJson.descripcion}</td>
             <td>${productoJson.rating}</td>
             <td>${productoJson.cantidadStock}</td>
-            <td>${productoJson.precio}$</td>
+            <td>${productoJson.precio}</td>
             <td>
                 <div class="dropdown">
                     <div id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="bi bi-three-dots-vertical d-pointer" id="tresPuntos"></i>
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item d-pointer" id="botonupdate" data-productoid="${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
+                        <li><a class="dropdown-item d-pointer" id="edit-${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
                         <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
                     </ul>
                 </div>
@@ -201,78 +206,73 @@ const selectCategoria = data => {
     });
 }
 //Envio el form
-var formActualizar = document.getElementById('formActualizar-producto');
+    const editarProducto = async (id) => {
+        var formActualizar = document.getElementById('formActualizar-producto');
+        formActualizar.addEventListener('submit', function (e) {
+        e.preventDefault();
 
+        let nombre = formActualizar.elements.nombre.value;
+        let categoria = formActualizar.elements.categoria.value;
+        let imagen = formActualizar.elements.imagen.value;
+        let descripcion = formActualizar.elements.descripcion.value;
+        let rating = formActualizar.elements.rating.value;
+        let stock = formActualizar.elements.cantidadStock.value;
+        let precio = formActualizar.elements.precio.value;
 
-formActualizar.addEventListener('submit', function (e) {
-    e.preventDefault();
-    let boton=document.getElementById('botonupdate');
-    let idProducto=(boton.dataset.productoid);
-    console.log(idProducto+"asdasd");
-    let nombre = formActualizar.elements.nombre.value;
-    let categoria = formActualizar.elements.categoria.value;
-    let imagen = formActualizar.elements.imagen.value;
-    let descripcion = formActualizar.elements.descripcion.value;
-    let rating = formActualizar.elements.rating.value;
-    let stock = formActualizar.elements.cantidadStock.value;
-    let precio = formActualizar.elements.precio.value;
+        let datos = {
+            nombre: nombre,
+            categoria: categoria,
+            imagen: imagen,
+            descripcion: descripcion,
+            rating: rating,
+            cantidadStock: stock,
+            precio: precio,
+        }
 
-    let datos = {
-        nombre: nombre,
-        categoria: categoria,
-        imagen: imagen,
-        descripcion: descripcion,
-        rating: rating,
-        cantidadStock: stock,
-        precio: precio,
+        let datosJson = JSON.stringify(datos)
+        console.log(datosJson)
+
+        try {
+            fetch('http://localhost:27459/api/Producto/'+id, {
+                method: 'PUT',
+                body: datosJson,
+
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                }
+            }).then((response) => {
+                response.json();
+                console.log(response)
+                if (response.status === 204) {
+                    formActualizar.innerHTML = `   <div class="card text-center p-0 my-2 ">
+                        <div class="card-header bg-transparent text-success border-0">
+                            <i class="far fa-check-circle display-4 d-block"></i>
+                            <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text lead">El Producto se ha actualizado con éxito.</p>
+                        </div>
+                    </div> `;
+                    EnableTienda();
+                }
+                if (response.status == 400) {
+                    formActualizar.innerHTML = ` <div class="card text-center p-0 my-2 ">
+                        <div class="card-header bg-transparent text-danger border-0">
+                        <i class="fas fa-exclamation-triangle"></i>
+                            <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text lead">El Producto no se ha actualizado.</p>
+                        </div>
+                    </div>  `;
+                }
+            }).then(data => console.log(data))
+
+        } catch (error) {
+            console.log(error)
+        }
+    });
     }
-
-    let datosJson = JSON.stringify(datos)
-    console.log(datosJson)
-
-    try {
-        fetch('http://localhost:27459/api/Producto/'+idProducto, {
-            method: 'PUT',
-            body: datosJson,
-
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8'
-            }
-        }).then((response) => {
-            response.json();
-            console.log(response)
-            if (response.status === 204) {
-                formActualizar.innerHTML = `   <div class="card text-center p-0 my-2 ">
-                    <div class="card-header bg-transparent text-success border-0">
-                        <i class="far fa-check-circle display-4 d-block"></i>
-                        <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text lead">El Producto se ha registrado con éxito.</p>
-                        <a href="/home" class="btn btn-primary m-auto">Ir al menu </a>
-                        <a href="/add-producto" class="btn btn-primary m-auto">Cargar otro Producto </a>
-                    </div>
-                  </div> `;
-            }
-            if (response.status == 400) {
-                formActualizar.innerHTML = ` <div class="card text-center p-0 my-2 ">
-                    <div class="card-header bg-transparent text-danger border-0">
-                    <i class="fas fa-exclamation-triangle"></i>
-                        <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
-                    </div>
-                    <div class="card-body">
-                        <p class="card-text lead">El Producto no se ha actualizado.</p>
-                        <a href="/home" class="btn btn-danger m-auto">Ir al menu </a>
-                        <a href="/add-producto" class="btn btn-danger m-auto">Cargar otro Producto </a>
-                    </div>
-                  </div>  `;
-            }
-        }).then(data => console.log(data))
-
-    } catch (error) {
-        console.log(error)
-    }
-});
 
         // Eliminar Producto
         const eliminarProducto = async (id) => {
@@ -286,6 +286,7 @@ formActualizar.addEventListener('submit', function (e) {
                 }
                 else{
                     alert('No se pudo eliminar el producto')
+                    EnableTienda();
                 }
                 
             } catch (error) {

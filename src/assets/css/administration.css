@@ -21,9 +21,16 @@ td {
     word-break:break-all;
     
 }
-input{
-margin:4%;
+input, select{
+margin:10px;
 
+}
+td {
+    text-align: center;
+}
+
+#btn-addProducto {
+    color: white;
 }
 
 .bi-three-dots-vertical:hover {

@@ -36,7 +36,6 @@ formulario.addEventListener('submit', function(e){
     let rating = formulario.elements.rating.value;
     let stock = formulario.elements.cantidadStock.value;
     let precio = formulario.elements.precio.value;
-    //let tienda = formulario.elements.tiendaId.value;
 
     let datos = {
         nombre: nombre,
@@ -46,7 +45,7 @@ formulario.addEventListener('submit', function(e){
         rating: rating,
         cantidadStock: stock,
         precio: precio,
-        //tiendaId: tienda
+        
     }
     
     let datosJson = JSON.stringify(datos)
