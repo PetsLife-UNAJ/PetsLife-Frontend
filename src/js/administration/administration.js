@@ -27,7 +27,7 @@ const EnableVeterinaria = async () => {
         <button class="btn btn-light"><i class="bi bi-plus-lg text-primary"></i> Agregar Cliente</button>
         <button class="btn btn-light"><i class="bi bi-plus-lg text-primary"></i> Agregar Mascota</button>
         <button class="btn btn-light"><i class="bi bi-plus-lg text-primary"></i> Solicitar Turno</button>
-        
+        <a href="/mis-turnos" class="btn btn-light"><i class="bi bi-plus-lg text-primary"></i> Atender mis turnos</a>
         <div>
             <table class="table table-hover table-borderless mt-4 caption-top">
                 <caption>Listado de turnos</caption>

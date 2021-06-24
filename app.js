@@ -73,6 +73,12 @@ app.use("/lista-Adopciones", (req, res) => {
   );
 });
 
+app.use("/mis-turnos", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/mis-turnos/mis-turnos.html")
+  );
+});
+
 // ---------------------------------------------------------------
 
 //Email turno

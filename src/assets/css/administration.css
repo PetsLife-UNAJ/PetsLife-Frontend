@@ -1,58 +1,57 @@
-
 .d-noborder {
-    border-width: 0 0 0px !important;
+  border-width: 0 0 0px !important;
 }
 
 .d-pointer {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .active {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
-.btn-light:hover, .btn-light:focus, .btn-light:active, .btn-light.active, .open>.dropdown-toggle.btn-light {
-    color: #fff;
-    background-color: #54b488;
+.btn-light:hover,
+.btn-light:focus,
+.btn-light:active,
+.btn-light.active,
+.open > .dropdown-toggle.btn-light {
+  color: #fff;
+  background-color: #54b488;
 }
 
 td {
-    word-break:break-all;
-    
+  word-break: break-all;
 }
-input, select{
-margin:10px;
-
+input,
+select {
+  margin: 10px;
 }
 td {
-    text-align: center;
+  text-align: center;
 }
 
 #btn-addProducto {
-    color: white;
+  color: white;
 }
 
 .bi-three-dots-vertical:hover {
-    color:#517bd4;
-    }
-.bg-danger{
-background-color:#dc7235 !important;
-
+  color: #517bd4;
 }
-.bg-danger:hover{
-    
-   transition: background-color 1s ease-out;
-    background-color:#dc3535 !important;
-    
-    }
-.modal-content{
-
-    
-    width: 650px;
+.bg-danger {
+  background-color: #dc7235 !important;
 }
-.modal-body{
-
-    
-    width: 635px;
+.bg-danger:hover {
+  transition: background-color 1s ease-out;
+  background-color: #dc3535 !important;
+}
+.modal-content {
+  width: 650px;
+}
+.modal-body {
+  width: 635px;
+}
+.title-turnos-veterinario {
+  margin-top: 80px;
+  margin-bottom: 60px;
 }
