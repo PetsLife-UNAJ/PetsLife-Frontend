@@ -11,6 +11,15 @@ const listarTurnos = async (turnos) => {
   const place = document.getElementById('turnos-list');
 
   for (const turno of turnos) {
+    let historia = await fetch(
+      `https://localhost:44314/api/HistoriaClinica/${turno.mascotaId}`
+    )
+      .then((response) => response.json())
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => console.log(err));
+
     let fecha = new Date(turno.horaInicio);
 
     let fechaTurno = fecha.getHours() + ':' + fecha.getMinutes();
@@ -33,11 +42,11 @@ const listarTurnos = async (turnos) => {
     `;
 
     place.appendChild(element);
-    crearModal(turno);
+    crearModal(turno, historia);
   }
 };
 
-const crearModal = (turno) => {
+const crearModal = (turno, historia) => {
   const listaModal = document.getElementById('modal-list');
   //Modal para atender
   const element = document.createElement('div');
@@ -86,28 +95,12 @@ const crearModal = (turno) => {
       `registro-input-${turno.turnoId}`
     ).value;
     const mascotaId = turno.mascotaId;
-    const turnoId = turno.turnoId;
 
     let data = {...turno, tratamiento, registro, mascotaId};
     agregarRegistro(data);
   };
 
   //Modal para ver historia
-
-  const btnHistoria = document.getElementById(`btn-historia-${turno.turnoId}`);
-  btnHistoria.onclick = async () => {
-    fetch(`https://localhost:44314/api/HistoriaClinica/${turno.mascotaId}`)
-      .then((response) => response.json())
-      .then((res) => {
-        const place = document.getElementById('modal-historia');
-
-        let element = document.createElement('div');
-        element.innerHTML = `<h1>el turno es</h1>`;
-
-        place.appendChild(element);
-      })
-      .catch((err) => console.log(err));
-  };
 
   const elementB = document.createElement('div');
   elementB.innerHTML = `
@@ -117,16 +110,41 @@ const crearModal = (turno) => {
         <div class="modal-header">
         <h5 class="modal-title">Historia de ${turno.mascotaNombre}</h5>
         </div>
-      <div class="modal-body" id="modal-historia">
-        <div class="container-sm">        
-          <h1>da</h1>
-        </div>
+        <div class='container'>
+        <div class="modal-body" id="modal-historia-${turno.turnoId}">
+                
+          <h2>Historia:</h2>
+        
+      </div>
       </div>
     </div>
     </div>   
   </div>   
   `;
   listaModal.appendChild(elementB);
+
+  const place = document.getElementById(`modal-historia-${turno.turnoId}`);
+  for (const registro of historia) {
+    let element = document.createElement('div');
+
+    if (registro.analisis == null) {
+      element.innerHTML = `
+        <h6 class="mt-2 text-muted">No posee historia clinica.</h6>
+      `;
+    } else {
+      element.innerHTML = `
+   <div class="border border-2 border-dark mb-1">
+      <div class="row">
+      <h6><strong>Registro:</strong> ${registro.analisis}</h6>
+      </div>
+      <div class="row">
+      <h6><strong>Tratamiento:</strong> ${registro.tratamiento}</h6>
+      </div>
+    </div>
+    `;
+    }
+    place.appendChild(element);
+  }
 };
 
 const agregarRegistro = async (data) => {
