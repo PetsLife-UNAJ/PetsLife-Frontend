@@ -88,82 +88,95 @@ const crearModal = (turno) => {
     const mascotaId = turno.mascotaId;
     const turnoId = turno.turnoId;
 
-    let data = {tratamiento, registro, mascotaId, turnoId};
+    let data = {...turno, tratamiento, registro, mascotaId};
     agregarRegistro(data);
+  };
 
-    //Modal para ver historia
-    const element = document.createElement('div');
-    element.innerHTML = `
+  //Modal para ver historia
+
+  const btnHistoria = document.getElementById(`btn-historia-${turno.turnoId}`);
+  btnHistoria.onclick = async () => {
+    fetch(`https://localhost:44314/api/HistoriaClinica/${turno.mascotaId}`)
+      .then((response) => response.json())
+      .then((res) => {
+        const place = document.getElementById('modal-historia');
+
+        let element = document.createElement('div');
+        element.innerHTML = `<h1>el turno es</h1>`;
+
+        place.appendChild(element);
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const elementB = document.createElement('div');
+  elementB.innerHTML = `
   <div class="modal fade" id="modal-hhcc-${turno.turnoId}" tabindex="-1">
-  <div class="modal-dialog">
-    <div class="modal-content modal-listado-content">
-      <div class="modal-header">
+    <div class="modal-dialog">
+      <div class="modal-content modal-listado-content">
+        <div class="modal-header">
         <h5 class="modal-title">Historia de ${turno.mascotaNombre}</h5>
-      </div>
-      <div class="modal-body">
+        </div>
+      <div class="modal-body" id="modal-historia">
         <div class="container-sm">        
-       <h1>da</h1>
+          <h1>da</h1>
         </div>
       </div>
     </div>
+    </div>   
   </div>   
   `;
-    listaModal.appendChild(element);
-    const btnHistoria = document.getElementById(`btn-historia-${turno.turnoId}`);
-    btnTurno.onclick = () => {
-      console.log('object');
-    };
+  listaModal.appendChild(elementB);
+};
+
+const agregarRegistro = async (data) => {
+  let registro = {
+    analisis: data.registro,
+    historiaClinicaId: data.historiaClinicaId
   };
 
-  const agregarRegistro = async (data) => {
-    let registro = {
-      analisis: data.registro,
-      historiaClinicaId: data.historiaClinicaId
-    };
+  let registroJson = JSON.stringify(registro);
 
-    let registroJson = JSON.stringify(registro);
-
-    const registroResponse = await fetch(`https://localhost:44314/api/Registros`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json;charset=UTF-8'},
-      body: registroJson
+  const registroResponse = await fetch(`https://localhost:44314/api/Registros`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    body: registroJson
+  })
+    .then((response) => response.json())
+    .then((res) => {
+      return res;
     })
-      .then((response) => response.json())
-      .then((res) => {
-        return res;
-      })
-      .catch((err) => console.log(err));
+    .catch((err) => console.log(err));
 
-    let tratamiento = {
-      registroId: registroResponse.registroId,
-      descripcion: data.tratamiento
-    };
-
-    let tratamientoJson = JSON.stringify(tratamiento);
-    fetch(`https://localhost:44314/api/Tratamiento`, {
-      method: 'POST',
-      headers: {'Content-Type': 'application/json;charset=UTF-8'},
-      body: tratamientoJson
-    })
-      .then((response) => response.json())
-      .then((res) => {
-        if (res.status == 201) {
-          console.log('Tratamiento registrado con exito');
-        }
-      })
-      .catch((err) => console.log(err));
-
-    fetch(`https://localhost:44314/api/Turno/${data.turnoId}`, {
-      method: 'DELETE'
-    })
-      .then((res) => res.json())
-      .then((res) => console.log(res))
-      .catch((err) => console.log(err));
-
-    location.reload();
+  let tratamiento = {
+    registroId: registroResponse.registroId,
+    descripcion: data.tratamiento
   };
+
+  let tratamientoJson = JSON.stringify(tratamiento);
+  fetch(`https://localhost:44314/api/Tratamiento`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    body: tratamientoJson
+  })
+    .then((response) => response.json())
+    .then((res) => {
+      if (res.status == 201) {
+        console.log('Tratamiento registrado con exito');
+      }
+    })
+    .catch((err) => console.log(err));
+
+  fetch(`https://localhost:44314/api/Turno/${data.turnoId}`, {
+    method: 'DELETE'
+  })
+    .then((res) => res.json())
+    .then((res) => console.log(res))
+    .catch((err) => console.log(err));
+
+  location.reload();
 };
 
 window.onload = () => {
-  getTurnosVeterinario(1);
+  getTurnosVeterinario(1001);
 };
