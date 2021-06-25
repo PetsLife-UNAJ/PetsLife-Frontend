@@ -102,14 +102,14 @@ const crearModal = (turno) => {
       </div>
       <div class="modal-body">
         <div class="container-sm">        
-       
+       <h1>da</h1>
         </div>
       </div>
     </div>
   </div>   
   `;
     listaModal.appendChild(element);
-    const btnHistoria = document.getElementById(`btn-historia-${turno.turnoId}}`);
+    const btnHistoria = document.getElementById(`btn-historia-${turno.turnoId}`);
     btnTurno.onclick = () => {
       console.log('object');
     };
