@@ -1,5 +1,5 @@
 var formulario = document.getElementById('formulario-producto');
-
+const btnSubmit = document.getElementById('btn-submit');
 
 document.addEventListener('DOMContentLoaded', () => {
   mostrarCategoria();
@@ -28,6 +28,11 @@ const selectCategoria = data => {
 
 formulario.addEventListener('submit', function(e){
     e.preventDefault(); 
+
+    btnSubmit.innerHTML = `<button class="btn btn-primary" type="button" disabled>
+    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    Enviando...
+  </button>`;
 
     let nombre = formulario.elements.nombre.value;
     let categoria = formulario.elements.categoria.value;

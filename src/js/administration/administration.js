@@ -208,8 +208,14 @@ const selectCategoria = data => {
 //Envio el form
     const editarProducto = async (id) => {
         var formActualizar = document.getElementById('formActualizar-producto');
+        var btnSubmit = document.getElementById('btn-submit');
         formActualizar.addEventListener('submit', function (e) {
         e.preventDefault();
+        
+        btnSubmit.innerHTML = `<button class="btn btn-primary" type="button" disabled>
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Actualizando...
+      </button>`;
 
         let nombre = formActualizar.elements.nombre.value;
         let categoria = formActualizar.elements.categoria.value;
@@ -265,6 +271,7 @@ const selectCategoria = data => {
                             <p class="card-text lead">El Producto no se ha actualizado.</p>
                         </div>
                     </div>  `;
+                    EnableTienda();
                 }
             }).then(data => console.log(data))
 
