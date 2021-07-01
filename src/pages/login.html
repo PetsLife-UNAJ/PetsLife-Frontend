@@ -7,12 +7,12 @@
     <title>Login</title>
   </head>
   <body>
-    <form method="POST" id="form-login">
+    <form id="form-login">
       <label for="correo">Ingrese su correo</label>
-      <input type="text" placeholder="Ingrese su correo" name="correo" />
+      <input type="email" name="correo" required />
 
-      <label for="password">Ingrese su correo</label>
-      <input type="password" placeholder="Ingrese su password" name="password" />
+      <label for="password">Ingrese su Contraseña</label>
+      <input type="password" name="password" required />
 
       <button type="submit" id="btn-login">Ingresar</button>
     </form>

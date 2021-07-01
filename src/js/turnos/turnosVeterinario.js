@@ -1,5 +1,15 @@
-const getTurnosVeterinario = async (id) => {
-  await fetch(`https://localhost:44314/api/Turno/${id}`)
+import {
+  URL_API_TURNO,
+  URL_API_HISTORIA_CLINICA,
+  URL_API_REGISTROS,
+  URL_API_TRATAMIENTO
+} from '../constants.js';
+import {sesion} from '../sesion.js';
+
+const getTurnosVeterinario = async () => {
+  await fetch(`${URL_API_TURNO}/${sesion.usuario.id}`, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
     .then((response) => response.json())
     .then((res) => {
       listarTurnos(res);
@@ -11,9 +21,9 @@ const listarTurnos = async (turnos) => {
   const place = document.getElementById('turnos-list');
 
   for (const turno of turnos) {
-    let historia = await fetch(
-      `https://localhost:44314/api/HistoriaClinica/${turno.mascotaId}`
-    )
+    let historia = await fetch(`${URL_API_HISTORIA_CLINICA}/${turno.mascotaId}`, {
+      headers: {Authorization: ` Bearer  ${sesion.token}`}
+    })
       .then((response) => response.json())
       .then((res) => {
         return res;
@@ -155,9 +165,13 @@ const agregarRegistro = async (data) => {
 
   let registroJson = JSON.stringify(registro);
 
-  const registroResponse = await fetch(`https://localhost:44314/api/Registros`, {
+  const registroResponse = await fetch(URL_API_REGISTROS, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
+
     body: registroJson
   })
     .then((response) => response.json())
@@ -172,9 +186,12 @@ const agregarRegistro = async (data) => {
   };
 
   let tratamientoJson = JSON.stringify(tratamiento);
-  fetch(`https://localhost:44314/api/Tratamiento`, {
+  fetch(URL_API_TRATAMIENTO, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
     body: tratamientoJson
   })
     .then((response) => response.json())
@@ -185,8 +202,9 @@ const agregarRegistro = async (data) => {
     })
     .catch((err) => console.log(err));
 
-  fetch(`https://localhost:44314/api/Turno/${data.turnoId}`, {
-    method: 'DELETE'
+  fetch(`${URL_API_TURNO}/${data.turnoId}`, {
+    method: 'DELETE',
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
   })
     .then((res) => res.json())
     .then((res) => console.log(res))
@@ -196,6 +214,5 @@ const agregarRegistro = async (data) => {
 };
 
 window.onload = () => {
-  getTurnosVeterinario(1001);
-  debugger;
+  getTurnosVeterinario();
 };

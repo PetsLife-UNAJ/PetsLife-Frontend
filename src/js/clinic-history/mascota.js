@@ -1,7 +1,8 @@
 import {sesion} from '../sesion.js';
+import {URL_API_CLIENTE,URL_API_MASCOTA} from '../constants.js';
 
 export const getCliente = () => {
-  fetch(`https://localhost:44314/api/Cliente`, {
+  fetch(URL_API_CLIENTE, {
     headers: {Authorization: ` Bearer  ${sesion.token}`}
   })
     .then((response) => response.json())
@@ -19,7 +20,7 @@ export const getCliente = () => {
 };
 
 const createMascota = (datos) => {
-  fetch('https://localhost:44314/api/Mascota', {
+  fetch(URL_API_MASCOTA, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
@@ -60,7 +61,7 @@ const createMascota = (datos) => {
 };
 
 const createClient = (datos) => {
-  fetch('https://localhost:44314/api/Cliente', {
+  fetch(URL_API_CLIENTE, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',

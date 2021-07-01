@@ -1,10 +1,11 @@
 import {getCliente} from '../clinic-history/mascota.js';
 import {sesion} from '../sesion.js';
+import {URL_API_CLIENTE, URL_API_TURNO} from '../constants.js';
 
 let email;
 
 const getClienteSesion = async () => {
-  return await fetch(`https://localhost:44314/api/Cliente/${sesion.usuario.id}`, {
+  return await fetch(`${URL_API_CLIENTE}/${sesion.usuario.id}`, {
     headers: {Authorization: ` Bearer  ${sesion.token}`}
   })
     .then((response) => response.json())
@@ -33,7 +34,7 @@ const getTurnos = async () => {
     '-' +
     fechaActual.getDate();
 
-  return await fetch(`https://localhost:44314/api/Turno?fecha=${fechaQuery}`, {
+  return await fetch(URL_API_TURNO + `?fecha=${fechaQuery}`, {
     headers: {Authorization: ` Bearer  ${sesion.token}`}
   })
     .then((res) => res.json())
@@ -46,7 +47,7 @@ const getTurnos = async () => {
 const createTurno = (data) => {
   let turnojson = JSON.stringify(data);
 
-  fetch('https://localhost:44314/api/Turno', {
+  fetch(URL_API_TURNO, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
@@ -85,7 +86,10 @@ const createTurno = (data) => {
 
         fetch('http://localhost:3000/send-email', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json;charset=UTF-8'},
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            Authorization: ` Bearer  ${sesion.token}`
+          },
           body: turnoMessageJson
         })
           .then((res) => res.json())
