@@ -3,29 +3,48 @@ import {getCliente} from '../clinic-history/mascota.js';
 let clienteActual;
 
 const getClienteSesion = async () => {
-  return await fetch('https://localhost:44314/api/Cliente/3')
+  let {token, usuario} = JSON.parse(localStorage.getItem('usuario'));
+
+  console.log(usuario, token);
+
+  return await fetch(`https://localhost:44314/api/Cliente/${usuario.id}`, {
+    headers: {Authorization: ` Bearer  ${token}`}
+  })
     .then((response) => response.json())
     .then((res) => {
-      return res;
-    })
-    .catch((err) => console.log(err));
-};
-
-const getMascotasByClienteId = (clienteId) => {
-  fetch(`https://localhost:44314/api/Cliente/${clienteId}`)
-    .then((response) => response.json())
-    .then((data) => {
       const place = document.getElementById('inputSelect');
 
-      for (const mascota of data.mascotas) {
+      for (const mascota of res.mascotas) {
         let element = document.createElement('option');
         element.value = mascota.mascotaId;
 
         element.innerHTML = mascota.nombre;
         place.appendChild(element);
       }
-    });
+
+      return res;
+    })
+    .catch((err) => console.log(err));
 };
+
+// const getMascotasByClienteId = (clienteId) => {
+//   fetch(`https://localhost:44314/api/Cliente/${usuario.id}`, {
+//     headers: `
+//   'Authorization': 'Bearer ' + ${token}`
+//   })
+//     .then((response) => response.json())
+//     .then((data) => {
+//       const place = document.getElementById('inputSelect');
+
+//       for (const mascota of data.mascotas) {
+//         let element = document.createElement('option');
+//         element.value = mascota.mascotaId;
+
+//         element.innerHTML = mascota.nombre;
+//         place.appendChild(element);
+//       }
+//     });
+// };
 
 const getTurnos = async () => {
   let fechaActual = new Date();
@@ -122,21 +141,21 @@ const listarTurnos = async () => {
   let listaTurnos = await getTurnos();
 
   const place = document.getElementById('rows-turnos');
+  if (listaTurnos) {
+    for (const turno of listaTurnos) {
+      let element = document.createElement('div');
+      element.className =
+        'row justify-content-center row-cols-auto  text-center fs-6  align-content-center ';
 
-  for (const turno of listaTurnos) {
-    let element = document.createElement('div');
-    element.className =
-      'row justify-content-center row-cols-auto  text-center fs-6  align-content-center ';
+      let hora = new Date(turno.horaInicio);
+      let minutos = hora.getMinutes();
+      if (hora.getMinutes() == 0) {
+        minutos = '00';
+      }
 
-    let hora = new Date(turno.horaInicio);
-    let minutos = hora.getMinutes();
-    if (hora.getMinutes() == 0) {
-      minutos = '00';
-    }
+      let horario = hora.getHours() + ':' + minutos;
 
-    let horario = hora.getHours() + ':' + minutos;
-
-    element.innerHTML = `
+      element.innerHTML = `
     <div class="col-2 border border-dark p-2">${horario}</div>
     <div class="col-2 border border-dark p-2">${turno.mascotaNombre}</div>
     <div class="col-2 border border-dark p-2">${turno.veterinarioNombre} ${turno.veterinarioApellido}</div>
@@ -147,13 +166,14 @@ const listarTurnos = async () => {
 
 `;
 
-    place.appendChild(element);
+      place.appendChild(element);
+    }
   }
 };
 
 window.onload = async (e) => {
   clienteActual = await getClienteSesion();
-  getMascotasByClienteId(3);
+  // getMascotasByClienteId(3);
   listarTurnos();
   getCliente();
 };

@@ -15,6 +15,13 @@ app.use('/home', (req, res) => {
   res.sendFile(path.join(__dirname, '/src/pages/home.html'));
 });
 //
+
+app.use("/login", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "/src/pages/login.html")
+  );
+});
+
 app.use('/add-client', (req, res) => {
   res.sendFile(path.join(__dirname, '/src/pages/clinic-history/add-client.html'));
 });

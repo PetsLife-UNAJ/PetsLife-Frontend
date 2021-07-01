@@ -197,4 +197,5 @@ const agregarRegistro = async (data) => {
 
 window.onload = () => {
   getTurnosVeterinario(1001);
+  debugger;
 };
