@@ -1,14 +1,11 @@
 import {getCliente} from '../clinic-history/mascota.js';
+import {sesion} from '../sesion.js';
 
-let clienteActual;
+let email;
 
 const getClienteSesion = async () => {
-  let {token, usuario} = JSON.parse(localStorage.getItem('usuario'));
-
-  console.log(usuario, token);
-
-  return await fetch(`https://localhost:44314/api/Cliente/${usuario.id}`, {
-    headers: {Authorization: ` Bearer  ${token}`}
+  return await fetch(`https://localhost:44314/api/Cliente/${sesion.usuario.id}`, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
   })
     .then((response) => response.json())
     .then((res) => {
@@ -22,29 +19,10 @@ const getClienteSesion = async () => {
         place.appendChild(element);
       }
 
-      return res;
+      return res.email;
     })
     .catch((err) => console.log(err));
 };
-
-// const getMascotasByClienteId = (clienteId) => {
-//   fetch(`https://localhost:44314/api/Cliente/${usuario.id}`, {
-//     headers: `
-//   'Authorization': 'Bearer ' + ${token}`
-//   })
-//     .then((response) => response.json())
-//     .then((data) => {
-//       const place = document.getElementById('inputSelect');
-
-//       for (const mascota of data.mascotas) {
-//         let element = document.createElement('option');
-//         element.value = mascota.mascotaId;
-
-//         element.innerHTML = mascota.nombre;
-//         place.appendChild(element);
-//       }
-//     });
-// };
 
 const getTurnos = async () => {
   let fechaActual = new Date();
@@ -55,7 +33,9 @@ const getTurnos = async () => {
     '-' +
     fechaActual.getDate();
 
-  return await fetch(`https://localhost:44314/api/Turno?fecha=${fechaQuery}`)
+  return await fetch(`https://localhost:44314/api/Turno?fecha=${fechaQuery}`, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
     .then((res) => res.json())
     .then((response) => {
       return response;
@@ -68,7 +48,10 @@ const createTurno = (data) => {
 
   fetch('https://localhost:44314/api/Turno', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
     body: turnojson
   })
     .then((response) => {
@@ -96,7 +79,7 @@ const createTurno = (data) => {
             <h4>${data.horaInicio}</h4>
             <p>Lo esperamos.</p>           
           `,
-          email: clienteActual.email
+          email: email
         };
         let turnoMessageJson = JSON.stringify(turnoMessage);
 
@@ -172,8 +155,7 @@ const listarTurnos = async () => {
 };
 
 window.onload = async (e) => {
-  clienteActual = await getClienteSesion();
-  // getMascotasByClienteId(3);
+  email = await getClienteSesion();
   listarTurnos();
   getCliente();
 };

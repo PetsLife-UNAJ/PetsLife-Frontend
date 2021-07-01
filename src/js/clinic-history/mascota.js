@@ -1,5 +1,9 @@
+import {sesion} from '../sesion.js';
+
 export const getCliente = () => {
-  fetch(`https://localhost:44314/api/Cliente`)
+  fetch(`https://localhost:44314/api/Cliente`, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
     .then((response) => response.json())
     .then((clientes) => {
       const select = document.getElementById('cliente');
@@ -17,7 +21,10 @@ export const getCliente = () => {
 const createMascota = (datos) => {
   fetch('https://localhost:44314/api/Mascota', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
     body: datos
   })
     .then((response) => {
@@ -55,7 +62,10 @@ const createMascota = (datos) => {
 const createClient = (datos) => {
   fetch('https://localhost:44314/api/Cliente', {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
     body: datos
   })
     .then((response) => {
