@@ -11,14 +11,16 @@ app.use(express.static(__dirname + '/src'));
 app.use('js', express.static(path.join(__dirname + 'js')));
 
 var jsonParser = bodyParser.json();
-//Ejemplo
+
 app.use('/home', (req, res) => {
   res.sendFile(path.join(__dirname, '/src/pages/home.html'));
 });
-//
 
 app.use('/login', (req, res) => {
   res.sendFile(path.join(__dirname, '/src/pages/login.html'));
+});
+app.use('/register', (req, res) => {
+  res.sendFile(path.join(__dirname, '/src/pages/register.html'));
 });
 
 app.use('/add-client', (req, res) => {

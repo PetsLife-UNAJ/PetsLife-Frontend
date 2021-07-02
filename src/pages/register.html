@@ -1,0 +1,42 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro</title>
+  </head>
+  <body>
+    <form id="form-register">
+      <label for="nombre">Ingrese su nombre:</label><br />
+      <input type="text" name="nombre" required /><br />
+
+      <label for="apellido">Ingrese su apellido:</label><br />
+      <input type="text" name="apellido" required /><br />
+
+      <label for="dni">Ingrese su dni:</label><br />
+      <input type="number" name="dni" required /><br />
+
+      <label for="email">Ingrese su email:</label><br />
+      <input type="email" name="email" required /><br />
+
+      <label for="telefono">Ingrese su telefono:</label><br />
+      <input type="number" name="telefono" required /><br />
+
+      <label for="contraseña">Ingrese su contraseña:</label><br />
+      <input type="password" name="contraseña" required /><br />
+
+      <label for="hombre">Hombre</label>
+      <input type="radio" name="sexo" id="hombre" value="masculino" required />
+
+      <label for="mujer">Mujer</label>
+      <input type="radio" name="sexo" id="mujer" value="femenino" required />
+
+      <label for="otro">Otro</label>
+      <input type="radio" name="sexo" id="otro" value="otro" required /><br />
+
+      <button type="submit">Registrarse</button>
+    </form>
+
+    <script type="module" src="../js/login/register.js"></script>
+  </body>
+</html>
