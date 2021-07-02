@@ -1,9 +1,8 @@
-import {URL_API_REGISTER} from '../constants.js';
-import {sesion} from '../sesion.js';
+import {registerUser} from '../services/registerService.js';
 
 const formRegister = document.getElementById('form-register');
 
-formRegister.onsubmit = (e) => {
+formRegister.onsubmit = async (e) => {
   e.preventDefault();
 
   let nombres = formRegister.elements.nombre.value;
@@ -16,17 +15,28 @@ formRegister.onsubmit = (e) => {
 
   let registro = {nombres, apellidos, dni, email, telefono, password, sexo};
 
-  let registroJson = JSON.stringify(registro);
+  const response = await registerUser(registro);
 
-  fetch(URL_API_REGISTER, {
-    method: 'POST',
-    headers: {
-      Authorization: ` Bearer  ${sesion.token}`,
-      'Content-Type': 'application/json;charset=UTF-8'
-    },
-    body: registroJson
-  })
-    .then((res) => res.json())
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+  if (response) {
+    formRegister.innerHTML = ` <div class="card text-center p-0 my-2 ">
+    <div class="card-header bg-transparent text-success border-0">
+      <i class="far fa-check-circle display-4 d-block"></i>
+      <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
+    </div>
+    <div class="card-body">
+      <a href="home" class="btn btn-primary m-auto">Ir al menu </a>
+    </div>
+  </div>`;
+  } else {
+    formRegister.innerHTML = ` <div class="card text-center p-0 my-2 ">
+    <div class="card-header bg-transparent text-danger border-0">
+    <i class="fas fa-exclamation-triangle"></i>
+      <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text lead">No has sido registrado.</p>
+      <a href="home" class="btn btn-danger m-auto">Ir al menu </a>
+    </div>
+  </div>`;
+  }
 };
