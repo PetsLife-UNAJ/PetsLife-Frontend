@@ -2,8 +2,6 @@ import {getCliente} from '../clinic-history/mascota.js';
 import {sesion} from '../sesion.js';
 import {URL_API_CLIENTE, URL_API_TURNO} from '../constants.js';
 
-let email;
-
 const getClienteSesion = async () => {
   return await fetch(`${URL_API_CLIENTE}/${sesion.usuario.id}`, {
     headers: {Authorization: ` Bearer  ${sesion.token}`}
@@ -19,8 +17,6 @@ const getClienteSesion = async () => {
         element.innerHTML = mascota.nombre;
         place.appendChild(element);
       }
-
-      return res.email;
     })
     .catch((err) => console.log(err));
 };
@@ -80,7 +76,7 @@ const createTurno = (data) => {
             <h4>${data.horaInicio}</h4>
             <p>Lo esperamos.</p>           
           `,
-          email: email
+          email: sesion.usuario.email
         };
         let turnoMessageJson = JSON.stringify(turnoMessage);
 
@@ -159,7 +155,7 @@ const listarTurnos = async () => {
 };
 
 window.onload = async (e) => {
-  email = await getClienteSesion();
+  getClienteSesion();
   listarTurnos();
   getCliente();
 };

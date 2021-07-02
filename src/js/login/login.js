@@ -1,3 +1,4 @@
+import {URL_API_LOGIN} from '../constants.js';
 const formLogin = document.getElementById('form-login');
 
 formLogin.onsubmit = (e) => {
@@ -9,9 +10,11 @@ formLogin.onsubmit = (e) => {
 
   let cuentajson = JSON.stringify(cuenta);
 
-  fetch('https://localhost:44315/api/login', {
+  fetch(URL_API_LOGIN, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8'
+    },
     body: cuentajson
   })
     .then((res) => res.json())

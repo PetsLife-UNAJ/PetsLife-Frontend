@@ -10,4 +10,9 @@ export const URL_API_HISTORIA_CLINICA ='https://localhost:44314/api/HistoriaClin
 export const URL_API_REGISTROS = 'https://localhost:44314/api/Registros';
 export const URL_API_TRATAMIENTO = 'https://localhost:44314/api/Tratamiento';
 export const URL_API_MASCOTA = 'https://localhost:44314/api/Mascota';
+
+
+
+//MICROSERVICIO AUTENTICACION
+export const URL_API_LOGIN='https://localhost:44315/api/login'; 
 export const URL_API_REGISTER = 'https://localhost:44315/api/register';
