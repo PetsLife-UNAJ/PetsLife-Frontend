@@ -54,6 +54,16 @@ app.use('/administracion', (req, res) => {
   res.sendFile(path.join(__dirname, '/src/pages/administration.html'));
 });
 
+app.use('/usuarios', (req, res) => {
+  res.sendFile(path.join(__dirname, '/src/pages/prueba.html'));
+});
+
+// ------------------------ USUARIO ------------------------
+
+app.use('/users', (req, res) => {
+  res.sendFile(path.join(__dirname, '/src/pages/users/users-home.html'));
+});
+
 // ----------------------------Adoptions----------------------------
 app.use("/add-Adoptable", (req, res) => {
   res.sendFile(
