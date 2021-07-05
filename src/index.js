@@ -50,18 +50,14 @@ app.use(indexRoute);
 app.use(express.static(path.join(__dirname, 'assets')));
 
 //listening the server
-app.listen(app.get('port'));
-
-
-
+app.listen(app.get('port'), () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
 
 //RUTAS VIEJAS REVISAR
 // app.use('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, '/src/pages/home.html'));
 // });
-
-
-
 
 // app.use('/add-client', (req, res) => {
 //   res.sendFile(path.join(__dirname, '/src/pages/clinic-history/add-client.html'));
@@ -75,7 +71,6 @@ app.listen(app.get('port'));
 //     path.join(__dirname, '/src/pages/clinic-history/clinic-history.html')
 //   );
 // });
-
 
 // // ---------------------------- STORE ----------------------------
 // app.use('/add-producto', (req, res) => {
