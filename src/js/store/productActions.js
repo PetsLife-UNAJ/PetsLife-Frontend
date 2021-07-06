@@ -1,29 +1,33 @@
 const backendUrl = "http://localhost:27459/"
 
+
+const handleError = (err) => {
+    console.warn(err);
+    return new Response(JSON.stringify(
+        {
+            status: 400,
+            message: err
+        }
+    ));
+};
+
 export const getProductos = async () => {
-    try {
-        let response = await fetch(backendUrl + `api/productos`)
-        let productos = await response.json()
+    let response = await fetch(backendUrl + `api/productos`).catch(handleError)
+    let data = await response.json()
 
-        return productos
-    }
-    catch (e) {
-        console.error(e)
-    }
-
-    return null
+    return data
 }
 
 export const getProductoById = async (id) => {
-    try {
-        let response = await fetch(backendUrl + `api/producto/${id}`)
-        let producto = await response.json()
+    let response = await fetch(backendUrl + `api/producto/${id}`).catch(handleError)
+    let data = await response.json()
 
-        return producto
-    }
-    catch (e) {
-        console.error(e)
-    }
+    return data
+}
 
-    return null
+export const getCategorias = async () => {
+    const response = await fetch(backendUrl + 'api/Categoria').catch(handleError)
+    const data = await response.json()
+    
+    return data
 }
