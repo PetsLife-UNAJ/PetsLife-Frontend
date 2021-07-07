@@ -61,10 +61,25 @@ router.get('/lista-Adopciones', (req, res) => {
 });
 
 
-// ADMINISTRATION
-router.get('/administracion', (req, res) => {
-  res.render('administration/administration.html');
+// ------------------------ ADMINISTRATION ------------------------
+router.get('/admin', (req, res) => {
+  res.render('administration/admin.html');
 });
+
+router.get('/admin/clinic', (req, res) => {
+  res.render('administration/admin-clinic.html');
+});
+
+router.get('/admin/store', (req, res) => {
+  res.render('administration/admin-store.html');
+});
+
+router.get('/admin/adoptions', (req, res) => {
+  res.render('administration/admin-adoptions.html');
+});
+
+
+
 
 
 module.exports = router;

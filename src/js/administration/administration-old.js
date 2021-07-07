@@ -1,4 +1,4 @@
-import { getTurnos, getAdoptables, getTiposMascota, addAdoptable } from "./administrationActions.js"
+import { getTurnos, getAdoptables, getTiposMascota, addAdoptable } from "./adminActions.js"
 import { getProductos, getCategorias } from '../store/productActions.js'
 
 
