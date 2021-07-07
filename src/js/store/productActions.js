@@ -42,8 +42,8 @@ export const updateProductoById = async (id, dataJson) => {
         body : JSON.stringify(dataJson)
     };
 
-    let response = await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
-    let data = await response.json()
+    await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
+    let data = {status: 200}
 
     return data
 }

@@ -1,4 +1,4 @@
-import { getProductos, getCategorias, getProductoById, updateProductoById, deleteProductoById} from '../store/productActions.js'
+import { getProductos, getCategorias, updateProductoById, deleteProductoById} from '../store/productActions.js'
 
 var msBody              = document.getElementById("msBody")
 var tiendaTableBody     = document.getElementById("tiendaTableBody")
@@ -71,8 +71,10 @@ const mostrarCategoria = async () => {
 }
 
 const editarProducto = async (id) => {
+    formActualizar.innerHTML = getActualizarForm()
+
     await mostrarCategoria()
-    var formActualizar = document.getElementById('formActualizar-producto');
+
     formActualizar.addEventListener('submit', (e) => {
         e.preventDefault();
         actualizarProducto(id)
@@ -149,4 +151,51 @@ const eliminarProducto = async (id) => {
         return
     }
     alert('Se elimino correctamente el producto');
+}
+
+const getActualizarForm = () => {
+    return (
+        `
+        <div class="form-floating">         
+                  <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre">
+                  <label for="nom"><p id="nombrep">Nombre</p></label>   
+                </div>
+      
+                <div class="form-floating">
+                  <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example">
+                    <option value="" disabled selected>Elija una opcion</option>
+                  </select>
+                  <label for="categoria">Categoria</label>
+                </div>
+      
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" >
+                  <label for="imagen">Imagen</label>
+                </div>
+      
+                <div class="form-floating">
+                  <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion">
+                  <label for="descripcion">Descripcion</label>
+                </div>
+      
+                <div class="form-floating">
+                  <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" >
+                  <label for="rating">Rating</label>
+                </div>
+      
+                <div class="form-floating">
+                  <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" >
+                  <label for="stock">Stock</label>
+                </div>
+      
+                <div class="form-floating">
+                  <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" >
+                  <label for="precio">Precio</label>
+                </div>
+
+                <div class="form-floating">
+                  <button type="submit" class="btn btn-primary mb-3" id="btn-submit">Actualizar</button>
+                </div>
+                `
+    )
 }
