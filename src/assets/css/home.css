@@ -68,7 +68,7 @@ input[type='number'] {
 
 a,
 .btn-link {
-  color: #5970ba;
+  color: #F2CA50;
 }
 
 .navbar-brand {
@@ -498,7 +498,7 @@ a,
 *********************/
 .noUi-connect {
   height: 50%;
-  background-color: #5970ba;
+  background-color: #F2CA50;
 }
 
 .noUi-target {
@@ -843,9 +843,6 @@ aside a {
   color: white;
 }
 
-.bs-footer .bs-social-media .btn-link:hover {
-}
-
 .bs-li-footer {
   margin: 10px;
 }
@@ -1147,10 +1144,10 @@ Banners
 
 a,
 .btn-link {
-  color: #000000;
+  color: #BF7C2A;
 }
 a:hover {
-  color: #c79819;
+  color: #59332A;
 }
 
 .badge-secondary {
@@ -1264,7 +1261,7 @@ a:hover {
   color: #000000;
 }
 .btn-link-term:hover {
-  color: #c79819;
+  color: #F2CA50;
 }
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
@@ -1963,4 +1960,8 @@ input {
     left: -400%;
     opacity: 1;
   }
+}
+
+.btn-link:hover {
+  color: #F2CA50;
 }
