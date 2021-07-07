@@ -60,4 +60,11 @@ router.get('/lista-Adopciones', (req, res) => {
   res.render('adoption/adopciones.html');
 });
 
+
+// ADMINISTRATION
+router.get('/administracion', (req, res) => {
+  res.render('administration/administration.html');
+});
+
+
 module.exports = router;

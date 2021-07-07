@@ -49,6 +49,10 @@ app.use(indexRoute);
 // static files
 app.use(express.static(path.join(__dirname, 'assets')));
 
+// static js
+console.log(path.join(__dirname, 'js'))
+app.use(express.static(path.join(__dirname, 'js')));
+
 //listening the server
 app.listen(app.get('port'), () => {
   console.log(`Example app listening at http://localhost:${app.get('port')}`);
