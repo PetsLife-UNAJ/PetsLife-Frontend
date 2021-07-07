@@ -128,8 +128,13 @@ a,
     display: flex;
     justify-content: center;
     align-items: center;
-    background: #0056b3;
+    background: #BF7C2A;
     border-radius: 0 0 .75rem .75rem
+}
+
+.bs-header-cart:hover {
+    background: #59332A;
+    border-color: #59332A;
 }
 
 .fa-shopping-bag {
@@ -1067,7 +1072,7 @@ Banners
 }
 
 .bs-header .bs-social-media a:hover {
-    color: #c79819;
+    color: #BF7C2A;
 }
 
 .btn.btn-primary {
@@ -1086,7 +1091,7 @@ Banners
 }
 
 .bs-header-cart {
-    background: #000000;
+    background: #BF7C2A;
 }
 
 .btn.btn-secondary {
@@ -1120,11 +1125,11 @@ Banners
 /* Menú */
 
 .bs-menu-lv1, .bs-menu-lv1 + .dropdown-menu, .bs-menu-lv3 {
-    background-color: #c79819;
+    background-color: #BF7C2A;
 }
 
 .bs-menu-lv1:hover, .show > .bs-menu-lv1 {
-    background: #000000;
+    background: #59332A;
 }
 
 .bs-menu-lv1 + .dropdown-menu {
@@ -1372,7 +1377,7 @@ label{
   display: none;
   width: 26px;
   float: right;
-  color: #354757;
+  color: #2B401D;
 }
 
 #toggle{
@@ -1477,7 +1482,7 @@ label{
   font-weight: 400;
   letter-spacing: 1.2px;
   margin: 30px;
-  color: #354757;
+  color: #2B401D;
 }
 
 .grand-title h4:after{
@@ -1527,20 +1532,20 @@ label{
 }
 
 .inner-text h3{
-  color: #299FFF;
+  color: #2B401D;
   text-transform: uppercase;
   font-weight: 400;
   letter-spacing: 1.2px;
 }
 
 .inner-text h5{
-  color: #6D85A8;
+  color: #2B401D;
   letter-spacing: 1.2px;
   text-transform: uppercase;
 }
 
 .inner-text p{
-  color: #6D85A8;
+  color: #2B401D;
 }
 
 .inner-content{
@@ -1584,7 +1589,7 @@ ul li img{
 }
 
 ul li h4{
-  color: #354757;
+  color: #2B401D;
   font-weight: 300;
   font-size: 25px;
 }
@@ -1593,7 +1598,7 @@ ul li p{
   font-size: 20px;
   width: 80%;
   margin: 0 auto;
-  color: #6D85A8;
+  color: #BF7C2A;
 }
 
 #slider figure{
@@ -1623,7 +1628,7 @@ ul li p{
   text-align: center;
   font-weight: 400;
   font-size: 40px;
-  color: #354757;
+  color: #2B401D;
   letter-spacing: 1.2px;
 }
 
@@ -1634,7 +1639,7 @@ ul li p{
   height: 3px;
   margin: 20px auto;
   border: 0;
-  background: #E58859;
+  background: #BF7C2A;
 }
 
 .portafolio-container{
@@ -1664,7 +1669,7 @@ ul li p{
 }
 
 .portafolio-text h5{
-  color: #299FFF;
+  color: #59332A;
   font-size: 15px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
@@ -1673,7 +1678,7 @@ ul li p{
 
 .portafolio-text p{
   text-align: justify;
-  color: #6D85A8;
+  color: #BF7C2A;
 }
 
 .portafolio-item:hover .portafolio-text{
@@ -1702,7 +1707,7 @@ ul li p{
   font-weight: 400;
   letter-spacing: 1.2px;
   margin: 30px;
-  color: #354757;
+  color: #2B401D;
 }
 
 .footer h4:after{
@@ -1712,7 +1717,7 @@ ul li p{
   height: 3px;
   margin: 20px auto;
   border: 0;
-  background: #E58859;
+  background: #BF7C2A;
 }
 
 .container{
@@ -1778,9 +1783,9 @@ ul li p{
 
 .flex-outer li button{
   background: 0 0 #FEFFFF;
-  border: 1px solid #6D85A8;
+  border: 1px solid #BF7C2A;
   border-radius: 3px;
-  color: #6D85A8;
+  color: #BF7C2A;
   font-size: 16px;
   line-height: inherit;
   margin: 30px 0;
@@ -1792,8 +1797,8 @@ ul li p{
 .flex-outer li button:hover,
 .flex-outer li button:active,
 .flex-outer li button:focus {
-	border-color: #299FFF;
-	color: #299FFF;
+	border-color: #59332A;
+	color: #59332A;
 }
 
 .flex-inner li{
@@ -1801,7 +1806,7 @@ ul li p{
 }
 
 .rect{
-	border-color: #6D85A8;
+	border-color: #BF7C2A;
   border-width: 0 0 1px 0;
   border-style: none none solid none;
   box-shadow: none;
@@ -1809,7 +1814,7 @@ ul li p{
 
 .rect:focus{
 	box-shadow: none;
-	border-color: #60A9F1;
+	border-color: #59332A;
   outline: none;
 }
 
@@ -1820,35 +1825,35 @@ ul li p{
 
 .flex-outer li ::placeholder{
   font-size: 12px;
-  color: #6D85A8;
+  color: #BF7C2A;
   text-transform: uppercase;
   font-weight: 400;
 }
 
 .flex-outer li ::-webkit-input-placeholder{
   font-size: 12px;
-  color: #6D85A8;
+  color: #BF7C2A;
   text-transform: uppercase;
   font-weight: 400;
 }
 
 .flex-outer li ::-moz-placeholder{
   font-size: 12px;
-  color: #6D85A8;
+  color: #BF7C2A;
   text-transform: uppercase;
   font-weight: 400;
 }
 
 .flex-outer li ::-ms-input-placeholder{
   font-size: 12px;
-  color: #6D85A8;
+  color: #BF7C2A;
   text-transform: uppercase;
   font-weight: 400;
 }
 
 .flex-outer li ::-moz-placeholder{
   font-size: 12px;
-  color: #6D85A8;
+  color: #BF7C2A;
   text-transform: uppercase;
   font-weight: 400;
 }
@@ -1890,7 +1895,7 @@ input{
     display: block;
     border-bottom: 1px solid #EAEAEB;
     margin: 0;
-    color: #6D85A8;
+    color: #BF7C2A;
   }
   #toggle:checked + .menu{display: block; background-color: #FEFFFF;}
 }
