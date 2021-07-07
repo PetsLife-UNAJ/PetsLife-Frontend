@@ -9,6 +9,8 @@ require('dotenv').config();
 // app.use(express.static(__dirname + '/src'));
 // app.use('js', express.static(path.join(__dirname + 'js')));
 
+app.use(express.static(__dirname));
+
 var jsonParser = bodyParser.json();
 
 //settings
