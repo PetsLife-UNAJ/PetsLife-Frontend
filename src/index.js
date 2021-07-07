@@ -7,6 +7,7 @@ const nodeMailer = require('nodemailer');
 
 // app.use(express.static(__dirname + '/src'));
 // app.use('js', express.static(path.join(__dirname + 'js')));
+app.use(express.static(__dirname));
 
 var jsonParser = bodyParser.json();
 
@@ -57,6 +58,8 @@ app.use(express.static(path.join(__dirname, 'js')));
 app.listen(app.get('port'), () => {
   console.log(`Example app listening at http://localhost:${app.get('port')}`);
 });
+
+
 
 // app.listen(app.get('port'));
 
