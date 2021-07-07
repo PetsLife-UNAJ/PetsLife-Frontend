@@ -51,8 +51,10 @@ app.use(express.static(path.join(__dirname, 'assets')));
 
 //listening the server
 app.listen(app.get('port'), () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`Example app listening at http://localhost:${app.get('port')}`);
 });
+
+// app.listen(app.get('port'));
 
 //RUTAS VIEJAS REVISAR
 // app.use('/', (req, res) => {
