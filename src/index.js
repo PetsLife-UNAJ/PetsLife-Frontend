@@ -9,7 +9,6 @@ require('dotenv').config();
 app.use(express.static(__dirname));
 //app.use('js', express.static(path.join(__dirname + 'js')));
 
-app.use(express.static(__dirname));
 
 var jsonParser = bodyParser.json();
 
@@ -56,5 +55,5 @@ app.use(express.static(path.join(__dirname, 'assets')));
 
 //listening the server
 app.listen(app.get('port'), () => {
-  console.log(`Example app listening at http://localhost:${app.get('port')}`);
+  console.log(`Example app listening at http://localhost:${app.get('port')}/home`);
 });

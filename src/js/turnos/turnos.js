@@ -1,6 +1,6 @@
 import {getCliente} from '../clinic-history/mascota.js';
 import {sesion} from '../sesion.js';
-import {URL_API_CLIENTE, URL_API_TURNO} from '../constants.js';
+import {URL_API_CLIENTE, URL_API_TURNO, headers} from '../constants.js';
 
 const getClienteSesion = async () => {
   return await fetch(`${URL_API_CLIENTE}/${sesion.usuario.id}`, {
