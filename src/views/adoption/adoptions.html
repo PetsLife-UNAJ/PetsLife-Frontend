@@ -1,52 +1,70 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>PetsLife - Adopciones</title>
-  <%- include ('../partials/head.html')%>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PetsLife - Adopciones</title>
+    <%- include ('../partials/head.html')%>
     <!--CSS-->
     <link rel="stylesheet" href="../../assets/css/adoptions.css" />
     <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-    <!--JQuery-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+      integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous"> -->
+    <!-- JQuery
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
     <!--Js Listado de Adoptables-->
-    <script src="../../js/Adoptions/listarMascotas.js"></script>
+  </head>
 
-
-    <%- include ('../partials/head.html')%>
-</head>
-
-<body>
-  <%- include ('../partials/navigation.html')%>
+  <body>
+    <%- include ('../partials/navigation.html')%>
     <main>
       <!--Carousel-->
       <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-indicators">
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true"
-            aria-label="Slide 1"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-          <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to="0"
+            class="active"
+            aria-current="true"
+            aria-label="Slide 1"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to="1"
+            aria-label="Slide 2"
+          ></button>
+          <button
+            type="button"
+            data-bs-target="#myCarousel"
+            data-bs-slide-to="2"
+            aria-label="Slide 3"
+          ></button>
         </div>
         <div class="carousel-inner mt-1">
           <div class="carousel-item active">
-
-            <img class="bd-placeholder-img" src="https://www.absalon.cl/wp-content/uploads/2020/02/mascotas.jpg" alt="">
+            <img
+              class="bd-placeholder-img"
+              src="https://www.absalon.cl/wp-content/uploads/2020/02/mascotas.jpg"
+              alt=""
+            />
             <div class="container">
               <div class="carousel-caption text-start">
                 <h1 class="color1">¿Listo para adoptar?</h1>
-                <h2 class="color1">Adoptar una mascota enriquece la vida y abre las puertas a una época de diversión,
-                  descubrimientos, juegos y mimos.</h2>
-
+                <h2 class="color1"
+                  >Adoptar una mascota enriquece la vida y abre las puertas a una
+                  época de diversión, descubrimientos, juegos y mimos.</h2
+                >
               </div>
             </div>
           </div>
           <div class="carousel-item">
-            <img class="bd-placeholder-img"
-              src="https://aristasdigital.files.wordpress.com/2017/10/perro.jpg?w=1600&h=700&crop=1" alt="">
+            <img
+              class="bd-placeholder-img"
+              src="https://aristasdigital.files.wordpress.com/2017/10/perro.jpg?w=1600&h=700&crop=1"
+              alt=""
+            />
             <div class="container">
               <div class="carousel-caption text-end">
                 <h1 class="color2">9 de cada 10 cachorros</h1>
@@ -55,8 +73,11 @@
             </div>
           </div>
           <div class="carousel-item">
-            <img class="bd-placeholder-img"
-              src="https://aristasdigital.files.wordpress.com/2017/08/perro.jpg?w=1600&h=700&crop=1" alt="">
+            <img
+              class="bd-placeholder-img"
+              src="https://aristasdigital.files.wordpress.com/2017/08/perro.jpg?w=1600&h=700&crop=1"
+              alt=""
+            />
             <div class="container">
               <div class="carousel-caption text-end">
                 <h1>ADOPTÁ</h1>
@@ -65,11 +86,21 @@
             </div>
           </div>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide="prev"
+        >
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Previous</span>
         </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#myCarousel"
+          data-bs-slide="next"
+        >
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="visually-hidden">Next</span>
         </button>
@@ -77,40 +108,43 @@
 
       <!--Requisitos de Adopcion-->
       <div class="container marketing">
-        <div class="row  ">
-          <div class="col-lg-12  ">
+        <div class="row">
+          <div class="col-lg-12">
             <div class="d-flex justify-content-center mt-3">
-              <img class="iconoCentral d-flex justify-content-center"
-                src="https://i.pinimg.com/originals/58/40/e2/5840e25157c52ee80139138d44d4f4a4.jpg" alt="">
+              <img
+                class="iconoCentral d-flex justify-content-center"
+                src="https://i.pinimg.com/originals/58/40/e2/5840e25157c52ee80139138d44d4f4a4.jpg"
+                alt=""
+              />
             </div>
             <h2 class="text-center">Requisitos para la Adopcion.</h2>
-            <p class="text-center"><strong>Adoptar es un acto de responsabilidad y compromiso por lo que es importante
-                que estes capacitado para hacerlo. Un perro puede vivir entre 14 y 18 años y durante todo ese tiempo
-                dependerá de vos.</strong>
+            <p class="text-center"
+              ><strong
+                >Adoptar es un acto de responsabilidad y compromiso por lo que es
+                importante que estes capacitado para hacerlo. Un perro puede vivir
+                entre 14 y 18 años y durante todo ese tiempo dependerá de
+                vos.</strong
+              >
 
-              Algunas cuestiones para tener en cuenta son el espacio disponible de tu casa, el tiempo que tengas para
-              brindarle compañía, actividad física y cuidado. También los costos asociados a su alimentación, atención
-              veterinaria y estadía durante tus vacaciones.
-
-              Para asegurarte una convivencia feliz tu elección debe estar orientada al estilo de vida que llevas y el
-              tiempo real que le podes dedicar.</p>
+              Algunas cuestiones para tener en cuenta son el espacio disponible de tu
+              casa, el tiempo que tengas para brindarle compañía, actividad física y
+              cuidado. También los costos asociados a su alimentación, atención
+              veterinaria y estadía durante tus vacaciones. Para asegurarte una
+              convivencia feliz tu elección debe estar orientada al estilo de vida
+              que llevas y el tiempo real que le podes dedicar.</p
+            >
           </div>
         </div>
 
         <!-- Comienzo de  FEATURETTES -->
-        <div id="ListaAdoptables">
+        <div id="ListaAdoptables"> </div>
 
-        </div>
-
-
-
-        <hr class="featurette-divider">
+        <hr class="featurette-divider" />
 
         <!-- Final de FEATURETTES -->
-
       </div>
     </main>
     <%- include ('../partials/footer.html')%>
-</body>
-
+    <script src="../../js/Adoptions/listarMascotas.js"></script>
+  </body>
 </html>

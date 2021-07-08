@@ -25,7 +25,7 @@ formLogin.onsubmit = async (e) => {
   }
 };
 
-const changeIcon = () => {
+export const changeIcon = () => {
   const IconLog = document.getElementById('icon-login');
   const btnLog = document.getElementById('btn-log');
   if (sesion) {
