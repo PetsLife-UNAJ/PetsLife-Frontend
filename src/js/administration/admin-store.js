@@ -124,9 +124,10 @@ const actualizarProducto = async (id) => {
         </div>  
         `
         return
+        
     }
-
-    // success update
+    else {
+            // success update
     formActualizar.innerHTML = 
     `   
     <div class="card text-center p-0 my-2 ">
@@ -139,6 +140,9 @@ const actualizarProducto = async (id) => {
         </div>
     </div> 
     `
+    //window.location.reload();
+    }
+
 }
 
 const eliminarProducto = async (id) => {
@@ -156,46 +160,97 @@ const eliminarProducto = async (id) => {
 const getActualizarForm = () => {
     return (
         `
-        <div class="form-floating">         
-                  <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre">
-                  <label for="nom"><p id="nombrep">Nombre</p></label>   
-                </div>
-      
-                <div class="form-floating">
-                  <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example">
-                    <option value="" disabled selected>Elija una opcion</option>
-                  </select>
-                  <label for="categoria">Categoria</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" >
-                  <label for="imagen">Imagen</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion">
-                  <label for="descripcion">Descripcion</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" >
-                  <label for="rating">Rating</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" >
-                  <label for="stock">Stock</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" >
-                  <label for="precio">Precio</label>
-                </div>
+       
+        <div class="form-floating">       
+          <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre" required>
+          <label for="nom">Nombre</label> 
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Nombre.
+          </div>
+        </div>
 
-                <div class="form-floating">
-                  <button type="submit" class="btn btn-primary mb-3" id="btn-submit">Actualizar</button>
-                </div>
+        <div class="form-floating">
+          <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example" required>
+            <option value="" disabled selected>Elija una opcion</option>
+          </select>
+          <label for="categoria">Categoria</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Por favor elija una opcion valida..
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" required>
+          <label for="imagen">Imagen</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese una Imagen.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion" required>
+          <label for="descripcion">Descripcion</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese una Descripcion.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" min="1" max="10" required>
+          <label for="rating">Rating</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Rating valido, entre 1 y 10.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" min="1" required>
+          <label for="stock">Stock</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Stock.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" min="1" required>
+          <label for="precio">Precio</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Precio.
+          </div>
+        </div>
+
+        <!--
+        <div class="form-floating">
+          <input type="number" class="form-control" id="tiendaId" name="tiendaId" placeholder="Id Tienda">
+          <label for="tiendaId">Tienda Id</label>
+        </div>
+        -->
+
+        <div class="form-floating">
+          <button type="submit" class="btn btn-primary mb-3" id="btn-submit">Actualizar</button>
+        </div>
+      
                 `
     )
 }
