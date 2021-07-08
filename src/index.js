@@ -5,7 +5,11 @@ const path = require('path');
 const indexRoute = require('./routes/index');
 const nodeMailer = require('nodemailer');
 require('dotenv').config();
+const TWILIO_ACCOUNT_SID = 'AC9b98ce652e60c2b92cf3c1f5e50c2be0'
+const TWILIO_AUTH_TOKEN = 'bdda36a89d40767f75307359eb91c3ec'
 
+const twilio = require('twilio');
+export const client = twilio(TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN);
 // app.use(express.static(__dirname + '/src'));
 // app.use('js', express.static(path.join(__dirname + 'js')));
 
@@ -53,10 +57,29 @@ app.use(indexRoute);
 app.use(express.static(path.join(__dirname, 'assets')));
 
 // static js
-console.log(path.join(__dirname, 'js'))
+// console.log(path.join(__dirname, 'js'))
 app.use(express.static(path.join(__dirname, 'js')));
 
 //listening the server
 app.listen(app.get('port'), () => {
   console.log(`Example app listening at http://localhost:${app.get('port')}`);
 });
+
+
+
+
+
+// client.messages
+//   .create({
+//     from: 'whatsapp:+14155238886',
+//     to: 'whatsapp:+5491136735184',
+//     body: 'Bienvenido a PetsLife 🎶I am _not_ ~pushing~ throwing away my *shot*!'
+//   })
+//   .then(message => {
+//     console.log(message);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });
+
+

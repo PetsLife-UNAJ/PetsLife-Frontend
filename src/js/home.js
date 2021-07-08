@@ -1,21 +1,26 @@
+import { client } from '../src/index.js'
 
-  /*
-  $(document).ready(function(){
-    $('a[href^="#"]').on('click',function (e){
-      e.preventDefault();
-      var target = this.hash;
-      var $target = $(target);
-      
-      //scroll con hash
-      $('html, body').animate({
-        'scrollTop': $target.offset().top
-      }, 1000, 'swing', function(){
-        window.location.hash = target;
-      });
-      
-     /* //scroll sin hash
-      $('html, body').animte({
-        'scrollTop': $targer.offset().top
-        }, 1000, 'swing');
-    });
-  });*/
+contactForm.addEventListener('submit', (event) => {
+
+  event.preventDefault();
+  let info = {
+    nombre: document.getElementById('nombre').value,
+    correo: document.getElementById('correo').value,
+    telefono: document.getElementById('telefono').value,
+    mensaje: document.getElementById('mensaje').value
+  };
+
+  client.messages
+  .create({
+    from: 'whatsapp:+14155238886',
+    to: 'whatsapp:+5491136735184',
+    body: `Mensaje de *${info.nombre}* - *${info.telefono}* : ${info.mensaje}`
+  })
+  .then(message => {
+    console.log(message);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+});
+

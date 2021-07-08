@@ -139,23 +139,23 @@
       <div class="footer" id="contacto">
         <h4 data-ix="slowfade-scroll-bigs">Contacto</h4>
         <div class="container">
-          <form action="enviar.php" method="post">
+          <form id="contactForm">
             <ul class="flex-outer">
               <li>
                 <label for="nombre" class="label-contact">Nombre</label>
-                <input type="text" name="nombre" placeholder="Ingresa Nombre" class="rect" required>
+                <input type="text" name="nombre" id="nombre" placeholder="Ingresa Nombre" class="rect" required>
               </li>
               <li>
                 <label for="correo" class="label-contact">Correo</label>
-                <input type="email" name="correo" placeholder="Ingresa Correo" class="rect" required>
+                <input type="email" name="correo" id="correo" placeholder="Ingresa Correo" class="rect" required>
               </li>
               <li>
                 <label class="label-contact" for="fono">Teléfono</label>
-                <input type="text" name="telefono" placeholder="Ingresa Teléfono" class="rect" required>
+                <input type="text" name="telefono" id="telefono" placeholder="Ingresa Teléfono" class="rect" required>
               </li>
               <li>
                 <label for="mensaje" class="label-contact">Mensaje</label>
-                <textarea rows="6" name="mensaje" class="rect" placeholder="Ingresa Mensaje" required></textarea>
+                <textarea rows="6" name="mensaje" id="mensaje" class="rect" placeholder="Ingresa Mensaje" required></textarea>
               </li>
               <li class="center">
                 <button type="submit">Enviar</button>
