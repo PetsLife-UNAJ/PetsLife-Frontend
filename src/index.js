@@ -6,10 +6,10 @@ const indexRoute = require('./routes/index');
 const nodeMailer = require('nodemailer');
 require('dotenv').config();
 const TWILIO_ACCOUNT_SID = 'AC9b98ce652e60c2b92cf3c1f5e50c2be0'
-const TWILIO_AUTH_TOKEN = 'bdda36a89d40767f75307359eb91c3ec'
+const TWILIO_AUTH_TOKEN = '3c26e3d4bc15ab0b338acecb4be82678'
 
 const twilio = require('twilio');
-export const client = twilio(TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN);
+const client = twilio(TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN);
 // app.use(express.static(__dirname + '/src'));
 // app.use('js', express.static(path.join(__dirname + 'js')));
 
@@ -18,7 +18,7 @@ app.use(express.static(__dirname));
 
 
 var jsonParser = bodyParser.json();
-
+app.use(express.json())
 //settings
 app.set('port', 3000);
 app.set('views', path.join(__dirname, 'views'));
@@ -51,6 +51,23 @@ app.post('/send-email', jsonParser, (req, res) => {
     }
   });
 });
+
+app.post('/send-whatsapp', (req, res) => {
+  client.messages
+  .create({
+    from: 'whatsapp:+14155238886',
+    to: 'whatsapp:+5491136735184',
+    body: `Mensaje de *${req.body.nombre}* - *${req.body.telefono}* : ${req.body.mensaje}`
+  })
+  .then(message => {
+    console.log(message);
+    res.send("ok")
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
+})
 
 // routes
 app.use(indexRoute);

@@ -1,5 +1,3 @@
-import { client } from '../src/index.js'
-
 contactForm.addEventListener('submit', (event) => {
 
   event.preventDefault();
@@ -10,17 +8,16 @@ contactForm.addEventListener('submit', (event) => {
     mensaje: document.getElementById('mensaje').value
   };
 
-  client.messages
-  .create({
-    from: 'whatsapp:+14155238886',
-    to: 'whatsapp:+5491136735184',
-    body: `Mensaje de *${info.nombre}* - *${info.telefono}* : ${info.mensaje}`
-  })
-  .then(message => {
-    console.log(message);
-  })
-  .catch(err => {
-    console.error(err);
-  });
+  const settings = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(info)
+  };
+  
+  var resp = fetch('/send-whatsapp', settings)
+
 });
 
