@@ -19,7 +19,7 @@ formLogin.onsubmit = async (e) => {
     console.log(response);
     localStorage.setItem('usuario', JSON.stringify(response));
 
-    window.location.href = window.origin;
+    location.reload();
   } else {
     document.getElementById('estado-login').innerHTML = 'No se ha podido registrar.';
   }
