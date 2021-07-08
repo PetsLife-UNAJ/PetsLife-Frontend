@@ -6,8 +6,8 @@ const indexRoute = require('./routes/index');
 const nodeMailer = require('nodemailer');
 require('dotenv').config();
 
-// app.use(express.static(__dirname + '/src'));
-// app.use('js', express.static(path.join(__dirname + 'js')));
+app.use(express.static(__dirname));
+//app.use('js', express.static(path.join(__dirname + 'js')));
 
 app.use(express.static(__dirname));
 
@@ -52,9 +52,7 @@ app.use(indexRoute);
 // static files
 app.use(express.static(path.join(__dirname, 'assets')));
 
-// static js
-console.log(path.join(__dirname, 'js'))
-app.use(express.static(path.join(__dirname, 'js')));
+//app.use(express.static(__dirname));
 
 //listening the server
 app.listen(app.get('port'), () => {
