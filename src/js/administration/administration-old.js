@@ -1,32 +1,36 @@
-import { getTurnos, getAdoptables, getTiposMascota, addAdoptable } from "./administrationActions.js"
+import { getTurnos, getAdoptables, getTiposMascota, addAdoptable } from "./adminActions.js"
 import { getProductos, getCategorias } from '../store/productActions.js'
 
-
-var msBody          = document.getElementById("msBody")
-var msVeterinaria   = document.getElementById("msVeterinaria")
-var msTienda        = document.getElementById("msTienda")
-var msAdopciones    = document.getElementById("msAdopciones")
-var msName          = document.getElementById("msName")
-var modalAdopciones = document.getElementById("modal-content-adopciones")
+var msBody = document.getElementById('msBody');
+var msVeterinaria = document.getElementById('msVeterinaria');
+var msTienda = document.getElementById('msTienda');
+var msAdopciones = document.getElementById('msAdopciones');
+var msName = document.getElementById('msName');
+var modalAdopciones = document.getElementById('modal-content-adopciones');
 
 window.onload = async () => {
-    msVeterinaria.onclick   = () => { EnableVeterinaria()   }
-    msTienda.onclick        = () => { EnableTienda()        }
-    msAdopciones.onclick    = () => { EnableAdopciones()    }
+  msVeterinaria.onclick = () => {
+    EnableVeterinaria();
+  };
+  msTienda.onclick = () => {
+    EnableTienda();
+  };
+  msAdopciones.onclick = () => {
+    EnableAdopciones();
+  };
 
-    msBody.innerHTML =
-        `
+  msBody.innerHTML = `
         <div class="h1 text-center"><i class="bi bi-arrow-left"></i> Selecciona un microservicio</div>
-    `
-}
+    `;
+};
 
 // ----------------------------------- Veterinaria ---------------------------------------
 const EnableVeterinaria = async () => {
-    ResetMs()
-    msVeterinaria.classList.add("active")
-    msName.innerHTML = "Veterinaria"
-    
-    msBody.innerHTML = `
+  ResetMs();
+  msVeterinaria.classList.add('active');
+  msName.innerHTML = 'Veterinaria';
+
+  msBody.innerHTML = `
         <button class="btn btn-light" id="agregarClienteBtn" data-bs-toggle="modal" data-bs-target="#modal-veterinaria"><i class="bi bi-plus-lg text-primary"></i> Agregar Cliente</button>
         <button class="btn btn-light" id="agregarMascotaBtn" data-bs-toggle="modal" data-bs-target="#modal-veterinaria"><i class="bi bi-plus-lg text-primary"></i> Agregar Mascota</button>
         <button class="btn btn-light" id="solicitarTurnoBtn" data-bs-toggle="modal" data-bs-target="#modal-veterinaria"><i class="bi bi-plus-lg text-primary"></i> Solicitar Turno</button>
@@ -52,34 +56,42 @@ const EnableVeterinaria = async () => {
             </table>
             <div class="spinner-border" role="status" id="loadingSpinner"></div>
         </div>
-    `
-    var turnosTableBody     = document.getElementById("turnosTableBody")
-    var spinner             = document.getElementById("loadingSpinner")
-    var modalVeterinaria    = document.getElementById("modal-content-veterinaria")
-    var agregarClienteBtn   = document.getElementById("agregarClienteBtn")
-    var agregarMascotaBtn   = document.getElementById("agregarMascotaBtn")
-    var solicitarTurnoBtn   = document.getElementById("solicitarTurnoBtn")
+    `;
+  var turnosTableBody = document.getElementById('turnosTableBody');
+  var spinner = document.getElementById('loadingSpinner');
+  var modalVeterinaria = document.getElementById('modal-content-veterinaria');
+  var agregarClienteBtn = document.getElementById('agregarClienteBtn');
+  var agregarMascotaBtn = document.getElementById('agregarMascotaBtn');
+  var solicitarTurnoBtn = document.getElementById('solicitarTurnoBtn');
 
-    agregarClienteBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalCliente()  }
-    agregarMascotaBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalMascota()  }
-    solicitarTurnoBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalTurno()    }
+  agregarClienteBtn.onclick = () => {
+    modalVeterinaria.innerHTML = GetModalCliente();
+  };
+  agregarMascotaBtn.onclick = () => {
+    modalVeterinaria.innerHTML = GetModalMascota();
+  };
+  solicitarTurnoBtn.onclick = () => {
+    modalVeterinaria.innerHTML = GetModalTurno();
+  };
 
-    var turnosJson = await getTurnos()
-    spinner.remove()
+  var turnosJson = await getTurnos();
+  spinner.remove();
 
-    if (turnosJson.status === 400) {
-        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los turnos de la base de datos</div>')
-        return
-    }
+  if (turnosJson.status === 400) {
+    msBody.insertAdjacentHTML(
+      'beforeend',
+      '<div class="alert alert-danger">Error al obtener los turnos de la base de datos</div>'
+    );
+    return;
+  }
 
-    turnosJson.forEach((turnoJson) => {
-        turnosTableBody.insertAdjacentHTML('beforeend', GetTurnoTable(turnoJson))
-    })
-}
+  turnosJson.forEach((turnoJson) => {
+    turnosTableBody.insertAdjacentHTML('beforeend', GetTurnoTable(turnoJson));
+  });
+};
 
 const GetModalMascota = () => {
-    return (
-        `
+  return `
         <div class="modal-header">
         <h5 class="modal-title">Ingresar mascota</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -114,13 +126,11 @@ const GetModalMascota = () => {
           </div>
         </form>
       </div>
-        `
-    )
-}
+        `;
+};
 
 const GetModalCliente = () => {
-    return (
-        `
+  return `
         <div class="modal-header">
         <h5 class="modal-title">Ingresar cliente</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -164,13 +174,11 @@ const GetModalCliente = () => {
           </div>
         </form>
         </div>
-        `
-    )
-}
+        `;
+};
 
 const GetModalTurno = () => {
-    return (
-        `
+  return `
         <div class="modal-header">
         <h5 class="modal-title">Solicitar turno</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -232,13 +240,11 @@ const GetModalTurno = () => {
           </div>
         </form>
       </div>
-        `
-        )
-}
+        `;
+};
 
 const GetTurnoTable = (turnoJson) => {
-    return (
-        `
+  return `
         <tr>
             <th scope="row">?</th>
             <td>${turnoJson.fecha}</td>
@@ -259,18 +265,17 @@ const GetTurnoTable = (turnoJson) => {
                 </div>
             </td>
         </tr>
-        `
-    )
-}
+        `;
+};
 // --------------------------------------------------------------------------------------
 
 // ------------------------------------- Tienda -----------------------------------------
 const EnableTienda = async () => {
-    ResetMs()
-    msTienda.classList.add("active")
-    msName.innerHTML = "Tienda"
+  ResetMs();
+  msTienda.classList.add('active');
+  msName.innerHTML = 'Tienda';
 
-    msBody.innerHTML = `
+  msBody.innerHTML = `
     <div>
     <a href="/add-producto" class="btn btn-light"><i class="bi bi-plus-lg text-primary"></i> Agregar Producto</a>
         <table class="table table-hover table-borderless mt-4 caption-top">
@@ -294,36 +299,38 @@ const EnableTienda = async () => {
         </table>
         <div class="spinner-border" role="status" id="loadingSpinner"></div>
     </div>
-    `
-    var tiendaTableBody = document.getElementById("tiendaTableBody")
-    var spinner = document.getElementById("loadingSpinner")
+    `;
+  var tiendaTableBody = document.getElementById('tiendaTableBody');
+  var spinner = document.getElementById('loadingSpinner');
 
-    var productosJson = await getProductos()
-    spinner.remove()
+  var productosJson = await getProductos();
+  spinner.remove();
 
-    if (productosJson.status === 400) {
-        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
-        return
-    }
+  if (productosJson.status === 400) {
+    msBody.insertAdjacentHTML(
+      'beforeend',
+      '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>'
+    );
+    return;
+  }
 
-    productosJson.forEach((productoJson) => {
-        tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
+  productosJson.forEach((productoJson) => {
+    tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
 
-        var deleteElem = document.getElementById(productoJson.productoId)
-        deleteElem.onclick = () => {
-            eliminarProducto(deleteElem.id);
-        };
+    var deleteElem = document.getElementById(productoJson.productoId);
+    deleteElem.onclick = () => {
+      eliminarProducto(deleteElem.id);
+    };
 
-        var editElement = document.getElementById('edit-'+productoJson.productoId);
-        editElement.onclick = () => {
-            editarProducto(productoJson.productoId);
-        }
-    });
-}
+    var editElement = document.getElementById('edit-' + productoJson.productoId);
+    editElement.onclick = () => {
+      editarProducto(productoJson.productoId);
+    };
+  });
+};
 
 const GetProductoTable = (productoJson) => {
-    return (
-        `
+  return `
         <tr>
             <th scope="row">${productoJson.productoId}</th>
             <td style="margin:10%">${productoJson.nombre}</td>
@@ -345,36 +352,35 @@ const GetProductoTable = (productoJson) => {
                 </div>
             </td>
         </tr>
-        `
-    )
-}
+        `;
+};
 // Cargo las categorias al form
 document.addEventListener('DOMContentLoaded', () => {
-    mostrarCategoria();
+  mostrarCategoria();
 });
 
 const mostrarCategoria = async () => {
-    const data = await getCategorias()
-    console.log(data);
-    selectCategoria(data);
-}
+  const data = await getCategorias();
+  console.log(data);
+  selectCategoria(data);
+};
 
-const selectCategoria = data => {
-    data.forEach(opciones => {
-        var categoria = document.getElementById('categoria');
-        let element = document.createElement('option');
-        element.value = opciones.categoriaId;
-        element.innerHTML = opciones.descripcion;
-        categoria.appendChild(element);
-    });
-}
+const selectCategoria = (data) => {
+  data.forEach((opciones) => {
+    var categoria = document.getElementById('categoria');
+    let element = document.createElement('option');
+    element.value = opciones.categoriaId;
+    element.innerHTML = opciones.descripcion;
+    categoria.appendChild(element);
+  });
+};
 
 const editarProducto = async (id) => {
-    var formActualizar = document.getElementById('formActualizar-producto');
-    var btnSubmit = document.getElementById('btn-submit');
-    formActualizar.addEventListener('submit', function (e) {
+  var formActualizar = document.getElementById('formActualizar-producto');
+  var btnSubmit = document.getElementById('btn-submit');
+  formActualizar.addEventListener('submit', function (e) {
     e.preventDefault();
-    
+
     btnSubmit.innerHTML = `<button class="btn btn-primary" type="button" disabled>
     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
     Actualizando...
@@ -389,31 +395,32 @@ const editarProducto = async (id) => {
     let precio = formActualizar.elements.precio.value;
 
     let datos = {
-        nombre: nombre,
-        categoria: categoria,
-        imagen: imagen,
-        descripcion: descripcion,
-        rating: rating,
-        cantidadStock: stock,
-        precio: precio,
-    }
+      nombre: nombre,
+      categoria: categoria,
+      imagen: imagen,
+      descripcion: descripcion,
+      rating: rating,
+      cantidadStock: stock,
+      precio: precio
+    };
 
-    let datosJson = JSON.stringify(datos)
-    console.log(datosJson)
+    let datosJson = JSON.stringify(datos);
+    console.log(datosJson);
 
     try {
-        fetch('http://localhost:27459/api/Producto/'+id, {
-            method: 'PUT',
-            body: datosJson,
+      fetch('http://localhost:27459/api/Producto/' + id, {
+        method: 'PUT',
+        body: datosJson,
 
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8'
-            }
-        }).then((response) => {
-            response.json();
-            console.log(response)
-            if (response.status === 204) {
-                formActualizar.innerHTML = `   <div class="card text-center p-0 my-2 ">
+        headers: {
+          'Content-Type': 'application/json;charset=UTF-8'
+        }
+      })
+        .then((response) => {
+          response.json();
+          console.log(response);
+          if (response.status === 204) {
+            formActualizar.innerHTML = `   <div class="card text-center p-0 my-2 ">
                     <div class="card-header bg-transparent text-success border-0">
                         <i class="far fa-check-circle display-4 d-block"></i>
                         <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
@@ -422,10 +429,10 @@ const editarProducto = async (id) => {
                         <p class="card-text lead">El Producto se ha actualizado con éxito.</p>
                     </div>
                 </div> `;
-                EnableTienda();
-            }
-            if (response.status == 400) {
-                formActualizar.innerHTML = ` <div class="card text-center p-0 my-2 ">
+            EnableTienda();
+          }
+          if (response.status == 400) {
+            formActualizar.innerHTML = ` <div class="card text-center p-0 my-2 ">
                     <div class="card-header bg-transparent text-danger border-0">
                     <i class="fas fa-exclamation-triangle"></i>
                         <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
@@ -434,46 +441,39 @@ const editarProducto = async (id) => {
                         <p class="card-text lead">El Producto no se ha actualizado.</p>
                     </div>
                 </div>  `;
-                EnableTienda();
-            }
-        }).then(data => console.log(data))
-
+            EnableTienda();
+          }
+        })
+        .then((data) => console.log(data));
     } catch (error) {
-        console.log(error)
+      console.log(error);
     }
-});
-}
+  });
+};
 
 const eliminarProducto = async (id) => {
-    try {
-        const response = await fetch('http://localhost:27459/api/Producto/'+id , {
-            method: 'DELETE'
-        });
-        if (response.status === 204) {
-            alert('Se elimino correctamente el producto');
-            EnableTienda();
-        }
-        else{
-            alert('No se pudo eliminar el producto')
-            EnableTienda();
-        }
-        
-    } catch (error) {
-        
+  try {
+    const response = await fetch('http://localhost:27459/api/Producto/' + id, {
+      method: 'DELETE'
+    });
+    if (response.status === 204) {
+      alert('Se elimino correctamente el producto');
+      EnableTienda();
+    } else {
+      alert('No se pudo eliminar el producto');
+      EnableTienda();
     }
-}
-
+  } catch (error) {}
+};
 
 // ----------------------------------------------------------------------------------
 
-
 // ----------------------------------- Adopciones ---------------------------------------
 const EnableAdopciones = async () => {
-    ResetMs()
-    msAdopciones.classList.add("active")
-    msName.innerHTML = "Adopciones"
-    msBody.innerHTML = 
-    `
+  ResetMs();
+  msAdopciones.classList.add('active');
+  msName.innerHTML = 'Adopciones';
+  msBody.innerHTML = `
     <button class="btn btn-light" id="agregarAnimalBtn" data-bs-toggle="modal" data-bs-target="#modal-adopciones"><i class="bi bi-plus-lg text-primary"></i> Agregar animal</button>
     <div>
         <table class="table table-hover table-borderless mt-4 caption-top">
@@ -496,70 +496,78 @@ const EnableAdopciones = async () => {
         </table>
         <div class="spinner-border" role="status" id="loadingSpinner"></div>
     </div>
-    `
-    var spinner = document.getElementById("loadingSpinner")
-    var adopcionesTableBody = document.getElementById("adopcionesTableBody")
-    var agregarAnimalBtn = document.getElementById("agregarAnimalBtn")
-    var adoptablesJson = await getAdoptables()
-    var tiposMascotaJson = await getTiposMascota() // sin validar
-    spinner.remove()
+    `;
+  var spinner = document.getElementById('loadingSpinner');
+  var adopcionesTableBody = document.getElementById('adopcionesTableBody');
+  var agregarAnimalBtn = document.getElementById('agregarAnimalBtn');
+  var adoptablesJson = await getAdoptables();
+  var tiposMascotaJson = await getTiposMascota(); // sin validar
+  spinner.remove();
 
-    agregarAnimalBtn.onclick = () => {
-        modalAdopciones.innerHTML = GetModalAdopciones()
-        // agrego tipo mascota al form-select
-        var tipoMascotaElem = document.getElementById("adoptableTipoMascota")
-        tiposMascotaJson.forEach((tipoMascotaJson) => {
-            tipoMascotaElem.insertAdjacentHTML('beforeend', `<option>${tipoMascotaJson.tipoAnimal}</option>`)
-        })
+  agregarAnimalBtn.onclick = () => {
+    modalAdopciones.innerHTML = GetModalAdopciones();
+    // agrego tipo mascota al form-select
+    var tipoMascotaElem = document.getElementById('adoptableTipoMascota');
+    tiposMascotaJson.forEach((tipoMascotaJson) => {
+      tipoMascotaElem.insertAdjacentHTML(
+        'beforeend',
+        `<option>${tipoMascotaJson.tipoAnimal}</option>`
+      );
+    });
 
-        // registro mascota
-        var registrarMascotaBtn = document.getElementById("registrarMascotaBtn")
-        registrarMascotaBtn.onclick = (e) => {
-            e.preventDefault()
-            registrarAdoptable(tiposMascotaJson)
-        }
-    }
+    // registro mascota
+    var registrarMascotaBtn = document.getElementById('registrarMascotaBtn');
+    registrarMascotaBtn.onclick = (e) => {
+      e.preventDefault();
+      registrarAdoptable(tiposMascotaJson);
+    };
+  };
 
-    if (adoptablesJson.status === 400) {
-        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los adoptantes de la base de datos</div>')
-        return
-    }
+  if (adoptablesJson.status === 400) {
+    msBody.insertAdjacentHTML(
+      'beforeend',
+      '<div class="alert alert-danger">Error al obtener los adoptantes de la base de datos</div>'
+    );
+    return;
+  }
 
-    adoptablesJson.forEach((adoptableJson) => {
-        adopcionesTableBody.insertAdjacentHTML('beforeend', GetAdoptableTable(adoptableJson))
-    })
-}
+  adoptablesJson.forEach((adoptableJson) => {
+    adopcionesTableBody.insertAdjacentHTML(
+      'beforeend',
+      GetAdoptableTable(adoptableJson)
+    );
+  });
+};
 
 const registrarAdoptable = async (tiposMascotaJson) => {
-    var adoptableNombre         = document.getElementById("adoptableNombre")
-    var adoptableImagen         = document.getElementById("adoptableImagen")
-    var adoptableHistoria       = document.getElementById("adoptableHistoria")
-    var adoptableTipoMascota    = document.getElementById("adoptableTipoMascota")
-    var adoptablePeso           = document.getElementById("adoptablePeso")
-    var adoptableEdad           = document.getElementById("adoptableEdad")
+  var adoptableNombre = document.getElementById('adoptableNombre');
+  var adoptableImagen = document.getElementById('adoptableImagen');
+  var adoptableHistoria = document.getElementById('adoptableHistoria');
+  var adoptableTipoMascota = document.getElementById('adoptableTipoMascota');
+  var adoptablePeso = document.getElementById('adoptablePeso');
+  var adoptableEdad = document.getElementById('adoptableEdad');
 
-    var tipoMascotaId = 1
-    tiposMascotaJson.forEach((tipoMascotaJson) => {
-        if (tipoMascotaJson.tipoAnimal === adoptableTipoMascota.value) {
-            tipoMascotaId = tipoMascotaJson.tipoAnimalId
-        }
-    })
-
-    var data = {
-        TipoAnimalId : tipoMascotaId,
-        adoptado: false,
-        edad: parseInt(adoptableEdad.value),
-        historia: adoptableHistoria.value,
-        imagen: adoptableImagen.value,
-        nombre: adoptableNombre.value,
-        peso: parseInt(adoptablePeso.value)
+  var tipoMascotaId = 1;
+  tiposMascotaJson.forEach((tipoMascotaJson) => {
+    if (tipoMascotaJson.tipoAnimal === adoptableTipoMascota.value) {
+      tipoMascotaId = tipoMascotaJson.tipoAnimalId;
     }
+  });
 
-    var response = await addAdoptable(data)
-    if (response.status === 400) {
-        // modal error
-        modalAdopciones.innerHTML = 
-        `
+  var data = {
+    TipoAnimalId: tipoMascotaId,
+    adoptado: false,
+    edad: parseInt(adoptableEdad.value),
+    historia: adoptableHistoria.value,
+    imagen: adoptableImagen.value,
+    nombre: adoptableNombre.value,
+    peso: parseInt(adoptablePeso.value)
+  };
+
+  var response = await addAdoptable(data);
+  if (response.status === 400) {
+    // modal error
+    modalAdopciones.innerHTML = `
         <div class="card text-center p-0 my-2 ">
             <div class="card-header bg-transparent text-danger border-0">
                 <i class="far fa-check-circle display-4 d-block"></i>
@@ -569,13 +577,12 @@ const registrarAdoptable = async (tiposMascotaJson) => {
                 <p class="card-text lead">Hubo un error al agregar la mascota como adoptable.</p>
             </div>
         </div>
-        `
-        return
-    }
-    
-    // modal exito
-    modalAdopciones.innerHTML = 
-    `
+        `;
+    return;
+  }
+
+  // modal exito
+  modalAdopciones.innerHTML = `
     <div class="card text-center p-0 my-2 ">
         <div class="card-header bg-transparent text-success border-0">
             <i class="far fa-check-circle display-4 d-block"></i>
@@ -585,12 +592,11 @@ const registrarAdoptable = async (tiposMascotaJson) => {
             <p class="card-text lead">La mascota adoptable fue agregada con exito.</p>
         </div>
     </div>
-    `
-}
+    `;
+};
 
 const GetAdoptableTable = (adoptableJson) => {
-    return (
-        `
+  return `
         <tr>
             <th scope="row">${adoptableJson.mascotaId}</th>
             <td style="margin:10%">${adoptableJson.nombre}</td>
@@ -605,19 +611,21 @@ const GetAdoptableTable = (adoptableJson) => {
                         <i class="bi bi-three-dots-vertical d-pointer" id="tresPuntos"></i>
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item d-pointer" id="edit-${adoptableJson.mascotaId}"><i class="bi bi-pencil"></i> Editar</a></li>
-                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${adoptableJson.mascotaId}"><i class="bi bi-trash"></i> Eliminar</a></li>
+                        <li><a class="dropdown-item d-pointer" id="edit-${
+                          adoptableJson.mascotaId
+                        }"><i class="bi bi-pencil"></i> Editar</a></li>
+                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${
+                          adoptableJson.mascotaId
+                        }"><i class="bi bi-trash"></i> Eliminar</a></li>
                     </ul>
                 </div>
             </td>
         </tr>
-        `
-    )
-}
+        `;
+};
 
 const GetModalAdopciones = () => {
-    return (
-        `
+  return `
         <div class="modal-header">
         <h5 class="modal-title">Registrar una animal para Adopcion</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -659,20 +667,17 @@ const GetModalAdopciones = () => {
         </div>
         </form>
       </div>
-        `
-    )
-}
+        `;
+};
 
 // ----------------------------------------------------------------------------------
 
-
 // ----------------------------------- Otro ---------------------------------------
 const ResetMs = () => {
-    msVeterinaria.classList.remove("active")
-    msTienda.classList.remove("active")
-    msAdopciones.classList.remove("active")
-    msBody.innerHTML = ""
-}
-
+  msVeterinaria.classList.remove('active');
+  msTienda.classList.remove('active');
+  msAdopciones.classList.remove('active');
+  msBody.innerHTML = '';
+};
 
 // ----------------------------------------------------------------------------------

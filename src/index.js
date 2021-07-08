@@ -4,9 +4,11 @@ const app = express();
 const path = require('path');
 const indexRoute = require('./routes/index');
 const nodeMailer = require('nodemailer');
+require('dotenv').config();
 
-// app.use(express.static(__dirname + '/src'));
-// app.use('js', express.static(path.join(__dirname + 'js')));
+app.use(express.static(__dirname));
+//app.use('js', express.static(path.join(__dirname + 'js')));
+
 app.use(express.static(__dirname));
 
 var jsonParser = bodyParser.json();
@@ -24,8 +26,8 @@ app.post('/send-email', jsonParser, (req, res) => {
     port: 465,
     auth: {
       //insertar cuenta gmail para enviar mensajes
-      user: '',
-      pass: ''
+      user: process.env.EMAIL || '',
+      pass: process.env.PASSWORD || ''
     }
   });
 
@@ -50,95 +52,9 @@ app.use(indexRoute);
 // static files
 app.use(express.static(path.join(__dirname, 'assets')));
 
-// static js
-console.log(path.join(__dirname, 'js'))
-app.use(express.static(path.join(__dirname, 'js')));
+//app.use(express.static(__dirname));
 
 //listening the server
 app.listen(app.get('port'), () => {
   console.log(`Example app listening at http://localhost:${app.get('port')}`);
 });
-
-
-
-// app.listen(app.get('port'));
-
-//RUTAS VIEJAS REVISAR
-// app.use('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/home.html'));
-// });
-
-// app.use('/add-client', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/clinic-history/add-client.html'));
-// });
-// app.use('/add-mascota', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/clinic-history/add-mascota.html'));
-// });
-
-// app.use('/veterinaria', (req, res) => {
-//   res.sendFile(
-//     path.join(__dirname, '/src/pages/clinic-history/clinic-history.html')
-//   );
-// });
-
-// // ---------------------------- STORE ----------------------------
-// app.use('/add-producto', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/store/add-producto.html'));
-// });
-
-// app.use('/producto/:id', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/store/producto.html'));
-// });
-
-// app.use('/store', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/store/store.html'));
-// });
-
-// app.use("/cart", (req, res) => {
-//   res.sendFile(
-//       path.join(__dirname, "/src/pages/store/carrito.html")
-//   );
-// });
-
-// // ------------------------ ADMINISTRATION ------------------------
-
-// app.use('/administracion', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/administration.html'));
-// });
-
-// app.use('/usuarios', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/prueba.html'));
-// });
-
-// // ------------------------ USUARIO ------------------------
-
-// app.use('/users', (req, res) => {
-//   res.sendFile(path.join(__dirname, '/src/pages/users/users-home.html'));
-// });
-
-// // ----------------------------Adoptions----------------------------
-// app.use("/add-Adoptable", (req, res) => {
-//   res.sendFile(
-//     path.join(__dirname, "/src/pages/adoption/addAdoptable.html")
-//   );
-// });
-
-// app.use("/adoptions", (req, res) => {
-//   res.sendFile(
-//     path.join(__dirname, "/src/pages/adoption/adoptions.html")
-//   );
-// });
-
-// app.use("/lista-Adopciones", (req, res) => {
-//   res.sendFile(
-//     path.join(__dirname, "/src/pages/adoption/adopciones.html")
-//   );
-// });
-
-// app.use("/mis-turnos", (req, res) => {
-//   res.sendFile(
-//     path.join(__dirname, "/src/pages/mis-turnos/mis-turnos.html")
-//   );
-// });
-
-// ---------------------------------------------------------------

@@ -21,6 +21,15 @@ router.get('/store', (req, res) => {
   res.render('store/store.html');
 });
 
+//login routes
+router.get('/login', (req, res) => {
+  res.render('login/login.html');
+});
+
+router.get('/register', (req, res) => {
+  res.render('login/register.html');
+});
+
 // Historia Clinica routes
 router.get('/add-client', (req, res) => {
   res.render('clinic-history/add-cliente.html');
@@ -61,10 +70,25 @@ router.get('/lista-Adopciones', (req, res) => {
 });
 
 
-// ADMINISTRATION
-router.get('/administracion', (req, res) => {
-  res.render('administration/administration.html');
+// ------------------------ ADMINISTRATION ------------------------
+router.get('/admin', (req, res) => {
+  res.render('administration/admin.html');
 });
+
+router.get('/admin/clinic', (req, res) => {
+  res.render('administration/admin-clinic.html');
+});
+
+router.get('/admin/store', (req, res) => {
+  res.render('administration/admin-store.html');
+});
+
+router.get('/admin/adoptions', (req, res) => {
+  res.render('administration/admin-adoptions.html');
+});
+
+
+
 
 
 module.exports = router;

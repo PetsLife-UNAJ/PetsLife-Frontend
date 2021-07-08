@@ -1,29 +1,37 @@
+import {sesion} from '../sesion.js';
+import {URL_API_CLIENTE,URL_API_MASCOTA} from '../constants.js';
+
 export const getCliente = () => {
-    fetch(`https://localhost:44314/api/Cliente`)
-      .then((response) => response.json())
-      .then((clientes) => {
+  fetch(URL_API_CLIENTE, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
+    .then((response) => response.json())
+    .then((clientes) => {
+      const select = document.getElementById('cliente');
 
-        const select = document.getElementById("cliente");
-
-        for (const client of clientes) {
-          let element = document.createElement("option");
-          element.value = client.clienteId;
-          element.innerHTML = client.nombre +' '+ client.apellido +' - ('+ client.dni +')';
-          select.appendChild(element);
-        }
-      });
-  };
+      for (const client of clientes) {
+        let element = document.createElement('option');
+        element.value = client.clienteId;
+        element.innerHTML =
+          client.nombre + ' ' + client.apellido + ' - (' + client.dni + ')';
+        select.appendChild(element);
+      }
+    });
+};
 
 const createMascota = (datos) => {
-    fetch("https://localhost:44314/api/Mascota", {
-      method: "POST",
-      headers: { "Content-Type": "application/json;charset=UTF-8" },
-      body: datos,
-    })
-      .then((response) => {
-        response.json();
-        if (response.status == 201) {
-          formMascota.innerHTML = ` <div class="card text-center p-0 my-2 ">
+  fetch(URL_API_MASCOTA, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
+    body: datos
+  })
+    .then((response) => {
+      response.json();
+      if (response.status == 201) {
+        formMascota.innerHTML = ` <div class="card text-center p-0 my-2 ">
             <div class="card-header bg-transparent text-success border-0">
               <i class="far fa-check-circle display-4 d-block"></i>
               <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
@@ -33,9 +41,9 @@ const createMascota = (datos) => {
               <a href="/veterinaria" class="btn btn-primary m-auto">Ir al menu </a>
             </div>
           </div>`;
-        }
-        if (response.status == 400) {
-            formMascota.innerHTML = ` <div class="card text-center p-0 my-2 ">
+      }
+      if (response.status == 400) {
+        formMascota.innerHTML = ` <div class="card text-center p-0 my-2 ">
           <div class="card-header bg-transparent text-danger border-0">
           <i class="fas fa-exclamation-triangle"></i>
             <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
@@ -45,18 +53,21 @@ const createMascota = (datos) => {
             <a href="/veterinaria" class="btn btn-danger m-auto">Ir al menu </a>
           </div>
         </div>`;
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 };
 
 const createClient = (datos) => {
-  fetch("https://localhost:44314/api/Cliente", {
-    method: "POST",
-    headers: { "Content-Type": "application/json;charset=UTF-8" },
-    body: datos,
+  fetch(URL_API_CLIENTE, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
+    body: datos
   })
     .then((response) => {
       response.json();
@@ -91,18 +102,18 @@ const createClient = (datos) => {
 };
 
 window.onload = (e) => {
-    getCliente();
+  getCliente();
 };
 
-var formMascota = document.getElementById("formMascota");
-var formCliente = document.getElementById("formCliente");
+var formMascota = document.getElementById('formMascota');
+var formCliente = document.getElementById('formCliente');
 
 formMascota.onsubmit = (e) => {
   e.preventDefault();
-  let nombre = document.getElementById("name").value;
-  let edad = document.getElementById("edad").value;
-  let peso = document.getElementById("peso").value;
-  let cliente = document.getElementById("cliente").value;
+  let nombre = document.getElementById('name').value;
+  let edad = document.getElementById('edad').value;
+  let peso = document.getElementById('peso').value;
+  let cliente = document.getElementById('cliente').value;
 
   let mascota = {
     nombre: nombre,
@@ -113,18 +124,17 @@ formMascota.onsubmit = (e) => {
 
   let mascotajson = JSON.stringify(mascota);
   createMascota(mascotajson);
-  
 };
 
 formCliente.onsubmit = (e) => {
   e.preventDefault();
 
-  let nombre = document.getElementById("nombre").value;
-  let apellido = document.getElementById("apellido").value;
-  let email = document.getElementById("email").value;
-  let dni = document.getElementById("dni").value;
-  let direccion = document.getElementById("direccion").value;
-  let telefono = document.getElementById("telefono").value;
+  let nombre = document.getElementById('nombre').value;
+  let apellido = document.getElementById('apellido').value;
+  let email = document.getElementById('email').value;
+  let dni = document.getElementById('dni').value;
+  let direccion = document.getElementById('direccion').value;
+  let telefono = document.getElementById('telefono').value;
 
   let cliente = {
     nombre: nombre,
@@ -137,6 +147,4 @@ formCliente.onsubmit = (e) => {
 
   let clientejson = JSON.stringify(cliente);
   createClient(clientejson);
-  
 };
-
