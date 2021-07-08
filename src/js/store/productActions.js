@@ -1,29 +1,60 @@
-const backendUrl = "http://localhost:27459/"
+const BASE_URL_STORE = "http://localhost:27459/"
+
+
+const handleError = (err) => {
+    console.warn(err);
+    return new Response(JSON.stringify(
+        {
+            status: 400,
+            message: err
+        }
+    ));
+};
 
 export const getProductos = async () => {
-    try {
-        let response = await fetch(backendUrl + `api/productos`)
-        let productos = await response.json()
+    let response = await fetch(BASE_URL_STORE + `api/productos`).catch(handleError)
+    let data = await response.json()
 
-        return productos
-    }
-    catch (e) {
-        console.error(e)
-    }
-
-    return null
+    return data
 }
 
 export const getProductoById = async (id) => {
-    try {
-        let response = await fetch(backendUrl + `api/producto/${id}`)
-        let producto = await response.json()
+    let response = await fetch(BASE_URL_STORE + `api/producto/${id}`).catch(handleError)
+    let data = await response.json()
 
-        return producto
-    }
-    catch (e) {
-        console.error(e)
-    }
+    return data
+}
 
-    return null
+export const getCategorias = async () => {
+    const response = await fetch(BASE_URL_STORE + 'api/Categoria').catch(handleError)
+    const data = await response.json()
+    
+    return data
+}
+
+export const updateProductoById = async (id, dataJson) => {
+    const settings = {
+        method: 'PUT',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body : JSON.stringify(dataJson)
+    };
+
+    await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
+    let data = {status: 200}
+
+    return data
+}
+
+export const deleteProductoById = async (id) => {
+    const settings = {
+        method: 'DELETE',
+    };
+
+    await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
+    let data = {status: 200}
+
+    return data
 }

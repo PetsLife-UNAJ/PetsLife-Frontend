@@ -1,5 +1,15 @@
-const getTurnosVeterinario = async (id) => {
-  await fetch(`https://localhost:44314/api/Turno/${id}`)
+import {
+  URL_API_TURNO,
+  URL_API_HISTORIA_CLINICA,
+  URL_API_REGISTROS,
+  URL_API_TRATAMIENTO
+} from '../constants.js';
+import {sesion} from '../sesion.js';
+
+const getTurnosVeterinario = async () => {
+  await fetch(`${URL_API_TURNO}/${sesion.usuario.id}`, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
     .then((response) => response.json())
     .then((res) => {
       listarTurnos(res);
@@ -11,6 +21,15 @@ const listarTurnos = async (turnos) => {
   const place = document.getElementById('turnos-list');
 
   for (const turno of turnos) {
+    let historia = await fetch(`${URL_API_HISTORIA_CLINICA}/${turno.mascotaId}`, {
+      headers: {Authorization: ` Bearer  ${sesion.token}`}
+    })
+      .then((response) => response.json())
+      .then((res) => {
+        return res;
+      })
+      .catch((err) => console.log(err));
+
     let fecha = new Date(turno.horaInicio);
 
     let fechaTurno = fecha.getHours() + ':' + fecha.getMinutes();
@@ -29,17 +48,17 @@ const listarTurnos = async (turnos) => {
     <td>${turno.clienteTelefono}</td>
     <td>${turno.consultorioNumero}</td>
     <td> <button  data-bs-toggle="modal" data-bs-target="#modal-${turno.turnoId}" class="btn btn-primary btn-sm p-1">Atender</button> </td>
-    <td></td>
+    <td><button class='btn btn-primary btn-sm' id="btn-historia-${turno.turnoId}" data-bs-toggle="modal" data-bs-target="#modal-hhcc-${turno.turnoId}">Ver Historia</button></td>
     `;
 
     place.appendChild(element);
-    crearModal(turno);
+    crearModal(turno, historia);
   }
 };
 
-const crearModal = (turno) => {
+const crearModal = (turno, historia) => {
   const listaModal = document.getElementById('modal-list');
-
+  //Modal para atender
   const element = document.createElement('div');
   element.innerHTML = `
   <div class="modal fade" id="modal-${turno.turnoId}" tabindex="-1">
@@ -86,33 +105,73 @@ const crearModal = (turno) => {
       `registro-input-${turno.turnoId}`
     ).value;
     const mascotaId = turno.mascotaId;
-    const turnoId = turno.turnoId;
 
-    let data = {tratamiento, registro, mascotaId, turnoId};
+    let data = {...turno, tratamiento, registro, mascotaId};
     agregarRegistro(data);
   };
+
+  //Modal para ver historia
+
+  const elementB = document.createElement('div');
+  elementB.innerHTML = `
+  <div class="modal fade" id="modal-hhcc-${turno.turnoId}" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content modal-listado-content">
+        <div class="modal-header">
+        <h5 class="modal-title">Historia de ${turno.mascotaNombre}</h5>
+        </div>
+        <div class='container'>
+        <div class="modal-body" id="modal-historia-${turno.turnoId}">
+                
+          <h2>Historia:</h2>
+        
+      </div>
+      </div>
+    </div>
+    </div>   
+  </div>   
+  `;
+  listaModal.appendChild(elementB);
+
+  const place = document.getElementById(`modal-historia-${turno.turnoId}`);
+  for (const registro of historia) {
+    let element = document.createElement('div');
+
+    if (registro.analisis == null) {
+      element.innerHTML = `
+        <h6 class="mt-2 text-muted">No posee historia clinica.</h6>
+      `;
+    } else {
+      element.innerHTML = `
+   <div class="border border-2 border-dark mb-1">
+      <div class="row">
+      <h6><strong>Registro:</strong> ${registro.analisis}</h6>
+      </div>
+      <div class="row">
+      <h6><strong>Tratamiento:</strong> ${registro.tratamiento}</h6>
+      </div>
+    </div>
+    `;
+    }
+    place.appendChild(element);
+  }
 };
 
 const agregarRegistro = async (data) => {
-  const historiaClinica = await fetch(
-    `https://localhost:44314/api/HistoriaClinica/${data.mascotaId}`
-  )
-    .then((response) => response.json())
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => console.log(err));
-
   let registro = {
     analisis: data.registro,
-    historiaClinicaId: historiaClinica[0].historiaClinicaId
+    historiaClinicaId: data.historiaClinicaId
   };
 
   let registroJson = JSON.stringify(registro);
 
-  const registroResponse = await fetch(`https://localhost:44314/api/Registros`, {
+  const registroResponse = await fetch(URL_API_REGISTROS, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
+
     body: registroJson
   })
     .then((response) => response.json())
@@ -127,9 +186,12 @@ const agregarRegistro = async (data) => {
   };
 
   let tratamientoJson = JSON.stringify(tratamiento);
-  fetch(`https://localhost:44314/api/Tratamiento`, {
+  fetch(URL_API_TRATAMIENTO, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
     body: tratamientoJson
   })
     .then((response) => response.json())
@@ -140,14 +202,17 @@ const agregarRegistro = async (data) => {
     })
     .catch((err) => console.log(err));
 
-  fetch(`https://localhost:44314/api/Turno/${data.turnoId}`, {
-    method: 'DELETE'
+  fetch(`${URL_API_TURNO}/${data.turnoId}`, {
+    method: 'DELETE',
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
   })
     .then((res) => res.json())
     .then((res) => console.log(res))
     .catch((err) => console.log(err));
+
+  location.reload();
 };
 
 window.onload = () => {
-  getTurnosVeterinario(1001);
+  getTurnosVeterinario();
 };

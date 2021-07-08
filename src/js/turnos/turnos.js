@@ -1,55 +1,55 @@
-import {getCliente} from '../clinic-history/mascota.js';
-
-let clienteActual;
+// import {getCliente} from '../clinic-history/mascota.js';
+import {sesion} from '../sesion.js';
+import {URL_API_CLIENTE, URL_API_TURNO} from '../constants.js';
+import {changeIcon} from '../login/login.js';
 
 const getClienteSesion = async () => {
-  return await fetch('https://localhost:44314/api/Cliente/3')
+  return await fetch(`${URL_API_CLIENTE}/${sesion.usuario.id}`, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
     .then((response) => response.json())
     .then((res) => {
-      return res;
-    })
-    .catch((err) => console.log(err));
-};
-
-const getMascotasByClienteId = (clienteId) => {
-  fetch(`https://localhost:44314/api/Cliente/${clienteId}`)
-    .then((response) => response.json())
-    .then((data) => {
       const place = document.getElementById('inputSelect');
 
-      for (const mascota of data.mascotas) {
+      for (const mascota of res.mascotas) {
         let element = document.createElement('option');
         element.value = mascota.mascotaId;
 
         element.innerHTML = mascota.nombre;
         place.appendChild(element);
       }
-    });
-};
-
-const getTurnos = async () => {
-  let fechaActual = new Date();
-  let fechaQuery =
-    fechaActual.getFullYear() +
-    '-' +
-    (fechaActual.getMonth() + 1) +
-    '-' +
-    fechaActual.getDate();
-
-  return await fetch(`https://localhost:44314/api/Turno?fecha=${fechaQuery}`)
-    .then((res) => res.json())
-    .then((response) => {
-      return response;
     })
     .catch((err) => console.log(err));
 };
 
+// const getTurnos = async () => {
+//   let fechaActual = new Date();
+//   let fechaQuery =
+//     fechaActual.getFullYear() +
+//     '-' +
+//     (fechaActual.getMonth() + 1) +
+//     '-' +
+//     fechaActual.getDate();
+
+//   return await fetch(URL_API_TURNO + `?fecha=${fechaQuery}`, {
+//     headers: {Authorization: ` Bearer  ${sesion.token}`}
+//   })
+//     .then((res) => res.json())
+//     .then((response) => {
+//       return response;
+//     })
+//     .catch((err) => console.log(err));
+// };
+
 const createTurno = (data) => {
   let turnojson = JSON.stringify(data);
 
-  fetch('https://localhost:44314/api/Turno', {
+  fetch(URL_API_TURNO, {
     method: 'POST',
-    headers: {'Content-Type': 'application/json;charset=UTF-8'},
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
     body: turnojson
   })
     .then((response) => {
@@ -77,13 +77,16 @@ const createTurno = (data) => {
             <h4>${data.horaInicio}</h4>
             <p>Lo esperamos.</p>           
           `,
-          email: clienteActual.email
+          email: sesion.usuario.email
         };
         let turnoMessageJson = JSON.stringify(turnoMessage);
 
         fetch('http://localhost:3000/send-email', {
           method: 'POST',
-          headers: {'Content-Type': 'application/json;charset=UTF-8'},
+          headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            Authorization: ` Bearer  ${sesion.token}`
+          },
           body: turnoMessageJson
         })
           .then((res) => res.json())
@@ -118,44 +121,44 @@ const createTurno = (data) => {
     });
 };
 
-const listarTurnos = async () => {
-  let listaTurnos = await getTurnos();
+// const listarTurnos = async () => {
+//   let listaTurnos = await getTurnos();
 
-  const place = document.getElementById('rows-turnos');
+//   const place = document.getElementById('rows-turnos');
+//   if (listaTurnos) {
+//     for (const turno of listaTurnos) {
+//       let element = document.createElement('div');
+//       element.className =
+//         'row justify-content-center row-cols-auto  text-center fs-6  align-content-center ';
 
-  for (const turno of listaTurnos) {
-    let element = document.createElement('div');
-    element.className =
-      'row justify-content-center row-cols-auto  text-center fs-6  align-content-center ';
+//       let hora = new Date(turno.horaInicio);
+//       let minutos = hora.getMinutes();
+//       if (hora.getMinutes() == 0) {
+//         minutos = '00';
+//       }
 
-    let hora = new Date(turno.horaInicio);
-    let minutos = hora.getMinutes();
-    if (hora.getMinutes() == 0) {
-      minutos = '00';
-    }
+//       let horario = hora.getHours() + ':' + minutos;
 
-    let horario = hora.getHours() + ':' + minutos;
+//       element.innerHTML = `
+//     <div class="col-2 border border-dark p-2">${horario}</div>
+//     <div class="col-2 border border-dark p-2">${turno.mascotaNombre}</div>
+//     <div class="col-2 border border-dark p-2">${turno.veterinarioNombre} ${turno.veterinarioApellido}</div>
+//     <div class="col-2 border border-dark p-2">${turno.clienteNombre} ${turno.clienteApellido}</div>
+//     <div class="col-2 border border-dark p-1 "><div class="mt-2">${turno.clienteTelefono}</div></div>
+//     <div class="col-2 border border-dark p-2">${turno.consultorioNumero}</div>
 
-    element.innerHTML = `
-    <div class="col-2 border border-dark p-2">${horario}</div>
-    <div class="col-2 border border-dark p-2">${turno.mascotaNombre}</div>
-    <div class="col-2 border border-dark p-2">${turno.veterinarioNombre} ${turno.veterinarioApellido}</div>
-    <div class="col-2 border border-dark p-2">${turno.clienteNombre} ${turno.clienteApellido}</div>
-    <div class="col-2 border border-dark p-1 "><div class="mt-2">${turno.clienteTelefono}</div></div>
-    <div class="col-2 border border-dark p-2">${turno.consultorioNumero}</div>
+// `;
 
-
-`;
-
-    place.appendChild(element);
-  }
-};
+//       place.appendChild(element);
+//     }
+//   }
+// };
 
 window.onload = async (e) => {
-  clienteActual = await getClienteSesion();
-  getMascotasByClienteId(3);
-  listarTurnos();
-  getCliente();
+  getClienteSesion();
+  // listarTurnos();
+  // getCliente();
+  changeIcon();
 };
 
 const formTurno = document.getElementById('formTurno');

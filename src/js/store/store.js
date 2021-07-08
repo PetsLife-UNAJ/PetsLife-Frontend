@@ -7,7 +7,7 @@ window.onload = async () => {
     var productosJson = await getProductos()
     loaderDiv.remove()
 
-    if (productosJson === null) {
+    if (productosJson.status === 400) {
         productosDiv.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
     }
 
