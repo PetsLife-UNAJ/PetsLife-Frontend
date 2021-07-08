@@ -1,4 +1,3 @@
-
 import {sesion} from '../sesion.js';
 import {URL_API_CLIENTE, URL_API_TURNO} from '../constants.js';
 import {changeIcon} from '../login/login.js';
@@ -26,24 +25,24 @@ const getClienteSesion = async () => {
   }
 };
 
-// const getTurnos = async () => {
-//   let fechaActual = new Date();
-//   let fechaQuery =
-//     fechaActual.getFullYear() +
-//     '-' +
-//     (fechaActual.getMonth() + 1) +
-//     '-' +
-//     fechaActual.getDate();
+const getTurnos = async () => {
+  let fechaActual = new Date();
+  let fechaQuery =
+    fechaActual.getFullYear() +
+    '-' +
+    (fechaActual.getMonth() + 1) +
+    '-' +
+    fechaActual.getDate();
 
-//   return await fetch(URL_API_TURNO + `?fecha=${fechaQuery}`, {
-//     headers: {Authorization: ` Bearer  ${sesion.token}`}
-//   })
-//     .then((res) => res.json())
-//     .then((response) => {
-//       return response;
-//     })
-//     .catch((err) => console.log(err));
-// };
+  return await fetch(URL_API_TURNO + `?fecha=${fechaQuery}`, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
+    .then((res) => res.json())
+    .then((response) => {
+      return response;
+    })
+    .catch((err) => console.log(err));
+};
 
 const createTurno = (data) => {
   let turnojson = JSON.stringify(data);
@@ -124,10 +123,47 @@ const createTurno = (data) => {
     });
 };
 
+const listarTurnos = () => {
+  fetch(URL_API_TURNO)
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      for (const turno of res) {
+        if (turno.clienteId == sesion.usuario.id) {
+          let horario = new Date(turno.horaInicio);
+          let horaTurno = horario.getHours() + ':' + horario.getMinutes();
+          if (horario.getMinutes() == 0) {
+            horaTurno = horaTurno + '0';
+          }
+          turno.horaInicio = horaTurno;
+
+          let fecha = new Date(turno.fecha);
+          turno.fecha = `${fecha.getDay()}/${
+            fecha.getMonth() + 1
+          }/${fecha.getFullYear()}`;
+
+          const place = document.getElementById('tabla-listado');
+          const element = document.createElement('tr');
+          element.classList = 'border';
+          element.innerHTML = `
+          <td>${turno.fecha}</td>
+          <td>${turno.horaInicio}</td>
+          <td>${turno.mascotaNombre}</td>
+          <td>${turno.veterinarioNombre} ${turno.veterinarioApellido}</td>
+          <td>${turno.consultorioNumero}</td>    
+          `;
+          place.appendChild(element);
+        }
+      }
+    })
+    .catch((err) => console.log(err));
+};
+
 window.onload = async (e) => {
   getClienteSesion();
-  // getTurnos();
+  getTurnos();
   changeIcon();
+  listarTurnos();
 };
 
 const formTurno = document.getElementById('formTurno');

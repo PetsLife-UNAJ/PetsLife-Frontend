@@ -40,106 +40,17 @@
           >
             Solicitar Turnos
           </a>
+          <a
+            data-bs-toggle="modal"
+            data-bs-target="#modal-listado"
+            class="btn btn-secondary"
+          >
+            Mis turnos
+          </a>
         </div></div
       ></div
     >
-    <!-- MODAL CLIENTE -->
-    <!-- <div class="modal fade" id="modal-cliente" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Ingresar cliente</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="formCliente">
-              <div class="container">
-                <div class="row input-group mt-3">
-                  <div class="col">
-                    <label class="fw-bold">Nombre</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      maxlength="50"
-                      id="nombre"
-                      required
-                    />
-                  </div>
-                  <div class="col">
-                    <label class="fw-bold">Apellido</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      maxlength="50"
-                      id="apellido"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="row form-group input-group m-0 mt-3">
-                  <label class="fw-bold">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    maxlength="50"
-                    id="email"
-                    required
-                  />
-                </div>
-                <div class="row form-group input-group mt-3">
-                  <div class="col">
-                    <label class="fw-bold">Dni</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      maxlength="8"
-                      oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                      id="dni"
-                      required
-                    />
-                  </div>
-                  <div class="col">
-                    <label class="fw-bold">Telefono</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      maxlength="12"
-                      id="telefono"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="row form-group input-group m-0 mt-3">
-                  <label class="fw-bold">Dirección</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    maxlength="50"
-                    id="direccion"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="modal-footer justify-content-center">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                  >Cerrar</button
-                >
-                <button type="submit" class="btn btn-primary">Guardar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    FIN MODAL CLIENTE -->
+
     <!-- MODAL MASCOTA -->
     <div class="modal fade" id="modal-mascota" tabindex="-1">
       <div class="modal-dialog">
@@ -188,12 +99,6 @@
                     />
                   </div>
                 </div>
-                <!-- <div class="form-group m-0 row">
-                  <label class="fw-bold">Cliente</label>
-                  <select class="custom-select form-control" id="cliente" required>
-                    <option selected disabled>Seleccione un cliente</option>
-                  </select>
-                </div> -->
               </div>
 
               <div class="modal-footer justify-content-center">
@@ -300,6 +205,50 @@
       </div>
     </div>
     <!-- FIN MODAL TURNO -->
+    <!-- MODAL LISTADO TURNOS -->
+    <div class="modal fade" id="modal-listado" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Mis turnos</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="col-12 text-center">
+                <table class="table table-hover table-borderless mt-4 caption-top">
+                  <thead>
+                    <tr>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Horario</th>
+                      <th scope="col">Mascota</th>
+                      <th scope="col">Veterinario</th>
+                      <th scope="col">Consultorio</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-listado"> </tbody>
+                </table>
+                <div class="modal-footer justify-content-center">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    >Cerrar</button
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIN MODAL LISTADO TURNOS -->
 
     <div class="section offices anchor">
       <div class="center">
