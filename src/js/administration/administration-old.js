@@ -1,10 +1,5 @@
-import {
-  getTurnos,
-  getAdoptables,
-  getTiposMascota,
-  addAdoptable
-} from './administrationActions.js';
-import {getProductos, getCategorias} from '../store/productActions.js';
+import { getTurnos, getAdoptables, getTiposMascota, addAdoptable } from "./adminActions.js"
+import { getProductos, getCategorias } from '../store/productActions.js'
 
 var msBody = document.getElementById('msBody');
 var msVeterinaria = document.getElementById('msVeterinaria');

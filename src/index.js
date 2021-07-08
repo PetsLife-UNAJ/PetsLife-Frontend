@@ -14,6 +14,8 @@ export const client = twilio(TWILIO_ACCOUNT_SID,TWILIO_AUTH_TOKEN);
 // app.use('js', express.static(path.join(__dirname + 'js')));
 
 app.use(express.static(__dirname));
+//app.use('js', express.static(path.join(__dirname + 'js')));
+
 
 var jsonParser = bodyParser.json();
 
@@ -59,10 +61,11 @@ app.use(express.static(path.join(__dirname, 'assets')));
 // static js
 // console.log(path.join(__dirname, 'js'))
 app.use(express.static(path.join(__dirname, 'js')));
+//app.use(express.static(__dirname));
 
 //listening the server
 app.listen(app.get('port'), () => {
-  console.log(`Example app listening at http://localhost:${app.get('port')}`);
+  console.log(`Example app listening at http://localhost:${app.get('port')}/home`);
 });
 
 

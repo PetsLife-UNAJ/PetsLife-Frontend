@@ -4,5 +4,5 @@ export const sesion = localStorage.getItem('usuario')
 
 export const logOut = () => {
   localStorage.removeItem('usuario');
-  window.location.href = window.origin;
+  window.location.href = '/home';
 };
