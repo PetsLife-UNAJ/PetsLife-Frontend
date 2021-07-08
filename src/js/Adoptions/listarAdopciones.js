@@ -1,5 +1,6 @@
 $(document).ready(function () {
     var adoptables;
+    var Lista_masc = [];
     $.get("https://localhost:44363/PosiblesAdoptantes", function (response) {
         console.log(response);
         ListarAdopciones(response);
@@ -12,7 +13,10 @@ $(document).ready(function () {
             var id_masc = element.mascotaId
             i++;
             $.get(`https://localhost:44363/api/Mascota/${id_masc}`, function (mascota) {
+
                 console.log(mascota)
+                Lista_masc.push(mascota);
+                console.log(Lista_masc);
                 $("#ListaAdoptables").append(
                     `<hr class="featurette-divider">
                             <div class="row featurette ">
@@ -58,7 +62,7 @@ $(document).ready(function () {
                                             <form class="row g-3 needs-validation" novalidate>
                                             <div class="col-md-4">
                                                 <label for="adop_name" class="form-label">Id de mascota</label>
-                                                <input type="text" class="form-control"  value="${id_masc}" readonly>
+                                                <input type="text" class="form-control" id="info-masc-id${element.mascotaId}"  value="${id_masc}" readonly>
                                                 <div class="valid-feedback">
                                                 Looks good!
                                                 </div>
@@ -66,7 +70,7 @@ $(document).ready(function () {
                                             
                                             <div class="col-md-4">
                                                 <label for="adop_apellido" class="form-label">Tipo animal</label>
-                                                <input type="text" class="form-control"  value="${mascota.tipoAnimal}" readonly>
+                                                <input type="text" class="form-control" id="info-masc-tipo${element.mascotaId}" value="${mascota.tipoAnimal}" readonly>
                                                 <div class="valid-feedback">
                                                 Looks good!
                                                 </div>
@@ -74,7 +78,7 @@ $(document).ready(function () {
                                             <div class="col-md-10"  >
                                             
                                                 <label for="adop_dni" class="label" style="font-size:18px">Historia de ${mascota.nombre} </label>
-                                                <p class="lead ps-2">${mascota.historia}</p>
+                                                <p class="lead ps-2" id="info-masc-hist${element.mascotaId}">${mascota.historia}</p>
                                                 
                                                 <div class="valid-feedback">
                                                 Looks good!
@@ -83,11 +87,6 @@ $(document).ready(function () {
                                             <p></p>
                                             <div class="col-md-5">
                                                 <img class="img-mascota rounded-3 border border-secondary shadow p-1 mb-5 bg-body rounded" src="${mascota.imagen}"">
-                                            </div>
-                                            
-                                            
-                                            <div class="col-12">
-                                                <button class="btn btn-primary" id="btn-actualizar${element.mascotaId}">Postularme</button>
                                             </div>
                                             </form> 
                                         
@@ -111,17 +110,14 @@ $(document).ready(function () {
                                             <form class="row g-3 needs-validation" novalidate>
                                             <div class="col-md-5">
                                                 <label for="mascota_adoptado" class="form-label">Estado adopcion</label>
-                                                <select id="mascota_adoptado" class="form-control col-auto" required>
-                                                    <option label="No adoptado"> No aprobado</option>
-                                                    <option label="Aprobado">Aprobado</option>
-                                                </select>
+                                                <input type="text" class="form-control" id="mascota_adoptado${element.mascotaId}" placeholder="Escriba aprobado para aprobar" required>
                                                 <div class="invalid-feedback">
                                                 Please provide a valid zip.
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="mascotass" class="form-label">Id Mascota</label>
-                                                <input type="text" class="form-control" id="mascota_id" value="${element.mascotaId}" readonly>
+                                                <input type="text" class="form-control" id="mascota_id${element.mascotaId}" value="${element.mascotaId}" readonly>
                                                 <div class="invalid-feedback">
                                                 Please provide a valid zip.
                                                 </div>
@@ -151,30 +147,36 @@ $(document).ready(function () {
                 )
 
                 $(`#btn-actualizar${element.adoptanteId}`).click(function () {
-
+                    debugger
                     console.log("Funciono");
                     
-                    if ($(mascota_adoptado).val() == "true") {
+                    if ($(`#mascota_adoptado${element.mascotaId}`).val() === "aprobado") {
                         x = Boolean(true);
                     }
                     else {
                         x = Boolean(false);
                     }
-
+                    var data;
                     
-                    var data = {
-                        "tipoAnimal": "Default",
-                        "tipoAnimalId": mascota.tipoAnimalId,
-                        "adoptado": x,
-                        "imagen": mascota.imagen,
-                        "nombre": mascota.nombre,
-                        "historia": mascota.historia,
-                        "edad": parseInt(mascota.edad),
-                        "peso": parseFloat(mascota.peso)
-                    }
+                    Lista_masc.forEach(elemento => {
+                        if (parseInt($(`#mascota_id${element.mascotaId}`).val()) === elemento.mascotaId){
+                            data = {
+                                "tipoAnimal": "Default",
+                                "tipoAnimalId": elemento.tipoAnimalId,
+                                "adoptado": x,
+                                "imagen": elemento.imagen,
+                                "nombre": elemento.nombre,
+                                "historia": elemento.historia,
+                                "edad": parseInt(elemento.edad),
+                                "peso": parseFloat(elemento.peso)
+                            }
+                        }
+                        
+                    });
+                    
                     console.log(data);
 
-                    var tipo = $("#mascota_id").val();
+                    var tipo = $(`#info-masc-id${element.mascotaId}`).val();
                     console.log(tipo);
                     
                     $.ajax({

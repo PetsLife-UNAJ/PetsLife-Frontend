@@ -50,14 +50,17 @@ $(document).ready(function () {
                                     <form class="row g-3 needs-validation" novalidate>
                                       <div class="col-md-4">
                                         <label for="adop_name" class="form-label">Nombre/s</label>
-                                        <input type="text" class="form-control" id="adop_name" value="Carlos" placeholder="Carlos Javier" required>
+                                        <input type="text" class="form-control" id="adop_name${element.mascotaId}" placeholder="Carlos Javier" required>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
+                                        <div class="invalid-feedback">
+                                          Please select a valid state.
+                                        </div>
                                       </div>
                                       <div class="col-md-4">
-                                        <label for="adop_apellido" class="form-label">Last name</label>
-                                        <input type="text" class="form-control" id="adop_apellido" value="Suarez" placeholder="Suarez" required>
+                                        <label for="adop_apellido" class="form-label">Apellido/s</label>
+                                        <input type="text" class="form-control" id="adop_apellido${element.mascotaId}" placeholder="Suarez" required>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
@@ -67,28 +70,29 @@ $(document).ready(function () {
                                       <h5 class="modal-title" id="exampleModalLabel">Datos de contacto</h5>
                                       <div class="col-md-5">
                                         <label for="adop_dni" class="label">Nº Documento</label>
-                                        <input type="text" class="form-control" id="adop_dni" value="4154" placeholder="Solo numeros sin puntos" required>
+                                        <input type="number" class="form-control" id="adop_dni${element.mascotaId}"  placeholder="Solo numeros sin puntos" required>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
                                       </div>
                                       <div class="col-md-5">
                                         <label for="adop_tel" class="label">Nº Telefono</label>
-                                        <input type="text" class="form-control" id="adop_tel" value="1133" placeholder="Solo numeros sin espacios" required>
-                                        <div class="valid-feedback">
-                                          Looks good!
+                                        <input type="number" class="form-control" id="adop_tel${element.mascotaId}"  placeholder="Solo numeros sin espacios" required>
+                                        <div class="invalid-feedback">
+                                          Please choose a username.
                                         </div>
+                                        
                                       </div>
                                       <div class="col-md-5">
                                         <label for="adop_correo" class="label">Correo</label>
-                                        <input type="text" class="form-control" id="adop_correo" value="carlos" placeholder="example@gmail.com" required>
+                                        <input type="text" class="form-control" id="adop_correo${element.mascotaId}"  placeholder="example@gmail.com" required>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
                                       </div>
                                       <div class="col-md-5">
                                         <label for="adop_dir" class="label">Direccion</label>
-                                        <input type="text" class="form-control" id="adop_dir" value="Concordia" placeholder="Calle y numero" required>
+                                        <input type="text" class="form-control" id="adop_dir${element.mascotaId}" placeholder="Localidad, barrio, calle y numero" required>
                                         <div class="valid-feedback">
                                           Looks good!
                                         </div>
@@ -112,12 +116,13 @@ $(document).ready(function () {
                                           Looks good!
                                         </div>
                                       </div>
-                                      <p></p>
+                                      <p>En caso de haber ingresado los datos correctamente recibirá una alerta por parte de su navegador en caso contrario intente nuevamente.</p>
+                                      
                                       <div class="col-12">
                                         <div class="form-check">
                                           <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                                           <label class="form-check-label" for="invalidCheck">
-                                            Agree to terms and conditions
+                                            Aceptar terminos y condiciones
                                           </label>
                                           <div class="invalid-feedback">
                                             You must agree before submitting.
@@ -147,7 +152,7 @@ $(document).ready(function () {
 
 
       );
-
+        
       $(`#btn-actualizar${element.mascotaId}`).click(function () {
 
         console.log("Funciono");
@@ -155,12 +160,12 @@ $(document).ready(function () {
         var tipo = element.mascotaId;
         var adopcion = {
 
-          "nombre": $("#adop_name").val(),
-          "apellido": $("#adop_apellido").val(),
-          "dni": $("#adop_dni").val(),
-          "direccion": $("#adop_dir").val(),
-          "telefono": $("#adop_tel").val(),
-          "email": $("#adop_correo").val(),
+          "nombre": $(`#adop_name${element.mascotaId}`).val(),
+          "apellido": $(`#adop_apellido${element.mascotaId}`).val(),
+          "dni": $(`#adop_dni${element.mascotaId}`).val(),
+          "direccion": $(`#adop_dir${element.mascotaId}`).val(),
+          "telefono": $(`#adop_tel${element.mascotaId}`).val(),
+          "email": $(`#adop_correo${element.mascotaId}`).val(),
           "mascotaId": 1,
           "adoptanteId": 1
 
@@ -176,7 +181,7 @@ $(document).ready(function () {
           contentType: "application/json",
           beforeSend: function () {
             console.log(this.data);
-            console.log("enviando...");
+            
           },
           success: function (response) {
             console.log(response);
@@ -184,6 +189,7 @@ $(document).ready(function () {
           },
           error: function (response) {
             console.log(response)
+            alert("Error")
           }
         });
 
