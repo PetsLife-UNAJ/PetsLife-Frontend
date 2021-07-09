@@ -5,34 +5,13 @@ var tiendaTableBody     = document.getElementById("tiendaTableBody")
 var spinner             = document.getElementById("loadingSpinner")
 var formActualizar      = document.getElementById('formActualizar-producto');
 
-window.onload = async () => {
-  var productosJson = await getProductos()
-  spinner.remove()
-
-  if (productosJson.status === 400) {
-      msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
-      return
-  }
-
-  productosJson.forEach((productoJson) => {
-      tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
-
-      var deleteElem = document.getElementById(productoJson.productoId)
-      deleteElem.onclick = () => {
-          eliminarProducto(deleteElem.id);
-      };
-
-      var editElement = document.getElementById('edit-'+productoJson.productoId);
-      editElement.onclick = () => {
-          editarProducto(productoJson.productoId);
-      }
-  });
-}
+window.onload = async () => { adminStore() }
 
 const adminStore = async () => {
-  tiendaTableBody.innerHTML = '';
-    var productosJson = await getProductos()
-  console.log(productosJson)
+  tiendaTableBody.innerHTML = ''
+  var productosJson = await getProductos()
+  spinner.style.display = 'none'
+
     if (productosJson.status === 400) {
         msBody.innerHTML = `<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>`;
         return
@@ -51,9 +30,7 @@ const adminStore = async () => {
             editarProducto(productoJson.productoId);
         }
     });
-  
 }
-
 
 const GetProductoTable = (productoJson) => {
     return (
@@ -101,23 +78,24 @@ const editarProducto = async (id) => {
     await mostrarCategoria()
     checkForm(id, formActualizar);
 }
-const checkForm = (id , form) => {
-  form.addEventListener('submit', function (event) {
-console.log(form.checkValidity())
-if (!form.checkValidity()) {
-  event.preventDefault()
-  event.stopPropagation()
-}
 
-else {
-  event.preventDefault();     
-  actualizarProducto(id);
-}
+const checkForm = (id, form) => {
+  form.addEventListener("submit", (event) => {
+    console.log(form.checkValidity());
+    if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      } 
+      else {
+          event.preventDefault();
+          actualizarProducto(id);
+      }
 
-form.classList.add('was-validated');
+    form.classList.add("was-validated");
+    }, false
+  );
+};
 
-}, false)
-}
 const actualizarProducto = async (id) => {
     var btnSubmit = document.getElementById('btn-submit');
 
@@ -180,7 +158,6 @@ const actualizarProducto = async (id) => {
     `
     adminStore();
     }
-
 }
 
 const eliminarProducto = async (id) => {

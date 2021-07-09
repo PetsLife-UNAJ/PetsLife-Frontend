@@ -5,6 +5,7 @@ window.onload = () => {
   // if (!(location.pathname == '/home') && !sesion) {
   //   document.getElementById('btn-log').click();
   // }
+  changeIcon();
 };
 
 const formLogin = document.getElementById('form-login');

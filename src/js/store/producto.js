@@ -5,15 +5,19 @@ import { getProductoById } from './productActions.js'
 window.onload = async () => {
     var productoDiv = document.getElementById("productDetail")
     var loaderDiv = document.getElementById("loader")
+    var actualProduct = document.getElementById("actualProduct")
 
     var productoId = location.pathname.split("/").pop()
     var productoJson = await getProductoById(productoId)
 
     console.log(productoJson)
     loaderDiv.remove()
-    if (productoJson === null) {
+    if (productoJson.status === 400) {
         productoDiv.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
+        return
     }
+    actualProduct.innerHTML = productoJson.nombre
+
 
     var productoHtml = ProductDetail(productoJson)
 

@@ -12,3 +12,11 @@
     background: #e0c57e;
     border-color: #c79819;
 }
+
+#buscador {
+    border-radius: 0 0 1rem 1rem;
+}
+
+#buscador-control {
+    border-radius: 0 0 1rem 1rem;
+}
