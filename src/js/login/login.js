@@ -2,10 +2,17 @@ import {login} from '../services/loginService.js';
 import {sesion, logOut} from '../sesion.js';
 
 window.onload = () => {
-  // if (!(location.pathname == '/home') && !sesion) {
-  //   document.getElementById('btn-log').click();
-  // }
+  // checkLogin();
   changeIcon();
+};
+
+const checkLogin = () => {
+  document.getElementById('back-home').onclick = () => {
+    location.href = '/home';
+  };
+  if (!(location.pathname == '/home') && !sesion) {
+    document.getElementById('btn-log').click();
+  }
 };
 
 const formLogin = document.getElementById('form-login');
