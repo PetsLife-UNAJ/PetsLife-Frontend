@@ -14,7 +14,7 @@ const checkLogin = () => {
   document.getElementById('btn-register').onclick = () => {
     location.href = '/register';
   };
-  if (!(location.pathname == '/home') && !sesion) {
+  if (!(location.pathname == '/home') &&!(location.pathname == '/register') && !sesion) {
     document.getElementById('btn-log').click();
   }
 };
