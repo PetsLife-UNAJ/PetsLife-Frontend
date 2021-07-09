@@ -2,8 +2,7 @@
   <div class="container">
     <div class="row justify-content-between">
       <!-- col-4 -->
-      <div
-        class="
+      <div class="
           col-lg-auto
           d-flex
           align-items-center
@@ -91,6 +90,7 @@
     </div>
     <!--row-->
   </div>
+
   <nav class="bs-header-navbar d-print-none">
     <div class="container">
       <div class="navbar navbar-expand-lg align-items-start">
@@ -159,6 +159,17 @@
           </div>
         </section>
 
+        <!-- Search bar (store) -->
+        <div id="store-search" class="me-1" hidden>
+            <form class="d-flex border bg-white" id="buscador">
+                <input id="buscador-control" class="form-control" name="buscar" type="search" placeholder="Buscar" aria-label="Search">
+                <button class="btn" type="submit"><i class="fa fa-search" style="color: #bf7c2a;" aria-hidden="true"></i></button>
+            </form>
+            <div class="cart">
+                <a style="color: black" href="/cart"><i class="bi bi-cart text-white"></i></a>
+            </div>
+        </div>
+
         <!-- section -->
         <section class="col-auto d-none d-lg-block bs-header-cart">
           <a
@@ -170,6 +181,7 @@
             <i id="icon-login" class="fas fa-user" aria-hidden="true"></i>
           </a>
         </section>
+
 
         <!-- Modal de login -->
         <div class="modal fade" id="modal-login" tabindex="-1">

@@ -2,6 +2,7 @@ import { getProductos } from './productActions.js'
 //import { getProductosPorCategoria} from './productActions.js'
 
 window.onload = async () => {
+    document.getElementById("store-search").hidden = false
     var productosJson = await getProductos()
     renderProductos(productosJson)
 }
