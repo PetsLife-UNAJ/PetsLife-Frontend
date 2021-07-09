@@ -1,24 +1,28 @@
-import {getCliente} from '../clinic-history/mascota.js';
 import {sesion} from '../sesion.js';
 import {URL_API_CLIENTE, URL_API_TURNO} from '../constants.js';
+import {changeIcon} from '../login/login.js';
 
 const getClienteSesion = async () => {
-  return await fetch(`${URL_API_CLIENTE}/${sesion.usuario.id}`, {
-    headers: {Authorization: ` Bearer  ${sesion.token}`}
-  })
-    .then((response) => response.json())
-    .then((res) => {
-      const place = document.getElementById('inputSelect');
-
-      for (const mascota of res.mascotas) {
-        let element = document.createElement('option');
-        element.value = mascota.mascotaId;
-
-        element.innerHTML = mascota.nombre;
-        place.appendChild(element);
-      }
+  if (sesion) {
+    return await fetch(`${URL_API_CLIENTE}/${sesion.usuario.id}`, {
+      headers: {Authorization: ` Bearer  ${sesion.token}`}
     })
-    .catch((err) => console.log(err));
+      .then((response) => response.json())
+      .then((res) => {
+        if (res.status != 404) {
+          const place = document.getElementById('inputSelect');
+
+          for (const mascota of res.mascotas) {
+            let element = document.createElement('option');
+            element.value = mascota.mascotaId;
+
+            element.innerHTML = mascota.nombre;
+            place.appendChild(element);
+          }
+        }
+      })
+      .catch((err) => console.log(err));
+  }
 };
 
 const getTurnos = async () => {
@@ -83,8 +87,7 @@ const createTurno = (data) => {
         fetch('http://localhost:3000/send-email', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json;charset=UTF-8',
-            Authorization: ` Bearer  ${sesion.token}`
+            'Content-Type': 'application/json;charset=UTF-8'
           },
           body: turnoMessageJson
         })
@@ -120,44 +123,47 @@ const createTurno = (data) => {
     });
 };
 
-const listarTurnos = async () => {
-  let listaTurnos = await getTurnos();
+const listarTurnos = () => {
+  fetch(URL_API_TURNO)
+    .then((res) => res.json())
+    .then((res) => {
+      console.log(res);
+      for (const turno of res) {
+        if (turno.clienteId == sesion.usuario.id) {
+          let horario = new Date(turno.horaInicio);
+          let horaTurno = horario.getHours() + ':' + horario.getMinutes();
+          if (horario.getMinutes() == 0) {
+            horaTurno = horaTurno + '0';
+          }
+          turno.horaInicio = horaTurno;
 
-  const place = document.getElementById('rows-turnos');
-  if (listaTurnos) {
-    for (const turno of listaTurnos) {
-      let element = document.createElement('div');
-      element.className =
-        'row justify-content-center row-cols-auto  text-center fs-6  align-content-center ';
+          let fecha = new Date(turno.fecha);
+          turno.fecha = `${fecha.getDay()}/${
+            fecha.getMonth() + 1
+          }/${fecha.getFullYear()}`;
 
-      let hora = new Date(turno.horaInicio);
-      let minutos = hora.getMinutes();
-      if (hora.getMinutes() == 0) {
-        minutos = '00';
+          const place = document.getElementById('tabla-listado');
+          const element = document.createElement('tr');
+          element.classList = 'border';
+          element.innerHTML = `
+          <td>${turno.fecha}</td>
+          <td>${turno.horaInicio}</td>
+          <td>${turno.mascotaNombre}</td>
+          <td>${turno.veterinarioNombre} ${turno.veterinarioApellido}</td>
+          <td>${turno.consultorioNumero}</td>    
+          `;
+          place.appendChild(element);
+        }
       }
-
-      let horario = hora.getHours() + ':' + minutos;
-
-      element.innerHTML = `
-    <div class="col-2 border border-dark p-2">${horario}</div>
-    <div class="col-2 border border-dark p-2">${turno.mascotaNombre}</div>
-    <div class="col-2 border border-dark p-2">${turno.veterinarioNombre} ${turno.veterinarioApellido}</div>
-    <div class="col-2 border border-dark p-2">${turno.clienteNombre} ${turno.clienteApellido}</div>
-    <div class="col-2 border border-dark p-1 "><div class="mt-2">${turno.clienteTelefono}</div></div>
-    <div class="col-2 border border-dark p-2">${turno.consultorioNumero}</div>
-
-
-`;
-
-      place.appendChild(element);
-    }
-  }
+    })
+    .catch((err) => console.log(err));
 };
 
 window.onload = async (e) => {
   getClienteSesion();
+  getTurnos();
+  changeIcon();
   listarTurnos();
-  getCliente();
 };
 
 const formTurno = document.getElementById('formTurno');

@@ -1,5 +1,10 @@
 import {login} from '../services/loginService.js';
-import {logOut} from '../sesion.js';
+import {sesion, logOut} from '../sesion.js';
+
+window.onload = () => {
+  changeIcon();
+};
+
 const formLogin = document.getElementById('form-login');
 
 formLogin.onsubmit = async (e) => {
@@ -14,18 +19,23 @@ formLogin.onsubmit = async (e) => {
     console.log(response);
     localStorage.setItem('usuario', JSON.stringify(response));
 
-    const IconLog = document.getElementById('icon-login');
+    location.reload();
+  } else {
+    document.getElementById('estado-login').innerHTML = 'No se ha podido registrar.';
+  }
+};
+
+export const changeIcon = () => {
+  const IconLog = document.getElementById('icon-login');
+  const btnLog = document.getElementById('btn-log');
+  if (sesion) {
     IconLog.classList.replace('fa-user', 'fa-sign-out-alt');
-
-    const btnLog = document.getElementById('btn-log');
-
     btnLog.removeAttribute('data-bs-target');
     btnLog.removeAttribute('data-bs-toggle');
-
     btnLog.onclick = () => {
       logOut();
     };
   } else {
-    document.getElementById('estado-login').innerHTML = 'No se ha podido registrar.';
+    IconLog.classList.replace('fa-sign-out-alt', 'fa-user');
   }
 };

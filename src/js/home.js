@@ -1,21 +1,21 @@
+contactForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  let info = {
+    nombre: document.getElementById('nombre').value,
+    correo: document.getElementById('correo').value,
+    telefono: document.getElementById('telefono').value,
+    mensaje: document.getElementById('mensaje').value
+  };
 
-  /*
-  $(document).ready(function(){
-    $('a[href^="#"]').on('click',function (e){
-      e.preventDefault();
-      var target = this.hash;
-      var $target = $(target);
-      
-      //scroll con hash
-      $('html, body').animate({
-        'scrollTop': $target.offset().top
-      }, 1000, 'swing', function(){
-        window.location.hash = target;
-      });
-      
-     /* //scroll sin hash
-      $('html, body').animte({
-        'scrollTop': $targer.offset().top
-        }, 1000, 'swing');
-    });
-  });*/
+  const settings = {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(info)
+  };
+
+  var resp = fetch('/send-whatsapp', settings);
+  document.getElementById('contactForm').reset();
+});
