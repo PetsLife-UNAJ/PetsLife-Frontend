@@ -10,6 +10,10 @@ const checkLogin = () => {
   document.getElementById('back-home').onclick = () => {
     location.href = '/home';
   };
+
+  document.getElementById('btn-register').onclick = () => {
+    location.href = '/register';
+  };
   if (!(location.pathname == '/home') && !sesion) {
     document.getElementById('btn-log').click();
   }
