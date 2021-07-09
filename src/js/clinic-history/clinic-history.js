@@ -1,5 +1,5 @@
 import {sesion} from '../sesion.js';
-import {URL_API_CLIENTE, URL_API_TURNO} from '../constants.js';
+import {URL_API_CLIENTE, URL_API_TURNO, URL_API_MASCOTA} from '../constants.js';
 import {changeIcon} from '../login/login.js';
 
 const getClienteSesion = async () => {
@@ -33,15 +33,16 @@ const getTurnos = async () => {
     (fechaActual.getMonth() + 1) +
     '-' +
     fechaActual.getDate();
-
-  return await fetch(URL_API_TURNO + `?fecha=${fechaQuery}`, {
-    headers: {Authorization: ` Bearer  ${sesion.token}`}
-  })
-    .then((res) => res.json())
-    .then((response) => {
-      return response;
+  if (sesion) {
+    return await fetch(URL_API_TURNO + `?fecha=${fechaQuery}`, {
+      headers: {Authorization: ` Bearer  ${sesion.token}`}
     })
-    .catch((err) => console.log(err));
+      .then((res) => res.json())
+      .then((response) => {
+        return response;
+      })
+      .catch((err) => console.log(err));
+  }
 };
 
 const createTurno = (data) => {
@@ -127,39 +128,43 @@ const listarTurnos = () => {
   fetch(URL_API_TURNO)
     .then((res) => res.json())
     .then((res) => {
-      console.log(res);
-      for (const turno of res) {
-        if (turno.clienteId == sesion.usuario.id) {
-          let horario = new Date(turno.horaInicio);
-          let horaTurno = horario.getHours() + ':' + horario.getMinutes();
-          if (horario.getMinutes() == 0) {
-            horaTurno = horaTurno + '0';
-          }
-          turno.horaInicio = horaTurno;
+      if (sesion) {
+        for (const turno of res) {
+          if (turno.clienteId == sesion.usuario.id) {
+            let horario = new Date(turno.horaInicio);
+            let horaTurno = horario.getHours() + ':' + horario.getMinutes();
+            if (horario.getMinutes() == 0) {
+              horaTurno = horaTurno + '0';
+            }
+            turno.horaInicio = horaTurno;
 
-          let fecha = new Date(turno.fecha);
-          turno.fecha = `${fecha.getDay()}/${
-            fecha.getMonth() + 1
-          }/${fecha.getFullYear()}`;
+            let fecha = new Date(turno.fecha);
+            turno.fecha = `${fecha.getDay()}/${
+              fecha.getMonth() + 1
+            }/${fecha.getFullYear()}`;
 
-          const place = document.getElementById('tabla-listado');
-          const element = document.createElement('tr');
-          element.classList = 'border';
-          element.innerHTML = `
+            const place = document.getElementById('tabla-listado');
+            const element = document.createElement('tr');
+            element.classList = 'border';
+            element.innerHTML = `
           <td>${turno.fecha}</td>
           <td>${turno.horaInicio}</td>
           <td>${turno.mascotaNombre}</td>
           <td>${turno.veterinarioNombre} ${turno.veterinarioApellido}</td>
           <td>${turno.consultorioNumero}</td>    
           `;
-          place.appendChild(element);
+            place.appendChild(element);
+          }
         }
       }
     })
     .catch((err) => console.log(err));
 };
 
-window.onload = async (e) => {
+window.onload = (e) => {
+  // if (!(location.pathname == '/home') && !sesion) {
+  //   document.getElementById('btn-log').click();
+  // }
   getClienteSesion();
   getTurnos();
   changeIcon();
@@ -181,4 +186,65 @@ formTurno.onsubmit = (e) => {
   };
 
   createTurno(turno);
+};
+
+const createMascota = (datos) => {
+  fetch(URL_API_MASCOTA, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      Authorization: ` Bearer  ${sesion.token}`
+    },
+    body: datos
+  })
+    .then((response) => {
+      response.json();
+      if (response.status == 201) {
+        formMascota.innerHTML = ` <div class="card text-center p-0 my-2 ">
+            <div class="card-header bg-transparent text-success border-0">
+              <i class="far fa-check-circle display-4 d-block"></i>
+              <h5 class="card-title text-success display-4 d-block">Registro exitoso</h5>
+            </div>
+            <div class="card-body">
+              <p class="card-text lead">La mascota se ha sido registrado con éxito.</p>
+              <a href="javascript:location.reload()" class="btn btn-primary m-auto">Ir al menu </a>
+            </div>
+          </div>`;
+      }
+      if (response.status == 400) {
+        formMascota.innerHTML = ` <div class="card text-center p-0 my-2 ">
+          <div class="card-header bg-transparent text-danger border-0">
+          <i class="fas fa-exclamation-triangle"></i>
+            <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text lead">La mascota no se ha registrado.</p>
+            <a href="javascript:location.reload()" class="btn btn-danger m-auto">Ir al menu </a>
+          </div>
+        </div>`;
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+var formMascota = document.getElementById('formMascota');
+
+formMascota.onsubmit = (e) => {
+  e.preventDefault();
+  let nombre = document.getElementById('name').value;
+  let edad = document.getElementById('edad').value;
+  let peso = document.getElementById('peso').value;
+  let cliente = sesion.usuario.id;
+
+  let mascota = {
+    nombre: nombre,
+    edad: edad,
+    peso: peso,
+    clienteId: cliente
+  };
+
+  let mascotajson = JSON.stringify(mascota);
+  createMascota(mascotajson);
 };

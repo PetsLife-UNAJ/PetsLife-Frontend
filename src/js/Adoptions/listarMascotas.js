@@ -1,7 +1,5 @@
 import {getAdoptables} from '../administration/adminActions.js'
 
-
-
 $(document).ready(function () {
 
 

@@ -2,7 +2,9 @@ import {login} from '../services/loginService.js';
 import {sesion, logOut} from '../sesion.js';
 
 window.onload = () => {
-  changeIcon();
+  // if (!(location.pathname == '/home') && !sesion) {
+  //   document.getElementById('btn-log').click();
+  // }
 };
 
 const formLogin = document.getElementById('form-login');
