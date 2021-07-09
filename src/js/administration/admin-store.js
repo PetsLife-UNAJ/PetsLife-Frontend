@@ -6,16 +6,40 @@ var spinner             = document.getElementById("loadingSpinner")
 var formActualizar      = document.getElementById('formActualizar-producto');
 
 window.onload = async () => {
-    var productosJson = await getProductos()
-    spinner.remove()
+  var productosJson = await getProductos()
+  spinner.remove()
 
+  if (productosJson.status === 400) {
+      msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
+      return
+  }
+
+  productosJson.forEach((productoJson) => {
+      tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
+
+      var deleteElem = document.getElementById(productoJson.productoId)
+      deleteElem.onclick = () => {
+          eliminarProducto(deleteElem.id);
+      };
+
+      var editElement = document.getElementById('edit-'+productoJson.productoId);
+      editElement.onclick = () => {
+          editarProducto(productoJson.productoId);
+      }
+  });
+}
+
+const adminStore = async () => {
+  tiendaTableBody.innerHTML = '';
+    var productosJson = await getProductos()
+  console.log(productosJson)
     if (productosJson.status === 400) {
-        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
+        msBody.innerHTML = `<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>`;
         return
     }
 
-    productosJson.forEach((productoJson) => {
-        tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
+    productosJson.forEach( productoJson => { 
+      tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
 
         var deleteElem = document.getElementById(productoJson.productoId)
         deleteElem.onclick = () => {
@@ -27,6 +51,7 @@ window.onload = async () => {
             editarProducto(productoJson.productoId);
         }
     });
+  
 }
 
 
@@ -74,14 +99,25 @@ const editarProducto = async (id) => {
     formActualizar.innerHTML = getActualizarForm()
 
     await mostrarCategoria()
-
-    formActualizar.addEventListener('submit', (e) => {
-        e.preventDefault();
-        actualizarProducto(id)
-      
-    })
+    checkForm(id, formActualizar);
+}
+const checkForm = (id , form) => {
+  form.addEventListener('submit', function (event) {
+console.log(form.checkValidity())
+if (!form.checkValidity()) {
+  event.preventDefault()
+  event.stopPropagation()
 }
 
+else {
+  event.preventDefault();     
+  actualizarProducto(id);
+}
+
+form.classList.add('was-validated');
+
+}, false)
+}
 const actualizarProducto = async (id) => {
     var btnSubmit = document.getElementById('btn-submit');
 
@@ -107,6 +143,7 @@ const actualizarProducto = async (id) => {
         cantidadStock: stock,
         precio: precio,
     }
+    
     var updatedProducto = await updateProductoById(id, datosJson)
 
     if (updatedProducto.status === 400) {
@@ -123,6 +160,7 @@ const actualizarProducto = async (id) => {
             </div>
         </div>  
         `
+        adminStore();
         return
         
     }
@@ -140,7 +178,7 @@ const actualizarProducto = async (id) => {
         </div>
     </div> 
     `
-    //window.location.reload();
+    adminStore();
     }
 
 }
@@ -151,16 +189,17 @@ const eliminarProducto = async (id) => {
 
     // todo: cambiar por mejor forma de mostrar los mensajes
     if (response.status === 400) {
-        alert('No se pudo eliminar el producto')
+        alert('No se pudo eliminar el producto');
+        adminStore();
         return
     }
     alert('Se elimino correctamente el producto');
+    adminStore()
 }
 
 const getActualizarForm = () => {
     return (
         `
-       
         <div class="form-floating">       
           <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre" required>
           <label for="nom">Nombre</label> 
@@ -249,8 +288,6 @@ const getActualizarForm = () => {
 
         <div class="form-floating">
           <button type="submit" class="btn btn-primary mb-3" id="btn-submit">Actualizar</button>
-        </div>
-      
-                `
+        </div>  `
     )
 }

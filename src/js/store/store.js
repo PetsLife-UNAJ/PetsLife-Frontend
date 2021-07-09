@@ -1,19 +1,79 @@
 import { getProductos } from './productActions.js'
+//import { getProductosPorCategoria} from './productActions.js'
 
 window.onload = async () => {
+    var productosJson = await getProductos()
+    renderProductos(productosJson)
+}
+
+var buscador = document.getElementById('buscador');
+buscador.addEventListener('submit', (event) => {
+    event.preventDefault();
+    let buscar = buscador.elements.buscar.value;
+    getProductosPorBuscador(buscar);
+})
+
+var bntCategoria = document.querySelectorAll('.categoria');
+bntCategoria.forEach(btn => {
+    btn.addEventListener('click', () => {
+        let categoria = btn.value;
+        var productosJsonPorCategoria = getProductosPorCategoria(categoria)
+        //renderProductos(productosJsonPorCategoria)
+        
+    })
+});
+
+const getProductosPorCategoria = async (categoria) => {
+    let response = await fetch( 'http://localhost:27459/api/Productos?categoria='+ categoria);
+    let data = await response.json()
+
+    //renderProductosPorCategoria(data , categoria);
+    renderProductos(data)
+}
+const getProductosPorBuscador = async (producto) => {
+    let response = await fetch( 'http://localhost:27459/api/Productos?producto='+ producto);
+    let data = await response.json()
+
+    //renderProductosPorCategoria(data , categoria);
+    renderProductos(data)
+}
+const renderProductos = (productosJson) => {
     var productosDiv = document.getElementById("product-list")
+    productosDiv.innerHTML = ''
     var loaderDiv = document.getElementById("loader")
 
-    var productosJson = await getProductos()
-    loaderDiv.remove()
-
+    if (loaderDiv != undefined) {
+        loaderDiv.remove()
+    }
+    
     if (productosJson.status === 400) {
         productosDiv.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
+    }
+
+    if (productosJson.length === 0) {
+        productosDiv.innerHTML = `<div class="alert alert-danger">No hay productos disponibles de esta categoria</div>`
     }
 
     console.log(productosJson)
 
     productosJson.forEach((productoJson) => {
+        productosDiv.insertAdjacentHTML('beforeend', ProductCard(productoJson))
+    })
+}
+
+const renderProductosPorCategoria = (productosJsonPorCategoria , categoria) => {
+    var productosDiv = document.getElementById("product-list")
+    productosDiv.innerHTML = '';
+    if (productosJsonPorCategoria.status === 400) {
+        productosDiv.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
+    }
+    console.log(productosJsonPorCategoria.length)
+
+    if (productosJsonPorCategoria.length === 0) {
+        productosDiv.innerHTML = `<div class="alert alert-danger">No hay productos disponibles de esta categoria: ${categoria}</div>`
+    }
+
+    productosJsonPorCategoria.forEach((productoJson) => {
         productosDiv.insertAdjacentHTML('beforeend', ProductCard(productoJson))
     })
 }

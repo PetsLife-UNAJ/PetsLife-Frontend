@@ -32,6 +32,12 @@ export const getCategorias = async () => {
     return data
 }
 
+export const getProductosPorCategoria = async (categoria) => {
+    let response = await fetch(backendUrl + `api/productos?categoria=${categoria}`).catch(handleError)
+    let data = await response.json()
+
+    return data;
+}
 export const updateProductoById = async (id, dataJson) => {
     const settings = {
         method: 'PUT',
