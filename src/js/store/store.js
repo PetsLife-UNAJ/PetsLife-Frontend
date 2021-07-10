@@ -4,8 +4,9 @@ import {getProductos} from './productActions.js';
 import {changeIcon, checkLogin} from '../login/login.js';
 
 window.onload = async () => {
+  console.log("store")
   changeIcon();
-  // checkLogin();
+  checkLogin();
   document.getElementById('store-search').hidden = false;
   var productosJson = await getProductos();
   renderProductos(productosJson);

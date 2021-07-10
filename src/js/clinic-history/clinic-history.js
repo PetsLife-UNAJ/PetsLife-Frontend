@@ -5,12 +5,15 @@ import {changeIcon, checkLogin} from '../login/login.js';
 let user = undefined;
 
 window.onload = () => {
-  // checkLogin();
+  console.log("clinic")
+  changeIcon();
+  checkLogin();
   const payload = getPayload(sesion.token);
   user = JSON.parse(payload.User);
+
   getClienteSesion();
   getTurnos();
-  changeIcon();
+
   listarTurnos();
 };
 

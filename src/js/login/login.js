@@ -10,6 +10,7 @@ import {sesion, logOut, getPayload} from '../sesion.js';
 // };
 
 export const checkLogin = () => {
+  console.log("login")
   document.getElementById('back-home').onclick = () => {
     location.href = '/home';
   };
@@ -20,6 +21,7 @@ export const checkLogin = () => {
   if (
     !(location.pathname == '/home') &&
     !(location.pathname == '/register') &&
+    !(location.pathname == '/adoptions') &&
     !sesion
   ) {
     document.getElementById('btn-log').click();
