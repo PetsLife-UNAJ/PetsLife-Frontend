@@ -1,9 +1,9 @@
 import {changeIcon, checkLogin} from '../login/login.js';
 
 window.onload = () => {
-  console.log("home")
-  changeIcon();
-  checkLogin();
+
+  // changeIcon();
+  // checkLogin();
 };
 
 contactForm.addEventListener('submit', (event) => {

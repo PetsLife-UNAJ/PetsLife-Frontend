@@ -2,9 +2,8 @@ import {getAdoptables} from '../administration/adminActions.js';
 import {changeIcon, checkLogin} from '../login/login.js';
 
 window.onload = () => {
-  console.log("adoption")
-  changeIcon();
-  checkLogin();
+  // changeIcon();
+  // checkLogin();
 };
 
 $(document).ready(function () {

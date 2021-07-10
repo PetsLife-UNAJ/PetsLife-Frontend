@@ -1,16 +1,7 @@
 import {login} from '../services/loginService.js';
 import {sesion, logOut, getPayload} from '../sesion.js';
 
-// window.onload = () => {
-//   checkLogin();
-//   changeIcon();
-//   console.log(sesion);
-//   const payload = getPayload(sesion.token);
-//   console.log(JSON.parse(payload.User));
-// };
-
 export const checkLogin = () => {
-  console.log("login")
   document.getElementById('back-home').onclick = () => {
     location.href = '/home';
   };

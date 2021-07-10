@@ -5,9 +5,9 @@ import {changeIcon, checkLogin} from '../login/login.js';
 let user = undefined;
 
 window.onload = () => {
-  console.log("clinic")
-  changeIcon();
-  checkLogin();
+  
+  // changeIcon();
+  // checkLogin();
   const payload = getPayload(sesion.token);
   user = JSON.parse(payload.User);
 
