@@ -1,3 +1,9 @@
+import {changeIcon} from '../login/login.js';
+
+window.onload = () => {
+  changeIcon();
+};
+
 contactForm.addEventListener('submit', (event) => {
   event.preventDefault();
   let info = {

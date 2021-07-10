@@ -11,9 +11,7 @@ const TWILIO_AUTH_TOKEN = '3c26e3d4bc15ab0b338acecb4be82678';
 const twilio = require('twilio');
 const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
-
 app.use(express.static(__dirname));
-
 
 var jsonParser = bodyParser.json();
 app.use(express.json());

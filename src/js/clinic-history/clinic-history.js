@@ -1,10 +1,22 @@
-import {sesion} from '../sesion.js';
+import {sesion, getPayload} from '../sesion.js';
 import {URL_API_CLIENTE, URL_API_TURNO, URL_API_MASCOTA} from '../constants.js';
-import {changeIcon} from '../login/login.js';
+import {changeIcon, checkLogin} from '../login/login.js';
+
+let user = undefined;
+
+window.onload = () => {
+  // checkLogin();
+  const payload = getPayload(sesion.token);
+  user = JSON.parse(payload.User);
+  getClienteSesion();
+  getTurnos();
+  changeIcon();
+  listarTurnos();
+};
 
 const getClienteSesion = async () => {
   if (sesion) {
-    return await fetch(`${URL_API_CLIENTE}/${sesion.usuario.id}`, {
+    return await fetch(`${URL_API_CLIENTE}/${user.Id}`, {
       headers: {Authorization: ` Bearer  ${sesion.token}`}
     })
       .then((response) => response.json())
@@ -81,7 +93,7 @@ const createTurno = (data) => {
             <h4>${data.horaInicio}</h4>
             <p>Lo esperamos.</p>           
           `,
-          email: sesion.usuario.email
+          email: user.Email
         };
         let turnoMessageJson = JSON.stringify(turnoMessage);
 
@@ -130,7 +142,7 @@ const listarTurnos = () => {
     .then((res) => {
       if (sesion) {
         for (const turno of res) {
-          if (turno.clienteId == sesion.usuario.id) {
+          if (turno.clienteId == user.Id) {
             let horario = new Date(turno.horaInicio);
             let horaTurno = horario.getHours() + ':' + horario.getMinutes();
             if (horario.getMinutes() == 0) {
@@ -159,16 +171,6 @@ const listarTurnos = () => {
       }
     })
     .catch((err) => console.log(err));
-};
-
-window.onload = (e) => {
-  // if (!(location.pathname == '/home') && !sesion) {
-  //   document.getElementById('btn-log').click();
-  // }
-  getClienteSesion();
-  getTurnos();
-  changeIcon();
-  listarTurnos();
 };
 
 const formTurno = document.getElementById('formTurno');
@@ -236,7 +238,7 @@ formMascota.onsubmit = (e) => {
   let nombre = document.getElementById('name').value;
   let edad = document.getElementById('edad').value;
   let peso = document.getElementById('peso').value;
-  let cliente = sesion.usuario.id;
+  let cliente = user.Id;
 
   let mascota = {
     nombre: nombre,

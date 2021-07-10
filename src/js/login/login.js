@@ -1,12 +1,15 @@
 import {login} from '../services/loginService.js';
-import {sesion, logOut} from '../sesion.js';
+import {sesion, logOut, getPayload} from '../sesion.js';
 
-window.onload = () => {
-  // checkLogin();
-  changeIcon();
-};
+// window.onload = () => {
+//   checkLogin();
+//   changeIcon();
+//   console.log(sesion);
+//   const payload = getPayload(sesion.token);
+//   console.log(JSON.parse(payload.User));
+// };
 
-const checkLogin = () => {
+export const checkLogin = () => {
   document.getElementById('back-home').onclick = () => {
     location.href = '/home';
   };
@@ -14,7 +17,11 @@ const checkLogin = () => {
   document.getElementById('btn-register').onclick = () => {
     location.href = '/register';
   };
-  if (!(location.pathname == '/home') &&!(location.pathname == '/register') && !sesion) {
+  if (
+    !(location.pathname == '/home') &&
+    !(location.pathname == '/register') &&
+    !sesion
+  ) {
     document.getElementById('btn-log').click();
   }
 };
