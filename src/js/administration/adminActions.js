@@ -52,9 +52,7 @@ export const addAdoptable = async (dataJson) => {
     body: JSON.stringify(dataJson)
   };
 
-  let response = await fetch(BASE_URL_ADOPTIONS + '/Mascota', settings).catch(
-    handleError
-  );
+  let response = await fetch(BASE_URL_ADOPTIONS + '/Mascota', settings).catch(handleError);
   let data = await response.json();
 
   return data;

@@ -1,10 +1,13 @@
-var productCartListDiv = document.getElementById("product-cart-list")
+var productListDiv  = document.getElementById("productoList")
+var totalPriceDiv   = document.getElementById("totalPrice")
+var comprarBtn      = document.getElementById("comprarBtn")
+var totalTextElem   = document.getElementById("totalText")
 
-window.onload = () => {
-    var totalPricediv = document.getElementById("totalPrice")
+export const LoadCarrito = () => {
+    resetCart()
 
-    if (localStorage.length === 0) {
-        productCartListDiv.innerHTML = `<div class="alert alert-info" role="alert"> El carrito esta vacio </div>`
+    if (!localStorage.cart || localStorage.cart.length === 0) {
+        showEmptyCart()
         return
     }
 
@@ -13,63 +16,149 @@ window.onload = () => {
 
     cart.forEach((product) => {
         totalPrice += product.price
-        var productCartHtml = ProductCartRow(product)
-        productCartListDiv.insertAdjacentHTML('beforeend', productCartHtml)
+        var productCartHtml = productCartRow(product)
+        productListDiv.insertAdjacentHTML('beforeend', productCartHtml)
 
         var deleteDiv = document.getElementById(`p-${product.id}`)
         deleteDiv.onclick = () => {
-            RemoveFromCart(product.id)
+            removeFromCart(product)
         }
     })
 
-    totalPricediv.innerHTML = `$ ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
-
+    totalPriceDiv.innerHTML = `$ ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
+    comprarBtn.onclick = () => {
+        buyProducts()
+    }
 }
 
+const addToCart = (product) => {
+    let productoJson = {
+        id: product.productoId,
+        price: product.precio,
+        name: product.nombre,
+        image: product.imagen,
+        quantity: 1
+    }
 
-const ProductCartRow = (data) => {
-    return (
-    `
-    <div class="row border-bottom p-2" id="product-cart-${data.id}">
-        <div class="col-1">
-            <img style="height: 50px; width: 50px" src=${data.image} alt=${data.name}>
-        </div>
+    if (localStorage.cart && localStorage.cart.length > 0 ) {
 
-        <div class="col-6 h5 d-flex ps-4 align-self-center">
-            ${data.name}
-        </div>
+        let cart = JSON.parse(localStorage.cart)
+        var productExists = isProductInCart(product)
 
-        <div class="col-2 fw-bold d-flex justify-content-center align-self-center">
-            $ ${data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
-        </div>
-        <div class="col-2 fw-bold d-flex justify-content-center align-self-center" id="p-${data.id}">
-           <i class="bi bi-x text-danger fw-bold h5" style="cursor: pointer; font-size: 30px"></i>
-        </div>
-    </div>
-    `
-    )
+        if (!productExists) {
+            cart.push(productoJson)
+            localStorage.setItem("cart", JSON.stringify(cart))
+        }
+    }
+    else {
+        localStorage.setItem("cart", JSON.stringify([productoJson]))
+    }
 }
 
-const RemoveFromCart = (productId, parentDiv) => {
+const removeFromCart = (product) => {
 
-    if (localStorage.length !== 0) {
+    if (localStorage.cart && localStorage.cart.length > 0 ) {
 
         let cart = JSON.parse(localStorage.cart)
 
         cart.forEach((producto) => {
-            if (producto.id === productId) {
+            if (producto.id === product.id) {
                 cart.splice(cart.indexOf(producto), 1)
 
                 localStorage.setItem("cart", JSON.stringify(cart))
             }
         })
 
+        document.getElementById(`product-cart-${product.id}`).remove()
+
         if (cart.length === 0) {
-            localStorage.clear()
+            localStorage.removeItem("cart")
+            showEmptyCart()            
         }
-
-        document.getElementById(`product-cart-${productId}`).remove()
-
-        location.reload();
+        // actualizo precio del carro al eliminar producto del carro.
+        var currentPrice = parseFloat(totalPriceDiv.innerHTML.split("$").pop().trim().replace('.', ''))
+        currentPrice -= parseFloat(product.price)
+        totalPriceDiv.innerHTML = `$ ${currentPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`    
     }
 }
+
+const buyProducts = () => {
+    if (localStorage.cart && localStorage.cart.length > 0 ) {
+        // fake buy
+
+        let delayMS = Math.floor((Math.random() * 3) * 1000)
+        comprarBtn.disabled = true
+
+        comprarBtn.innerHTML = 
+        `
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        `
+
+        setTimeout(() => {
+            showEmptyCart()
+            productListDiv.innerHTML = `<div class="alert alert-success" role="alert">Se realizo la compra con exito!</a></div>`
+            localStorage.removeItem("cart")
+        }, delayMS)
+    }
+}
+
+const isProductInCart = (productJson) => {
+    console.log(productJson)
+    if (localStorage.cart && localStorage.cart.length > 0 ) {
+        let cart = JSON.parse(localStorage.cart)
+
+        for (let producto of cart) {
+            if (producto.id === productJson.productoId) {
+                return true
+            }
+        }
+    }
+
+    return false
+}
+
+const showEmptyCart = () => {
+    productListDiv.innerHTML = `<div class="alert alert-info" role="alert">No hay productos agregados en el carrito. <a href="/store">Ver productos</a></div>`
+    totalPriceDiv.hidden = true
+    comprarBtn.hidden = true
+    totalTextElem.hidden = true
+}
+
+const resetCart = () => {
+    productListDiv.innerHTML = ''
+    totalPriceDiv.hidden = false
+    comprarBtn.hidden = false
+    totalTextElem.hidden = false
+}
+
+const productCartRow = (data) => {
+    return (
+    `
+    <div class="row border-bottom p-2" id="product-cart-${data.id}">
+        <div class="col-2">
+            <img class="w-100 h-100" src=${data.image} alt=${data.name}>
+        </div>
+
+        <div class="col">
+            <div class="row">
+                <div class="col h5 d-flex align-self-center">
+                    ${data.name}
+                </div>
+            </div>
+            <div class="row">
+
+                <div class="col fw-bold d-flex">
+                    $ ${data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}
+                </div>
+                <div class="col fw-bold d-flex justify-content-center align-self-center" id="p-${data.id}">
+                    <i class="fa fa-trash text-danger" style="cursor: pointer" aria-hidden="true"></i>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    `
+    )
+}
+
+export {addToCart, isProductInCart}

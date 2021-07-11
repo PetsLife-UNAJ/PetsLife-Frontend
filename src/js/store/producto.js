@@ -1,16 +1,19 @@
 import { getProductoById } from './productActions.js'
+import {addToCart, isProductInCart} from './carrito.js'
+import {LoadCarrito} from './carrito.js'
 
 
+var productoDiv     = document.getElementById("productDetail")
+var loaderDiv       = document.getElementById("loader")
+var actualProduct   = document.getElementById("actualProduct")
 
 window.onload = async () => {
-    var productoDiv = document.getElementById("productDetail")
-    var loaderDiv = document.getElementById("loader")
-    var actualProduct = document.getElementById("actualProduct")
+	document.getElementById("store-cart").hidden = false
+	document.getElementById("cartIcon").onclick = () => {LoadCarrito()}
 
     var productoId = location.pathname.split("/").pop()
     var productoJson = await getProductoById(productoId)
 
-    console.log(productoJson)
     loaderDiv.remove()
     if (productoJson.status === 400) {
         productoDiv.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
@@ -20,48 +23,23 @@ window.onload = async () => {
 
 
     var productoHtml = ProductDetail(productoJson)
-
     productoDiv.insertAdjacentHTML('beforeend', productoHtml)
 
-    productoDiv.querySelector("#btn-add-cart").onclick = () => {
-        AddToCart(productoJson)
+
+    var addToCartBtn = document.getElementById("btn-add-cart")
+
+    var productInCart = isProductInCart(productoJson)
+    if (productInCart) {
+        addToCartBtn.innerHTML = "En carrito"
+        addToCartBtn.disabled = true
     }
-
-}
-
-const AddToCart = (product) => {
-    let productoJson = {
-        id: product.productoId,
-        price: product.precio,
-        name: product.nombre,
-        image: product.imagen,
-        quantity: 1
-    }
-
-    if (localStorage.length !== 0) {
-
-        let cart = JSON.parse(localStorage.cart)
-        var productExists = false
-
-        cart.forEach((producto) => {
-            if (producto.id === product.productoId) {
-                productExists = true
-                // ...
-            }
-        })
-
-        if (!productExists) {
-            console.log(cart)
-            console.log("Adding new product...")
-
-            cart.push(productoJson)
-            localStorage.setItem("cart", JSON.stringify(cart))
-        }
-    }
-    else {
-        localStorage.setItem("cart", JSON.stringify([productoJson]))
+    addToCartBtn.onclick = () => { 
+        addToCart(productoJson) 
+        addToCartBtn.innerHTML = "En carrito"
+        addToCartBtn.disabled = true
     }
 }
+
 
 const ProductDetail = (data) => {
 

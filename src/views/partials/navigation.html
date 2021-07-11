@@ -138,7 +138,7 @@
                   class="bs-menu-lv1"
                   style="text-decoration: none"
                   href="/clinic-history"
-                  title="Nosotros"
+                  title="Veterinaria"
                   role="menuitem"
                   id="btn-veterinaria"
                 >
@@ -175,12 +175,58 @@
               ><i class="fa fa-search" style="color: #bf7c2a" aria-hidden="true"></i
             ></button>
           </form>
-          <div class="cart">
-            <a style="color: black" href="/cart"
-              ><i class="bi bi-cart text-white"></i
-            ></a>
+
+        </div>
+
+         <!-- Cart (store) -->
+        <div class="actions" id="store-cart" hidden>
+          
+          <i 
+          class="fa fa-shopping-cart bs-menu-lv1" 
+          style="cursor: pointer" 
+          title="Carrito" 
+          role="menuitem" 
+          id="cartIcon" 
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight" 
+          aria-controls="offcanvasRight"
+          ></i>
+        
+          <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+              <h5 id="offcanvasRightLabel">Carrito</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div id="productoDetail">
+                <div id="productoAlert">
+        
+                </div>
+                <div class="row">
+                  <div class="col bg-white pb-3" id="productoList"></div>
+                </div>
+        
+                <div class="row">
+                  <div class="col">
+                    <div class="d-flex justify-content-between mb-2">
+        
+                      <div class="d-flex">
+                        <p class="h5 me-2" id="totalText">Total: </p>
+                        <div id="totalPrice">$ 0</div>
+                      </div>
+                    </div>
+        
+                    <div class="d-grid gap-2">
+                      <button id="comprarBtn" class="btn btn-primary d-pointer">Comprar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
+
 
         <!-- section -->
         <section class="col-auto d-none d-lg-block bs-header-cart">

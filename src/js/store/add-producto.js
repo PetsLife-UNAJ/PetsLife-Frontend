@@ -25,6 +25,7 @@ const selectCategoria = data => {
     categoria.appendChild(element);
   });
 }
+
 // Validacion de formulario con Bootstrap
 // Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
