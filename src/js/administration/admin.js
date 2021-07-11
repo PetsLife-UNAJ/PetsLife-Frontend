@@ -1,5 +1,6 @@
 import {sesion, getPayload} from '../sesion.js';
-//Chequear logeo como admin
+
+// Chequear logeo como admin
 // if (sesion) {
 //   const payload = getPayload(sesion.token);
 //   const user = JSON.parse(payload.User);

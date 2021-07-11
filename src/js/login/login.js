@@ -1,14 +1,6 @@
 import {login} from '../services/loginService.js';
 import {sesion, logOut, getPayload} from '../sesion.js';
 
-// window.onload = () => {
-//   checkLogin();
-//   changeIcon();
-//   console.log(sesion);
-//   const payload = getPayload(sesion.token);
-//   console.log(JSON.parse(payload.User));
-// };
-
 export const checkLogin = () => {
   document.getElementById('back-home').onclick = () => {
     location.href = '/home';
@@ -20,6 +12,7 @@ export const checkLogin = () => {
   if (
     !(location.pathname == '/home') &&
     !(location.pathname == '/register') &&
+    !(location.pathname == '/adoptions') &&
     !sesion
   ) {
     document.getElementById('btn-log').click();

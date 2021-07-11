@@ -1,5 +1,10 @@
 import {getAdoptables} from '../administration/adminActions.js';
+import {changeIcon, checkLogin} from '../login/login.js';
 
+window.onload = () => {
+  // changeIcon();
+  // checkLogin();
+};
 
 $(document).ready(function () {
   ListarAdoptables();
