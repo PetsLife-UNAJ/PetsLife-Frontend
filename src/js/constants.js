@@ -16,8 +16,11 @@ export const URL_API_LOGIN = 'https://localhost:44315/api/login';
 export const URL_API_REGISTER = 'https://localhost:44315/api/register';
 
 //ADOPCIONES
-export const BASE_URL_ADOPTIONS         = 'https://localhost:44363/api';
+export const BASE_URL_ADOPTIONS = 'https://localhost:44363/api';
 
 
 //STORE
 export const BASE_URL_STORE = 'http://localhost:27459/api';
+
+// HOME
+export const BASE_URL_HOME = 'http://localhost:3000/home'
