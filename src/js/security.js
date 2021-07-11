@@ -1,6 +1,6 @@
 import { sesion } from "./sesion.js";
-import { changeIcon } from "../js/login/login.js";
-import { BASE_URL_HOME } from "../js/constants.js";
+import { changeIcon } from "./login/login.js";
+import { BASE_URL_HOME } from "./constants.js";
 
 const navBarCheck = () => {
     var section = location.pathname.split("/")[1].toLowerCase();
