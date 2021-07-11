@@ -1,6 +1,7 @@
 import {sesion} from '../sesion.js';
 import {URL_API_HISTORIA_BASE, BASE_URL_ADOPTIONS} from '../constants.js';
 
+
 const handleError = (err) => {
   console.warn(err);
   return new Response(
@@ -10,6 +11,7 @@ const handleError = (err) => {
     })
   );
 };
+
 
 // ------------------------------------- CLINIC -----------------------------------------------------
 export const getTurnos = async () => {
@@ -36,6 +38,7 @@ export const getTiposMascota = async () => {
   let response = await fetch(BASE_URL_ADOPTIONS + '/Tipos', {
     headers: {Authorization: ` Bearer  ${sesion.token}`}
   }).catch(handleError);
+  console.log(response)
   let data = await response.json();
 
   return data;

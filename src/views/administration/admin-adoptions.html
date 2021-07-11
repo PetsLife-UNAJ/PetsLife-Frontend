@@ -3,48 +3,28 @@
 
 <head>
     <title>Administracion | PetsLife</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <%- include ('../partials/head.html')%>
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/css/administration.css">
+    <link rel="stylesheet" href="/css/buttons.css" />
     <script type="module" src="/js/administration/admin-adoptions.js"></script>
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark" id="navbarP">
-        <div class="container">
-            <a class="navbar-brand" href="/">PetsLife</a>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <form class="d-flex">
-                    <ul class="navbar-nav me-auto mb-2 mb-md-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Administracion</a>
-                        </li>
-                    </ul>
-                </form>
-            </div>
-        </div>
-    </nav>
+    <%- include ('../partials/navigation-admin.html')%>
+
 
     <div class="container min-vh-100 pt-4">
         <div class="row min-vh-100">
-            <div class="col-md-2 text-center" >
-                <div class="list-group list-group-flush" id="msSelector">
-                    <a href='/admin/clinic' class="list-group-item list-group-item-action d-noborder py-3 d-pointer" id="msVeterinaria" aria-current="true">
-                        Veterinaria
-                    </a>
-                    <a href='/admin/store' class="list-group-item list-group-item-action d-noborder py-3 d-pointer" id="msTienda">Tienda</a>
-                    <a href='/admin/adoptions' class="list-group-item list-group-item-action d-noborder py-3 d-pointer active" id="msAdopciones">Adopciones</a>
-                </div>
-            </div>
 
-            <div class="col-md-9">
+            <div class="col">
                 <div class="text-center pb-5 h1" id="msName">Adopciones</div>
                 
                 <div id="msBody">
-                  <button class="btn btn-light" id="agregarAnimalBtn" data-bs-toggle="modal" data-bs-target="#modal-adopciones"><i class="bi bi-plus-lg text-primary"></i> Agregar animal</button>
+                  <button class="btn btn-petslife" id="agregarAnimalBtn" data-bs-toggle="modal" data-bs-target="#modal-adopciones"><i class="bi bi-plus-lg text-primary"></i> Agregar animal</button>
                   <div>
-                      <table class="table table-hover table-borderless mt-4 caption-top">
+                      <table class="table table-striped table-hover mt-4 caption-top">
                           <caption>Listado de animales en adopcion</caption>
                           <thead>
                           <tr>
@@ -78,20 +58,8 @@
         </div>
       </div>
     </div>
+    <%- include ('../partials/footer.html')%>
 
-    <div class="footer mt-auto">
-        <footer class="container-inline">
-            <nav class="navbar navbar-dark bg-dark">
-                <div class="navbar-expand m-auto navbar-text">
-                    © 2021 FullStack, Inc.<i class="fa fa-heart"></i> by <a href="#">Back to top</a>
-                </div>
-            </nav>
-        </footer>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
-            integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
-            crossorigin="anonymous"></script>
 </body>
 
 </html>

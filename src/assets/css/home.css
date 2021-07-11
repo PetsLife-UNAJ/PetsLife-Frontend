@@ -1293,7 +1293,8 @@ body {
 }
 
 *::selection {
-  outline: none;
+  color: white;
+  background:rgba(220, 155, 76, 1);
 }
 
 /*MENU*/

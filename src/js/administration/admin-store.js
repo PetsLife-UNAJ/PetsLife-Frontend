@@ -17,15 +17,15 @@ const adminStore = async () => {
         return
     }
 
-    productosJson.forEach( productoJson => { 
+    productosJson.forEach( (productoJson) => { 
       tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
 
-        var deleteElem = document.getElementById(productoJson.productoId)
+        var deleteElem = document.getElementById(`delete-` + productoJson.productoId)
         deleteElem.onclick = () => {
-            eliminarProducto(deleteElem.id);
+            eliminarProducto(productoJson.productoId);
         };
 
-        var editElement = document.getElementById('edit-'+productoJson.productoId);
+        var editElement = document.getElementById('edit-' + productoJson.productoId);
         editElement.onclick = () => {
             editarProducto(productoJson.productoId);
         }
@@ -51,7 +51,7 @@ const GetProductoTable = (productoJson) => {
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item d-pointer" id="edit-${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
-                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
+                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="delete-${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
                     </ul>
                 </div>
             </td>

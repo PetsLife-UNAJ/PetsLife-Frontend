@@ -27,3 +27,4 @@ contactForm.addEventListener('submit', (event) => {
   var resp = fetch('/send-whatsapp', settings);
   document.getElementById('contactForm').reset();
 });
+

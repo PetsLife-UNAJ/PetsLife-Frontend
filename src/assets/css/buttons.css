@@ -1,0 +1,15 @@
+.btn.btn-petslife {
+    background: #bf7c2a;
+    border-color: #c79819;
+    color: white;
+}
+.btn.btn-petslife:hover {
+    background: #e0c57e;
+    border-color: #c79819;
+    font-weight: 400;
+}
+.btn-petslife:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background: #e0c57e;
+    border-color: #c79819;
+}

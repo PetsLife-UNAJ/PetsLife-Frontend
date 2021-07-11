@@ -4,16 +4,12 @@ import {
 	getProductosPorCategoria,
 	getProductosPorBuscador,
 } from "./productActions.js"
-import { changeIcon, checkLogin } from "../login/login.js"
+import { checkLogin } from "../login/login.js"
 import {LoadCarrito} from './carrito.js'
 
 window.onload = async () => {
-	changeIcon()
-	checkLogin();
+	//checkLogin();
 	
-	// activo carro y barra de search
-	document.getElementById("store-search").hidden = false
-	document.getElementById("store-cart").hidden = false
 	document.getElementById("cartIcon").onclick = () => {LoadCarrito()}
 	var productosJson = await getProductos()
 	renderProductos(productosJson)
