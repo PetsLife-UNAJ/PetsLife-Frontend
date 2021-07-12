@@ -154,7 +154,7 @@ const crearModal = (turno, historia) => {
         fecha.getMonth() + 1
       }/${fecha.getFullYear()}`;
       element.innerHTML = `
-   <div class="border border-1 border-dark mb-1">
+   <div class=" border-bottom border-1 border-dark mb-1">
       <div class="row">
           <h6><strong>Fecha:</strong> ${registro.fechaCreacion}</h6>
       </div>  
