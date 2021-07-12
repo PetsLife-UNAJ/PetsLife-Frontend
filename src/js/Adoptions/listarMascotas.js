@@ -11,13 +11,13 @@ $(document).ready(function () {
 
 async function ListarAdoptables() {
   var response = await getAdoptables()
-  
+  debugger
   response.forEach(element => {
 
     $("#ListaAdoptables").append(
       `<hr class="featurette-divider">
                   <div class="row featurette ">
-                      <div class = " d-flex justify-content-end"><p>Mascota id:</p><p id = "${element.mascotaId}" class = "ps-1"> ${element.mascotaId}</p></div>
+                      
                       <div class="col-md-7 order-md-2">
                       <div class="d-flex bd-highlight">
                           
@@ -49,14 +49,14 @@ async function ListarAdoptables() {
                                   <form class="row g-3 needs-validation" novalidate>
                                     <div class="col-md-4">
                                       <label for="adop_name" class="form-label">Nombre/s</label>
-                                      <input type="text" class="form-control" id="adop_name" value="Carlos" placeholder="Carlos Javier" required>
+                                      <input type="text" class="form-control" id="adop_name"   required>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
                                     </div>
                                     <div class="col-md-4">
-                                      <label for="adop_apellido" class="form-label">Last name</label>
-                                      <input type="text" class="form-control" id="adop_apellido" value="Suarez" placeholder="Suarez" required>
+                                      <label for="adop_apellido" class="form-label">Apellido/s</label>
+                                      <input type="text" class="form-control" id="adop_apellido"   required>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
@@ -66,28 +66,28 @@ async function ListarAdoptables() {
                                     <h5 class="modal-title" id="exampleModalLabel">Datos de contacto</h5>
                                     <div class="col-md-5">
                                       <label for="adop_dni" class="label">Nº Documento</label>
-                                      <input type="text" class="form-control" id="adop_dni" value="4154" placeholder="Solo numeros sin puntos" required>
+                                      <input type="text" class="form-control" id="adop_dni"  placeholder="Solo numeros sin puntos" required>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <label for="adop_tel" class="label">Nº Telefono</label>
-                                      <input type="text" class="form-control" id="adop_tel" value="1133" placeholder="Solo numeros sin espacios" required>
+                                      <input type="text" class="form-control" id="adop_tel"  placeholder="Solo numeros sin espacios" required>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <label for="adop_correo" class="label">Correo</label>
-                                      <input type="text" class="form-control" id="adop_correo" value="carlos" placeholder="example@gmail.com" required>
+                                      <input type="text" class="form-control" id="adop_correo"  placeholder="example@gmail.com" required>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
                                     </div>
                                     <div class="col-md-5">
                                       <label for="adop_dir" class="label">Direccion</label>
-                                      <input type="text" class="form-control" id="adop_dir" value="Concordia" placeholder="Calle y numero" required>
+                                      <input type="text" class="form-control" id="adop_dir"  placeholder="Calle y numero" required>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
@@ -100,7 +100,7 @@ async function ListarAdoptables() {
                                       <label for="validationCustom02" class="label">Nombre: ${element.nombre}</label><p></p>
                                       <label for="validationCustom02" class="label">Peso: ${element.peso}</label><p></p>
                                       <label for="validationCustom02" class="label">Edad: ${element.edad}</label><p></p>
-                                      <label for="validationCustom02" class="label">Id de mascota: ${element.mascotaId}</label><p></p>
+                                      
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>

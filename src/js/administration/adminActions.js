@@ -23,7 +23,7 @@ export const getTurnos = async () => {
 
 // ------------------------------------ ADOPTIONS ----------------------------------------------------
 export const getAdoptables = async () => {
-  let response = await fetch(BASE_URL_ADOPTIONS + 'Adoptables').catch(handleError);
+  let response = await fetch(BASE_URL_ADOPTIONS + 'api/Adoptables').catch(handleError);
   let data = await response.json();
 
   return data;
