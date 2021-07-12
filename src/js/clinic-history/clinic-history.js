@@ -7,9 +7,11 @@ window.onload = () => {
   if (sesion) {
     const payload = getPayload(sesion.token);
     user = JSON.parse(payload.User);
-    getClienteSesion();
-    getTurnos();
-    listarTurnos();
+    if (user.RolId === 3) {
+      getClienteSesion();
+      getTurnos();
+      listarTurnos();
+    }
   }
 };
 
@@ -142,6 +144,12 @@ const listarTurnos = () => {
     .then((res) => res.json())
     .then((res) => {
       if (sesion) {
+
+        res.sort(function (a, b) {
+          return new Date(a.horaInicio) - new Date(b.horaInicio);
+        });
+
+
         for (const turno of res) {
           if (turno.clienteId == user.Id) {
             let horario = new Date(turno.horaInicio);

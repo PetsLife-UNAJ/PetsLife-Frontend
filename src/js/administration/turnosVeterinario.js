@@ -25,10 +25,13 @@ const getTurnosVeterinario = async () => {
 
 const listarTurnos = async (turnos) => {
   const place = document.getElementById('turnos-list');
-  let historia;
+
+  turnos.sort(function (a, b) {
+    return new Date(a.horaInicio) - new Date(b.horaInicio);
+  });
 
   for (let turno of turnos) {
-    historia = await fetch(`${URL_API_HISTORIA_CLINICA}/${turno.mascotaId}`, {
+    let historia = await fetch(`${URL_API_HISTORIA_CLINICA}/${turno.mascotaId}`, {
       headers: {Authorization: ` Bearer  ${sesion.token}`}
     })
       .then((response) => response.json())
