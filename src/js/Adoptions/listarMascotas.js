@@ -1,5 +1,5 @@
-import {getAdoptables} from '../administration/adminActions.js';
-import {changeIcon, checkLogin} from '../login/login.js';
+import { getAdoptables } from '../administration/adminActions.js';
+import { changeIcon, checkLogin } from '../login/login.js';
 
 window.onload = () => {
   // changeIcon();
@@ -17,7 +17,7 @@ async function ListarAdoptables() {
     $('#ListaAdoptables').append(
       `<hr class="featurette-divider">
                   <div class="row featurette ">
-                      <div class = " d-flex justify-content-end"><p>Mascota id:</p><p id = "${element.mascotaId}" class = "ps-1"> ${element.mascotaId}</p></div>
+                      <div class = " d-flex justify-content-end"></div>
                       <div class="col-md-7 order-md-2">
                       <div class="d-flex bd-highlight">
                           
@@ -100,7 +100,6 @@ async function ListarAdoptables() {
                                       <label for="validationCustom02" class="label">Nombre: ${element.nombre}</label><p></p>
                                       <label for="validationCustom02" class="label">Peso: ${element.peso}</label><p></p>
                                       <label for="validationCustom02" class="label">Edad: ${element.edad}</label><p></p>
-                                      <label for="validationCustom02" class="label">Id de mascota: ${element.mascotaId}</label><p></p>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
@@ -116,10 +115,10 @@ async function ListarAdoptables() {
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                                         <label class="form-check-label" for="invalidCheck">
-                                          Agree to terms and conditions
+                                        Acepto los términos y condiciones 
                                         </label>
                                         <div class="invalid-feedback">
-                                          You must agree before submitting.
+                                        Debes estar de acuerdo antes de enviar. 
                                         </div>
                                       </div>
                                     </div>
@@ -146,7 +145,6 @@ async function ListarAdoptables() {
     );
 
     $(`#btn-actualizar${element.mascotaId}`).click(function () {
-      console.log('Funciono');
 
       var tipo = element.mascotaId;
       var adopcion = {
@@ -159,7 +157,6 @@ async function ListarAdoptables() {
         mascotaId: 1,
         adoptanteId: 1
       };
-      console.log(adopcion);
 
       $.ajax({
         type: 'POST',
@@ -169,15 +166,11 @@ async function ListarAdoptables() {
         dataType: 'json',
         contentType: 'application/json',
         beforeSend: function () {
-          console.log(this.data);
-          console.log('enviando...');
         },
         success: function (response) {
-          console.log(response);
           alert('Creado con exito');
         },
         error: function (response) {
-          console.log(response);
         }
       });
 

@@ -5,16 +5,17 @@ import {changeIcon, checkLogin} from '../login/login.js';
 let user = undefined;
 
 window.onload = () => {
-  
   // changeIcon();
   // checkLogin();
-  const payload = getPayload(sesion.token);
-  user = JSON.parse(payload.User);
+  if (sesion) {
+    const payload = getPayload(sesion.token);
+    user = JSON.parse(payload.User);
 
-  getClienteSesion();
-  getTurnos();
+    getClienteSesion();
+    getTurnos();
 
-  listarTurnos();
+    listarTurnos();
+  }
 };
 
 const getClienteSesion = async () => {

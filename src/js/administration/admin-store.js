@@ -9,8 +9,8 @@ var modales = document.getElementById('modales');
 window.onload = async () => { adminStore() }
 
 const adminStore = async () => {
-  
-  tiendaTableBody.innerHTML = " ";
+  debugger;
+  tiendaTableBody.innerHTML = ''
   var productosJson = await getProductos()
   spinner.style.display = 'none'
 
