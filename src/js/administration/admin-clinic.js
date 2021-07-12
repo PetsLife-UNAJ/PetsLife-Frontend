@@ -6,13 +6,13 @@ var spinner             = document.getElementById("loadingSpinner")
 var modalVeterinaria    = document.getElementById("modal-content-veterinaria")
 var agregarClienteBtn   = document.getElementById("agregarClienteBtn")
 var agregarMascotaBtn   = document.getElementById("agregarMascotaBtn")
-var solicitarTurnoBtn   = document.getElementById("solicitarTurnoBtn")
+// var solicitarTurnoBtn   = document.getElementById("solicitarTurnoBtn")
 
 
 window.onload = async () => {
     agregarClienteBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalCliente()  }
     agregarMascotaBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalMascota()  }
-    solicitarTurnoBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalTurno()    }
+    // solicitarTurnoBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalTurno()    }
 
     var turnosJson = await getTurnos()
     spinner.remove()
