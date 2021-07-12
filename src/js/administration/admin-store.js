@@ -9,7 +9,7 @@ var modales = document.getElementById('modales');
 window.onload = async () => { adminStore() }
 
 const adminStore = async () => {
-  debugger;
+  
   tiendaTableBody.innerHTML = " ";
   var productosJson = await getProductos()
   spinner.style.display = 'none'
@@ -71,7 +71,7 @@ const getModalProducto = (product) => {
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="staticBackdropLabel">Actualizar Producto</h5>
+          <h5 class="modal-title" id="staticBackdropLabel">Actualizar Producto con Id: ${product.productoId}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -88,7 +88,7 @@ const getModalProducto = (product) => {
           </div>
   
           <div class="form-floating">
-            <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example" required>
+            <select class="form-select" name="categoria" id="categoria-${product.productoId}" aria-label="Floating label select example" required>
               <option value="1" disabled selected>${product.categoria}</option>
             </select>
             <label for="categoria">Categoria</label>
@@ -178,11 +178,12 @@ const getModalProducto = (product) => {
 }
 
 
-const mostrarCategoria = async () => {
+const mostrarCategoria = async (id) => {
     const data = await getCategorias()
-
+    var categoria = document.getElementById(`categoria-${id}`);
+    categoria.innerHTML = '';
+    //var categoria = modales.querySelectorAll('#categoria');
     data.forEach(opciones => {
-        var categoria = modales.querySelector('#categoria');
         let element = document.createElement('option');
         element.value = opciones.categoriaId;
         element.innerHTML = opciones.descripcion;
@@ -194,9 +195,9 @@ const editarProducto = async (id) => {
   //formActualizar.innerHTML = " ";
  // formActualizar = document.getElementById("formActualizar-producto-${id}");
     //formActualizar.innerHTML = getActualizarForm(producto);
-    formActualizar = modales.querySelector(`#formActualizar-producto-${id}`);
+    var formActualizar = modales.querySelector(`#formActualizar-producto-${id}`);
     console.log(id)
-    await mostrarCategoria()
+    await mostrarCategoria(id)
     checkForm(id, formActualizar);
 }
 
@@ -209,7 +210,7 @@ const checkForm = (id, form) => {
       } 
       else {
           event.preventDefault();
-          actualizarProducto(id);
+          actualizarProducto(id , form);
       }
 
     form.classList.add("was-validated");
@@ -217,7 +218,7 @@ const checkForm = (id, form) => {
   );
 };
 
-const actualizarProducto = async (id) => {
+const actualizarProducto = async (id , formActualizar) => {
     var btnSubmit = document.getElementById(`btn-submit-${id}`);
 
     btnSubmit.innerHTML = `<button class="btn btn-primary" type="button" disabled>
