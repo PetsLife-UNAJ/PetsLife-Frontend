@@ -1,8 +1,22 @@
 import {login} from '../services/loginService.js';
-import {sesion, logOut} from '../sesion.js';
+import {sesion, logOut, getPayload} from '../sesion.js';
 
-window.onload = () => {
-  changeIcon();
+export const checkLogin = () => {
+  document.getElementById('back-home').onclick = () => {
+    location.href = '/home';
+  };
+
+  document.getElementById('btn-register').onclick = () => {
+    location.href = '/register';
+  };
+  if (
+    !(location.pathname == '/home') &&
+    !(location.pathname == '/register') &&
+    !(location.pathname == '/adoptions') &&
+    !sesion
+  ) {
+    document.getElementById('btn-log').click();
+  }
 };
 
 const formLogin = document.getElementById('form-login');

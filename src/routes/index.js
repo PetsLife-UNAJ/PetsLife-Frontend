@@ -22,9 +22,6 @@ router.get('/store', (req, res) => {
 });
 
 //login routes
-router.get('/login', (req, res) => {
-  res.render('login/login.html');
-});
 
 router.get('/register', (req, res) => {
   res.render('login/register.html');
@@ -39,8 +36,8 @@ router.get('/add-mascota', (req, res) => {
   res.render('clinic-history/add-mascota.html');
 });
 
-router.get('/mis-turnos', (req, res) => {
-  res.render('mis-turnos/mis-turnos.html');
+router.get('/lista-turnos', (req, res) => {
+  res.render('turnos-veterinario/lista-turnos.html');
 });
 
 //Adopciones routes
@@ -69,7 +66,6 @@ router.get('/lista-Adopciones', (req, res) => {
   res.render('adoption/adopciones.html');
 });
 
-
 // ------------------------ ADMINISTRATION ------------------------
 router.get('/admin', (req, res) => {
   res.render('administration/admin.html');
@@ -87,8 +83,5 @@ router.get('/admin/adoptions', (req, res) => {
   res.render('administration/admin-adoptions.html');
 });
 
-
-
-
-
 module.exports = router;
+

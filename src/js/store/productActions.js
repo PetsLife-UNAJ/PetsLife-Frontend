@@ -32,6 +32,20 @@ export const getCategorias = async () => {
     return data
 }
 
+export const getProductosPorCategoria = async (categoria) => {
+    let response = await fetch(BASE_URL_STORE + `api/productos?categoria=${categoria}`).catch(handleError)
+    let data = await response.json()
+
+    return data
+}
+
+export const getProductosPorBuscador = async (producto) => {
+    let response = await fetch(BASE_URL_STORE + `api/Productos?producto=${producto}`).catch(handleError)
+    let data = await response.json()
+  
+    return data
+}
+  
 export const updateProductoById = async (id, dataJson) => {
     const settings = {
         method: 'PUT',
@@ -42,8 +56,8 @@ export const updateProductoById = async (id, dataJson) => {
         body : JSON.stringify(dataJson)
     };
 
-    await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
-    let data = {status: 200}
+    let data = await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
+    if (data.status === undefined) data.status = 200
 
     return data
 }
@@ -53,8 +67,8 @@ export const deleteProductoById = async (id) => {
         method: 'DELETE',
     };
 
-    await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
-    let data = {status: 200}
+    let data = await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
+    if (data.status === undefined) data.status = 200
 
     return data
 }

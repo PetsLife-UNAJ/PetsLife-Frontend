@@ -1,5 +1,12 @@
-contactForm.addEventListener('submit', (event) => {
+import {changeIcon, checkLogin} from '../login/login.js';
 
+window.onload = () => {
+
+  // changeIcon();
+  // checkLogin();
+};
+
+contactForm.addEventListener('submit', (event) => {
   event.preventDefault();
   let info = {
     nombre: document.getElementById('nombre').value,
@@ -16,8 +23,8 @@ contactForm.addEventListener('submit', (event) => {
     },
     body: JSON.stringify(info)
   };
-  
-  var resp = fetch('/send-whatsapp', settings)
-  document.getElementById("contactForm").reset();
+
+  var resp = fetch('/send-whatsapp', settings);
+  document.getElementById('contactForm').reset();
 });
 

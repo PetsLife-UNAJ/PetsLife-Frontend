@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Veterinaria</title>
     <%- include ('../partials/head.html')%>
 
     <link rel="stylesheet" href="../../assets/css/clinic-history.css" />
@@ -13,11 +13,11 @@
   <body>
     <%- include ('../partials/navigation.html')%>
     <div class="mainContent peluqueriaContent">
-      <div class="section head">
+      <div class="section head mt-1">
         <h1>Clínica Veterinaria</h1>
         <div class="icn heart"></div>
       </div>
-      <div class="section peluqueriaMap">
+      <div class="section peluqueriaMap mt-1">
         <div class="text" style="padding-top: 50px">
           <p>En PetsLife tenemos los mejores Veterinarios</p>
           <p>Convertite en cliente y solicitá tu Turno!</p>
@@ -40,106 +40,17 @@
           >
             Solicitar Turnos
           </a>
+          <a
+            data-bs-toggle="modal"
+            data-bs-target="#modal-listado"
+            class="btn btn-secondary"
+          >
+            Mis turnos
+          </a>
         </div></div
       ></div
     >
-    <!-- MODAL CLIENTE -->
-    <!-- <div class="modal fade" id="modal-cliente" tabindex="-1">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Ingresar cliente</h5>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <form id="formCliente">
-              <div class="container">
-                <div class="row input-group mt-3">
-                  <div class="col">
-                    <label class="fw-bold">Nombre</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      maxlength="50"
-                      id="nombre"
-                      required
-                    />
-                  </div>
-                  <div class="col">
-                    <label class="fw-bold">Apellido</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      maxlength="50"
-                      id="apellido"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="row form-group input-group m-0 mt-3">
-                  <label class="fw-bold">Email</label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    maxlength="50"
-                    id="email"
-                    required
-                  />
-                </div>
-                <div class="row form-group input-group mt-3">
-                  <div class="col">
-                    <label class="fw-bold">Dni</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      maxlength="8"
-                      oninput="if(this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"
-                      id="dni"
-                      required
-                    />
-                  </div>
-                  <div class="col">
-                    <label class="fw-bold">Telefono</label>
-                    <input
-                      type="number"
-                      class="form-control"
-                      maxlength="12"
-                      id="telefono"
-                      required
-                    />
-                  </div>
-                </div>
-                <div class="row form-group input-group m-0 mt-3">
-                  <label class="fw-bold">Dirección</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    maxlength="50"
-                    id="direccion"
-                    required
-                  />
-                </div>
-              </div>
-              <div class="modal-footer justify-content-center">
-                <button
-                  type="button"
-                  class="btn btn-secondary"
-                  data-bs-dismiss="modal"
-                  >Cerrar</button
-                >
-                <button type="submit" class="btn btn-primary">Guardar</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    FIN MODAL CLIENTE -->
+
     <!-- MODAL MASCOTA -->
     <div class="modal fade" id="modal-mascota" tabindex="-1">
       <div class="modal-dialog">
@@ -188,12 +99,6 @@
                     />
                   </div>
                 </div>
-                <!-- <div class="form-group m-0 row">
-                  <label class="fw-bold">Cliente</label>
-                  <select class="custom-select form-control" id="cliente" required>
-                    <option selected disabled>Seleccione un cliente</option>
-                  </select>
-                </div> -->
               </div>
 
               <div class="modal-footer justify-content-center">
@@ -300,6 +205,50 @@
       </div>
     </div>
     <!-- FIN MODAL TURNO -->
+    <!-- MODAL LISTADO TURNOS -->
+    <div class="modal fade" id="modal-listado" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Mis turnos</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div class="container-fluid">
+              <div class="col-12 text-center">
+                <table class="table table-hover table-borderless mt-4 caption-top">
+                  <thead>
+                    <tr>
+                      <th scope="col">Fecha</th>
+                      <th scope="col">Horario</th>
+                      <th scope="col">Mascota</th>
+                      <th scope="col">Veterinario</th>
+                      <th scope="col">Consultorio</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabla-listado"> </tbody>
+                </table>
+                <div class="modal-footer justify-content-center">
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal"
+                    >Cerrar</button
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIN MODAL LISTADO TURNOS -->
 
     <div class="section offices anchor">
       <div class="center">
@@ -458,9 +407,16 @@
         </div>
       </div>
     </div>
-    <%- include ('../partials/footer.html')%>
-
-    <script type="module" src="/js/clinic-history/mascota.js"></script>
-    <script type="module" src="/js/turnos/turnos.js"></script>
+    <footer class="container">
+      <p class="float-end"><a href="#">Volver hacia Arriba</a></p>
+      <p style="color: #bf7c2a">&copy; Veterinaria digital - FullStack Team. </p>
+    </footer>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+      crossorigin="anonymous"
+    ></script>
+    <script type="module" src="/js/clinic-history/clinic-history.js"></script>
+    <script type="module" src="/js/login/login.js"></script>
   </body>
 </html>

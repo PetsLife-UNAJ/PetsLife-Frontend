@@ -2,7 +2,6 @@ $(document).ready(function () {
     var adoptables;
     var Lista_masc = [];
     $.get("https://localhost:44363/PosiblesAdoptantes", function (response) {
-        console.log(response);
         ListarAdopciones(response);
     });
 
@@ -13,14 +12,17 @@ $(document).ready(function () {
             var id_masc = element.mascotaId
             i++;
             $.get(`https://localhost:44363/api/Mascota/${id_masc}`, function (mascota) {
+<<<<<<< HEAD
 
                 console.log(mascota)
                 Lista_masc.push(mascota);
                 console.log(Lista_masc);
+=======
+>>>>>>> dev
                 $("#ListaAdoptables").append(
                     `<hr class="featurette-divider">
                             <div class="row featurette ">
-                            <div class = " d-flex justify-content-end"><p>Mascota id:</p><p id = "${element.mascotaId}" class = "ps-1"> ${element.mascotaId}</p></div>
+                            <div class = " d-flex justify-content-end"></div>
                                 <div class="col-md-7 order-md-2">
                                 <div class="d-flex bd-highlight">
                                 
@@ -147,10 +149,15 @@ $(document).ready(function () {
                 )
 
                 $(`#btn-actualizar${element.adoptanteId}`).click(function () {
+<<<<<<< HEAD
                     debugger
                     console.log("Funciono");
                     
                     if ($(`#mascota_adoptado${element.mascotaId}`).val() === "aprobado") {
+=======
+
+                    if ($(mascota_adoptado).val() == "true") {
+>>>>>>> dev
                         x = Boolean(true);
                     }
                     else {
@@ -174,11 +181,27 @@ $(document).ready(function () {
                         
                     });
                     
+<<<<<<< HEAD
                     console.log(data);
 
                     var tipo = $(`#info-masc-id${element.mascotaId}`).val();
                     console.log(tipo);
                     
+=======
+                    var data = {
+                        "tipoAnimal": "Default",
+                        "tipoAnimalId": mascota.tipoAnimalId,
+                        "adoptado": x,
+                        "imagen": mascota.imagen,
+                        "nombre": mascota.nombre,
+                        "historia": mascota.historia,
+                        "edad": parseInt(mascota.edad),
+                        "peso": parseFloat(mascota.peso)
+                    }
+
+                    var tipo = $("#mascota_id").val();
+
+>>>>>>> dev
                     $.ajax({
                         async:false,
                         url: `https://localhost:44363/api/Mascota/${tipo}`,
@@ -187,15 +210,11 @@ $(document).ready(function () {
                         contentType: "application/json",
                         data: JSON.stringify(data),
                         beforeSend: function () {
-                            console.log(this.data);
-                            console.log("enviando...");
                           },
                           success: function (response) {
-                            console.log(response);
                             alert("Creado con exito")
                           },
                           error: function (response) {
-                            console.log(response)
                           }
                     });
                     

@@ -19,7 +19,7 @@
           />
         </a>
       </div>
-      <div class="col-lg-auto text-right" style="align-self: center;">
+      <div class="col-lg-auto text-right" style="align-self: center">
         <div class="row align-items-center my-1 my-lg-0">
           <!-- abre menu-->
           <div class="col-auto d-lg-none">
@@ -74,8 +74,7 @@
             >
               <i class="fas fa-user" aria-hidden="true"></i
               ><i class="bi bi-instagram"></i>
-              <svg class="bi" width="32" height="32" fill="currentColor">
-              </svg>
+              <svg class="bi" width="32" height="32" fill="currentColor"></svg>
             </a>
 
             <a class="btn btn-link" href="/cart/display/carro" title="carro">
@@ -91,12 +90,13 @@
     </div>
     <!--row-->
   </div>
+
   <nav class="bs-header-navbar d-print-none">
     <div class="container">
       <div class="navbar navbar-expand-lg align-items-start">
         <section class="col-md col-12 position-static">
           <div class="collapse navbar-collapse" id="menuPrincipal">
-            <ul class="bs-header-nav navbar-nav" role="navegation">
+            <ul class="bs-header-nav navbar-nav" role="navegation" id="navBarMenu">
               <li class="nav-item bs-menu-close">
                 <button
                   type="button"
@@ -138,8 +138,9 @@
                   class="bs-menu-lv1"
                   style="text-decoration: none"
                   href="/clinic-history"
-                  title="Nosotros"
+                  title="Veterinaria"
                   role="menuitem"
+                  id="btn-veterinaria"
                 >
                   Veterinaria
                 </a>
@@ -159,6 +160,74 @@
           </div>
         </section>
 
+        <!-- Search bar (store) -->
+        <div id="store-search" class="me-1" hidden>
+          <form class="d-flex border bg-white" id="buscador">
+            <input
+              id="buscador-control"
+              class="form-control"
+              name="buscar"
+              type="search"
+              placeholder="Buscar"
+              aria-label="Search"
+            />
+            <button class="btn" type="submit"
+              ><i class="fa fa-search" style="color: #bf7c2a" aria-hidden="true"></i
+            ></button>
+          </form>
+
+        </div>
+
+         <!-- Cart (store) -->
+        <div class="actions" id="store-cart" hidden>
+          
+          <i 
+          class="fa fa-shopping-cart bs-menu-lv1" 
+          style="cursor: pointer" 
+          title="Carrito" 
+          role="menuitem" 
+          id="cartIcon" 
+          data-bs-toggle="offcanvas"
+          data-bs-target="#offcanvasRight" 
+          aria-controls="offcanvasRight"
+          ></i>
+        
+          <div class="offcanvas offcanvas-end" data-bs-scroll="true" tabindex="-1" id="offcanvasRight"
+            aria-labelledby="offcanvasRightLabel">
+            <div class="offcanvas-header">
+              <h5 id="offcanvasRightLabel">Carrito</h5>
+              <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <div id="productoDetail">
+                <div id="productoAlert">
+        
+                </div>
+                <div class="row">
+                  <div class="col bg-white pb-3" id="productoList"></div>
+                </div>
+        
+                <div class="row">
+                  <div class="col">
+                    <div class="d-flex justify-content-between mb-2">
+        
+                      <div class="d-flex">
+                        <p class="h5 me-2" id="totalText">Total: </p>
+                        <div id="totalPrice">$ 0</div>
+                      </div>
+                    </div>
+        
+                    <div class="d-grid gap-2">
+                      <button id="comprarBtn" class="btn btn-primary d-pointer">Comprar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
         <!-- section -->
         <section class="col-auto d-none d-lg-block bs-header-cart">
           <a
@@ -172,17 +241,17 @@
         </section>
 
         <!-- Modal de login -->
-        <div class="modal fade" id="modal-login" tabindex="-1">
+        <div
+          class="modal fade"
+          id="modal-login"
+          tabindex="-1"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+        >
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
                 <h5 class="modal-title">Iniciar sesión</h5>
-                <button
-                  type="button"
-                  class="btn-close"
-                  data-bs-dismiss="modal"
-                  aria-label="Close"
-                ></button>
               </div>
               <div class="modal-body">
                 <div class="container">
@@ -208,13 +277,29 @@
                         class="form-control mb-2"
                         required
                       />
-                      <div class="row justify-content-center">
+                      <div class="justify-content-center row">
                         <button
                           type="submit"
                           id="btn-login"
                           class="btn btn-primary my-3 w-50"
                           >Ingresar</button
                         >
+                      </div>
+                      <div class="row justify-content-center">
+                        <button
+                          type="button"
+                          class="btn btn-secondary my-3 w-50"
+                          id="back-home"
+                          >Volver al inicio</button
+                        >
+                        <button
+                          type="button"
+                          id="btn-register"
+                          class="btn btn-primary my-3 w-50"
+                          href="/register"
+                          >Registrarse</button
+                        >
+
                         <span id="estado-login"></span
                       ></div>
                     </form> </div

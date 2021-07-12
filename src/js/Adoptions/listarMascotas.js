@@ -1,23 +1,23 @@
-import {getAdoptables} from '../administration/adminActions.js'
+import { getAdoptables } from '../administration/adminActions.js';
+import { changeIcon, checkLogin } from '../login/login.js';
 
-
+window.onload = () => {
+  // changeIcon();
+  // checkLogin();
+};
 
 $(document).ready(function () {
-
-
   ListarAdoptables();
-
 });
 
 async function ListarAdoptables() {
-  var response = await getAdoptables()
-  debugger
-  response.forEach(element => {
+  var response = await getAdoptables();
 
-    $("#ListaAdoptables").append(
+  response.forEach((element) => {
+    $('#ListaAdoptables').append(
       `<hr class="featurette-divider">
                   <div class="row featurette ">
-                      
+                      <div class = " d-flex justify-content-end"></div>
                       <div class="col-md-7 order-md-2">
                       <div class="d-flex bd-highlight">
                           
@@ -100,7 +100,6 @@ async function ListarAdoptables() {
                                       <label for="validationCustom02" class="label">Nombre: ${element.nombre}</label><p></p>
                                       <label for="validationCustom02" class="label">Peso: ${element.peso}</label><p></p>
                                       <label for="validationCustom02" class="label">Edad: ${element.edad}</label><p></p>
-                                      
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
@@ -116,10 +115,10 @@ async function ListarAdoptables() {
                                       <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
                                         <label class="form-check-label" for="invalidCheck">
-                                          Agree to terms and conditions
+                                        Acepto los términos y condiciones 
                                         </label>
                                         <div class="invalid-feedback">
-                                          You must agree before submitting.
+                                        Debes estar de acuerdo antes de enviar. 
                                         </div>
                                       </div>
                                     </div>
@@ -143,46 +142,35 @@ async function ListarAdoptables() {
                   </div>
                   </div>
               `
-
-
     );
 
     $(`#btn-actualizar${element.mascotaId}`).click(function () {
 
-      console.log("Funciono");
-
       var tipo = element.mascotaId;
       var adopcion = {
-
-        "nombre": $("#adop_name").val(),
-        "apellido": $("#adop_apellido").val(),
-        "dni": $("#adop_dni").val(),
-        "direccion": $("#adop_dir").val(),
-        "telefono": $("#adop_tel").val(),
-        "email": $("#adop_correo").val(),
-        "mascotaId": 1,
-        "adoptanteId": 1
-
+        nombre: $('#adop_name').val(),
+        apellido: $('#adop_apellido').val(),
+        dni: $('#adop_dni').val(),
+        direccion: $('#adop_dir').val(),
+        telefono: $('#adop_tel').val(),
+        email: $('#adop_correo').val(),
+        mascotaId: 1,
+        adoptanteId: 1
       };
-      console.log(adopcion);
 
       $.ajax({
         type: 'POST',
         async: false,
         url: `https://localhost:44363/api/Adoptante/${tipo}`,
         data: JSON.stringify(adopcion),
-        dataType: "json",
-        contentType: "application/json",
+        dataType: 'json',
+        contentType: 'application/json',
         beforeSend: function () {
-          console.log(this.data);
-          console.log("enviando...");
         },
         success: function (response) {
-          console.log(response);
-          alert("Creado con exito")
+          alert('Creado con exito');
         },
         error: function (response) {
-          console.log(response)
         }
       });
 
@@ -199,11 +187,6 @@ async function ListarAdoptables() {
         },
       });
         */
-
     });
-
-
-
   });
-
-};
+}

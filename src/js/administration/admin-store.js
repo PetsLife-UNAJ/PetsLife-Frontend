@@ -5,30 +5,32 @@ var tiendaTableBody     = document.getElementById("tiendaTableBody")
 var spinner             = document.getElementById("loadingSpinner")
 var formActualizar      = document.getElementById('formActualizar-producto');
 
-window.onload = async () => {
-    var productosJson = await getProductos()
-    spinner.remove()
+window.onload = async () => { adminStore() }
+
+const adminStore = async () => {
+  tiendaTableBody.innerHTML = ''
+  var productosJson = await getProductos()
+  spinner.style.display = 'none'
 
     if (productosJson.status === 400) {
-        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
+        msBody.innerHTML = `<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>`;
         return
     }
 
-    productosJson.forEach((productoJson) => {
-        tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
+    productosJson.forEach( (productoJson) => { 
+      tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
 
-        var deleteElem = document.getElementById(productoJson.productoId)
+        var deleteElem = document.getElementById(`delete-` + productoJson.productoId)
         deleteElem.onclick = () => {
-            eliminarProducto(deleteElem.id);
+            eliminarProducto(productoJson.productoId);
         };
 
-        var editElement = document.getElementById('edit-'+productoJson.productoId);
+        var editElement = document.getElementById('edit-' + productoJson.productoId);
         editElement.onclick = () => {
             editarProducto(productoJson.productoId);
         }
     });
 }
-
 
 const GetProductoTable = (productoJson) => {
     return (
@@ -49,7 +51,7 @@ const GetProductoTable = (productoJson) => {
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item d-pointer" id="edit-${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
-                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
+                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="delete-${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
                     </ul>
                 </div>
             </td>
@@ -74,13 +76,25 @@ const editarProducto = async (id) => {
     formActualizar.innerHTML = getActualizarForm()
 
     await mostrarCategoria()
-
-    formActualizar.addEventListener('submit', (e) => {
-        e.preventDefault();
-        actualizarProducto(id)
-      
-    })
+    checkForm(id, formActualizar);
 }
+
+const checkForm = (id, form) => {
+  form.addEventListener("submit", (event) => {
+    console.log(form.checkValidity());
+    if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      } 
+      else {
+          event.preventDefault();
+          actualizarProducto(id);
+      }
+
+    form.classList.add("was-validated");
+    }, false
+  );
+};
 
 const actualizarProducto = async (id) => {
     var btnSubmit = document.getElementById('btn-submit');
@@ -107,6 +121,7 @@ const actualizarProducto = async (id) => {
         cantidadStock: stock,
         precio: precio,
     }
+    
     var updatedProducto = await updateProductoById(id, datosJson)
 
     if (updatedProducto.status === 400) {
@@ -123,10 +138,12 @@ const actualizarProducto = async (id) => {
             </div>
         </div>  
         `
+        adminStore();
         return
+        
     }
-
-    // success update
+    else {
+            // success update
     formActualizar.innerHTML = 
     `   
     <div class="card text-center p-0 my-2 ">
@@ -139,6 +156,8 @@ const actualizarProducto = async (id) => {
         </div>
     </div> 
     `
+    adminStore();
+    }
 }
 
 const eliminarProducto = async (id) => {
@@ -147,55 +166,105 @@ const eliminarProducto = async (id) => {
 
     // todo: cambiar por mejor forma de mostrar los mensajes
     if (response.status === 400) {
-        alert('No se pudo eliminar el producto')
+        alert('No se pudo eliminar el producto');
+        adminStore();
         return
     }
     alert('Se elimino correctamente el producto');
+    adminStore()
 }
 
 const getActualizarForm = () => {
     return (
         `
-        <div class="form-floating">         
-                  <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre">
-                  <label for="nom"><p id="nombrep">Nombre</p></label>   
-                </div>
-      
-                <div class="form-floating">
-                  <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example">
-                    <option value="" disabled selected>Elija una opcion</option>
-                  </select>
-                  <label for="categoria">Categoria</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" >
-                  <label for="imagen">Imagen</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion">
-                  <label for="descripcion">Descripcion</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" >
-                  <label for="rating">Rating</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" >
-                  <label for="stock">Stock</label>
-                </div>
-      
-                <div class="form-floating">
-                  <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" >
-                  <label for="precio">Precio</label>
-                </div>
+        <div class="form-floating">       
+          <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre" required>
+          <label for="nom">Nombre</label> 
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Nombre.
+          </div>
+        </div>
 
-                <div class="form-floating">
-                  <button type="submit" class="btn btn-primary mb-3" id="btn-submit">Actualizar</button>
-                </div>
-                `
+        <div class="form-floating">
+          <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example" required>
+            <option value="" disabled selected>Elija una opcion</option>
+          </select>
+          <label for="categoria">Categoria</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Por favor elija una opcion valida..
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" required>
+          <label for="imagen">Imagen</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese una Imagen.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion" required>
+          <label for="descripcion">Descripcion</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese una Descripcion.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" min="1" max="10" required>
+          <label for="rating">Rating</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Rating valido, entre 1 y 10.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" min="1" required>
+          <label for="stock">Stock</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Stock.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" min="1" required>
+          <label for="precio">Precio</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Precio.
+          </div>
+        </div>
+
+        <!--
+        <div class="form-floating">
+          <input type="number" class="form-control" id="tiendaId" name="tiendaId" placeholder="Id Tienda">
+          <label for="tiendaId">Tienda Id</label>
+        </div>
+        -->
+
+        <div class="form-floating">
+          <button type="submit" class="btn btn-primary mb-3" id="btn-submit">Actualizar</button>
+        </div>  `
     )
 }

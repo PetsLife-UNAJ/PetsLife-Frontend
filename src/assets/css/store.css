@@ -1,0 +1,22 @@
+.btn.btn-primary {
+    background: #c79819;
+    border-color: #c79819;
+}
+.btn.btn-primary:hover {
+    background: #e0c57e;
+    border-color: #c79819;
+    font-weight: 400;
+}
+.btn-primary:not(:disabled):not(.disabled).active, .btn-primary:not(:disabled):not(.disabled):active, .show>.btn-primary.dropdown-toggle {
+    color: #fff;
+    background: #e0c57e;
+    border-color: #c79819;
+}
+
+#buscador {
+    border-radius: 0 0 1rem 1rem;
+}
+
+#buscador-control {
+    border-radius: 0 0 1rem 1rem;
+}

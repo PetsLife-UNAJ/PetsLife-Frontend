@@ -107,7 +107,7 @@ a,
 .bs-header-navbar {
   padding: 0;
   width: 100%;
-  background-image: url(https://dojiw2m9tvv09.cloudfront.net/21828/22/petss.png?699);
+  /* background-image: url(https://dojiw2m9tvv09.cloudfront.net/21828/22/petss.png?699); */
   background-color: white;
 }
 
@@ -1293,7 +1293,8 @@ body {
 }
 
 *::selection {
-  outline: none;
+  color: white;
+  background:rgba(220, 155, 76, 1);
 }
 
 /*MENU*/
@@ -1964,4 +1965,8 @@ input {
 
 .btn-link:hover {
   color: #F2CA50;
+}
+
+.btn-link {
+  text-decoration: none !important;
 }
