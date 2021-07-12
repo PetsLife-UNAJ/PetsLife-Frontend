@@ -37,7 +37,6 @@ $(document).ready(function(){
                 "adoptado" : false,
                 "TipoAnimalId" : tipo
             };
-            console.log(MascotaDTO);
             
             $.ajax({
                 type : 'POST',
@@ -47,16 +46,12 @@ $(document).ready(function(){
                 dataType : "json",
                 contentType : "application/json" ,
                 beforeSend :function(){
-                    console.log(this.data);
-                    console.log("enviando...");
                 },
                 success : function(response){
-                    console.log(response);
                     $("#registro")[0].reset();
                     alert("Creado con exito")
                 },
                 error : function(response){
-                    console.log(response)
                 }
             });
 
