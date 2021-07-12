@@ -4,10 +4,16 @@ import {
   URL_API_REGISTROS,
   URL_API_TRATAMIENTO
 } from '../constants.js';
-import {sesion} from '../sesion.js';
+import {sesion, getPayload} from '../sesion.js';
+
+let user;
+if (sesion) {
+  const payload = getPayload(sesion.token);
+  user = JSON.parse(payload.User);
+}
 
 const getTurnosVeterinario = async () => {
-  await fetch(`${URL_API_TURNO}/${sesion.usuario.id}`, {
+  await fetch(`${URL_API_TURNO}/${user.Id}`, {
     headers: {Authorization: ` Bearer  ${sesion.token}`}
   })
     .then((response) => response.json())
@@ -19,9 +25,10 @@ const getTurnosVeterinario = async () => {
 
 const listarTurnos = async (turnos) => {
   const place = document.getElementById('turnos-list');
+  let historia;
 
-  for (const turno of turnos) {
-    let historia = await fetch(`${URL_API_HISTORIA_CLINICA}/${turno.mascotaId}`, {
+  for (let turno of turnos) {
+    historia = await fetch(`${URL_API_HISTORIA_CLINICA}/${turno.mascotaId}`, {
       headers: {Authorization: ` Bearer  ${sesion.token}`}
     })
       .then((response) => response.json())
@@ -38,7 +45,7 @@ const listarTurnos = async (turnos) => {
       fechaTurno = fechaTurno + '0';
     }
     turno.horaInicio = fechaTurno;
-    const element = document.createElement('tr');
+    let element = document.createElement('tr');
     element.classList = 'border';
     element.innerHTML = `
     <td>${turno.horaInicio}</td>
@@ -96,15 +103,13 @@ const crearModal = (turno, historia) => {
   </div>   
   `;
   listaModal.appendChild(element);
-  const btnTurno = document.getElementById(`btn-turno-${turno.turnoId}`);
+  let btnTurno = document.getElementById(`btn-turno-${turno.turnoId}`);
   btnTurno.onclick = () => {
-    const tratamiento = document.getElementById(
+    let tratamiento = document.getElementById(
       `tratamiento-input-${turno.turnoId}`
     ).value;
-    const registro = document.getElementById(
-      `registro-input-${turno.turnoId}`
-    ).value;
-    const mascotaId = turno.mascotaId;
+    let registro = document.getElementById(`registro-input-${turno.turnoId}`).value;
+    let mascotaId = turno.mascotaId;
 
     let data = {...turno, tratamiento, registro, mascotaId};
     agregarRegistro(data);
@@ -134,7 +139,7 @@ const crearModal = (turno, historia) => {
   listaModal.appendChild(elementB);
 
   const place = document.getElementById(`modal-historia-${turno.turnoId}`);
-  for (const registro of historia) {
+  for (let registro of historia) {
     let element = document.createElement('div');
 
     if (registro.analisis == null) {
