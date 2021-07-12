@@ -8,6 +8,7 @@ var formActualizar      = document.getElementById('formActualizar-producto');
 window.onload = async () => { adminStore() }
 
 const adminStore = async () => {
+  debugger;
   tiendaTableBody.innerHTML = ''
   var productosJson = await getProductos()
   spinner.style.display = 'none'
@@ -74,7 +75,7 @@ const mostrarCategoria = async () => {
 
 const editarProducto = async (id) => {
     formActualizar.innerHTML = getActualizarForm()
-
+    console.log(id)
     await mostrarCategoria()
     checkForm(id, formActualizar);
 }
