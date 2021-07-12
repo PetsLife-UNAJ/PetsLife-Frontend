@@ -64,8 +64,6 @@ const renderProductos = (productosJson) => {
 		productosDiv.innerHTML = `<div class="alert alert-danger">No hay productos disponibles de esta categoria</div>`
 	}
 
-	//console.log(productosJson);
-
 	productosJson.forEach((productoJson) => {
 		productosDiv.insertAdjacentHTML("beforeend", ProductCard(productoJson))
 	})

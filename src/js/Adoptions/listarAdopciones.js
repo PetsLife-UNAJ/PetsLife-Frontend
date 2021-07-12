@@ -1,7 +1,6 @@
 $(document).ready(function () {
     var adoptables;
     $.get("https://localhost:44363/PosiblesAdoptantes", function (response) {
-        console.log(response);
         ListarAdopciones(response);
     });
 
@@ -12,11 +11,10 @@ $(document).ready(function () {
             var id_masc = element.mascotaId
             i++;
             $.get(`https://localhost:44363/api/Mascota/${id_masc}`, function (mascota) {
-                console.log(mascota)
                 $("#ListaAdoptables").append(
                     `<hr class="featurette-divider">
                             <div class="row featurette ">
-                            <div class = " d-flex justify-content-end"><p>Mascota id:</p><p id = "${element.mascotaId}" class = "ps-1"> ${element.mascotaId}</p></div>
+                            <div class = " d-flex justify-content-end"></div>
                                 <div class="col-md-7 order-md-2">
                                 <div class="d-flex bd-highlight">
                                 
@@ -152,8 +150,6 @@ $(document).ready(function () {
 
                 $(`#btn-actualizar${element.adoptanteId}`).click(function () {
 
-                    console.log("Funciono");
-                    
                     if ($(mascota_adoptado).val() == "true") {
                         x = Boolean(true);
                     }
@@ -172,11 +168,9 @@ $(document).ready(function () {
                         "edad": parseInt(mascota.edad),
                         "peso": parseFloat(mascota.peso)
                     }
-                    console.log(data);
 
                     var tipo = $("#mascota_id").val();
-                    console.log(tipo);
-                    
+
                     $.ajax({
                         async:false,
                         url: `https://localhost:44363/api/Mascota/${tipo}`,
@@ -185,15 +179,11 @@ $(document).ready(function () {
                         contentType: "application/json",
                         data: JSON.stringify(data),
                         beforeSend: function () {
-                            console.log(this.data);
-                            console.log("enviando...");
                           },
                           success: function (response) {
-                            console.log(response);
                             alert("Creado con exito")
                           },
                           error: function (response) {
-                            console.log(response)
                           }
                     });
                     
