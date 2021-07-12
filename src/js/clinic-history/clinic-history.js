@@ -141,7 +141,9 @@ const createTurno = (data) => {
 };
 
 const listarTurnos = () => {
-  fetch(URL_API_TURNO)
+  fetch(URL_API_TURNO, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
     .then((res) => res.json())
     .then((res) => {
       if (sesion) {
