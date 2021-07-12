@@ -8,7 +8,8 @@ var formActualizar      = document.getElementById('formActualizar-producto');
 window.onload = async () => { adminStore() }
 
 const adminStore = async () => {
-  tiendaTableBody.innerHTML = ''
+  debugger;
+  tiendaTableBody.innerHTML = " ";
   var productosJson = await getProductos()
   spinner.style.display = 'none'
 
@@ -27,7 +28,7 @@ const adminStore = async () => {
 
         var editElement = document.getElementById('edit-' + productoJson.productoId);
         editElement.onclick = () => {
-            editarProducto(productoJson.productoId);
+            editarProducto(productoJson.productoId , productoJson);
         }
     });
 }
@@ -72,8 +73,9 @@ const mostrarCategoria = async () => {
     });
 }
 
-const editarProducto = async (id) => {
-    formActualizar.innerHTML = getActualizarForm()
+const editarProducto = async (id , producto) => {
+  formActualizar.innerHTML = " ";
+    formActualizar.innerHTML = getActualizarForm(producto)
 
     await mostrarCategoria()
     checkForm(id, formActualizar);
@@ -174,11 +176,11 @@ const eliminarProducto = async (id) => {
     adminStore()
 }
 
-const getActualizarForm = () => {
+const getActualizarForm = (product) => {
     return (
         `
         <div class="form-floating">       
-          <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre" required>
+          <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre" value="${product.nombre}" required>
           <label for="nom">Nombre</label> 
           <div class="valid-feedback">
             Bien!
@@ -202,7 +204,7 @@ const getActualizarForm = () => {
         </div>
 
         <div class="form-floating">
-          <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" required>
+          <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" value="${product.imagen}" required>
           <label for="imagen">Imagen</label>
           <div class="valid-feedback">
             Bien!
@@ -213,7 +215,7 @@ const getActualizarForm = () => {
         </div>
 
         <div class="form-floating">
-          <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion" required>
+          <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion" value="${product.descripcion}" required>
           <label for="descripcion">Descripcion</label>
           <div class="valid-feedback">
             Bien!
@@ -224,7 +226,7 @@ const getActualizarForm = () => {
         </div>
 
         <div class="form-floating">
-          <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" min="1" max="10" required>
+          <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" min="1" max="10" value="${product.rating}" required>
           <label for="rating">Rating</label>
           <div class="valid-feedback">
             Bien!
@@ -235,7 +237,7 @@ const getActualizarForm = () => {
         </div>
 
         <div class="form-floating">
-          <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" min="1" required>
+          <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" min="1" value="${product.cantidadStock}" required>
           <label for="stock">Stock</label>
           <div class="valid-feedback">
             Bien!
@@ -246,7 +248,7 @@ const getActualizarForm = () => {
         </div>
 
         <div class="form-floating">
-          <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" min="1" required>
+          <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" min="1" value="${product.precio}" required>
           <label for="precio">Precio</label>
           <div class="valid-feedback">
             Bien!
