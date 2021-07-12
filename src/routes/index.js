@@ -58,10 +58,6 @@ router.get('/producto/:id', (req, res) => {
   res.render('store/producto.html');
 });
 
-router.get('/cart', (req, res) => {
-  res.render('store/carrito.html');
-});
-
 router.get('/lista-Adopciones', (req, res) => {
   res.render('adoption/adopciones.html');
 });

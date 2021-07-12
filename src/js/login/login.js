@@ -13,6 +13,7 @@ export const checkLogin = () => {
     !(location.pathname == '/home') &&
     !(location.pathname == '/register') &&
     !(location.pathname == '/adoptions') &&
+    !(location.pathname == '/store') &&
     !sesion
   ) {
     document.getElementById('btn-log').click();

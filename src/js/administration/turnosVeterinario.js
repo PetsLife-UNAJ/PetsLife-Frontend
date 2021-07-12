@@ -25,10 +25,13 @@ const getTurnosVeterinario = async () => {
 
 const listarTurnos = async (turnos) => {
   const place = document.getElementById('turnos-list');
-  let historia;
+
+  turnos.sort(function (a, b) {
+    return new Date(a.horaInicio) - new Date(b.horaInicio);
+  });
 
   for (let turno of turnos) {
-    historia = await fetch(`${URL_API_HISTORIA_CLINICA}/${turno.mascotaId}`, {
+    let historia = await fetch(`${URL_API_HISTORIA_CLINICA}/${turno.mascotaId}`, {
       headers: {Authorization: ` Bearer  ${sesion.token}`}
     })
       .then((response) => response.json())
@@ -36,7 +39,6 @@ const listarTurnos = async (turnos) => {
         return res;
       })
       .catch((err) => console.log(err));
-
     let fecha = new Date(turno.horaInicio);
 
     let fechaTurno = fecha.getHours() + ':' + fecha.getMinutes();
@@ -93,7 +95,7 @@ const crearModal = (turno, historia) => {
             <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="btn-turno-${turno.turnoId}"
             >Terminar</button
           >
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
           >Cancelar</button
         >
         </form>
@@ -125,10 +127,10 @@ const crearModal = (turno, historia) => {
         <div class="modal-header">
         <h5 class="modal-title">Historia de ${turno.mascotaNombre}</h5>
         </div>
-        <div class='container'>
+      
         <div class="modal-body" id="modal-historia-${turno.turnoId}">
-                
-          <h2>Historia:</h2>
+        <div class='container'> 
+          
         
       </div>
       </div>
@@ -147,13 +149,20 @@ const crearModal = (turno, historia) => {
         <h6 class="mt-2 text-muted">No posee historia clinica.</h6>
       `;
     } else {
+      let fecha = new Date(registro.fechaCreacion);
+      registro.fechaCreacion = `${fecha.getDate()}/${
+        fecha.getMonth() + 1
+      }/${fecha.getFullYear()}`;
       element.innerHTML = `
-   <div class="border border-2 border-dark mb-1">
+   <div class="border border-1 border-dark mb-1">
       <div class="row">
-      <h6><strong>Registro:</strong> ${registro.analisis}</h6>
+          <h6><strong>Fecha:</strong> ${registro.fechaCreacion}</h6>
+      </div>  
+      <div class="row">
+         <h6><strong>Registro:</strong> ${registro.analisis}</h6>
       </div>
       <div class="row">
-      <h6><strong>Tratamiento:</strong> ${registro.tratamiento}</h6>
+          <h6><strong>Tratamiento:</strong> ${registro.tratamiento}</h6>
       </div>
     </div>
     `;

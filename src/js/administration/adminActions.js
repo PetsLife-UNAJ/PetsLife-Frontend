@@ -15,7 +15,7 @@ const handleError = (err) => {
 
 // ------------------------------------- CLINIC -----------------------------------------------------
 export const getTurnos = async () => {
-  let response = await fetch(URL_API_HISTORIA_BASE + '/turno', {
+  let response = await fetch(URL_API_HISTORIA_BASE + '/Turno', {
     headers: {Authorization: ` Bearer  ${sesion.token}`}
   }).catch(handleError);
   let data = await response.json();

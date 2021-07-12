@@ -1,20 +1,17 @@
 import {sesion, getPayload} from '../sesion.js';
 import {URL_API_CLIENTE, URL_API_TURNO, URL_API_MASCOTA} from '../constants.js';
-import {changeIcon, checkLogin} from '../login/login.js';
 
 let user = undefined;
 
 window.onload = () => {
-  // changeIcon();
-  // checkLogin();
   if (sesion) {
     const payload = getPayload(sesion.token);
     user = JSON.parse(payload.User);
-
-    getClienteSesion();
-    getTurnos();
-
-    listarTurnos();
+    if (user.RolId === 3) {
+      getClienteSesion();
+      getTurnos();
+      listarTurnos();
+    }
   }
 };
 
@@ -141,10 +138,18 @@ const createTurno = (data) => {
 };
 
 const listarTurnos = () => {
-  fetch(URL_API_TURNO)
+  fetch(URL_API_TURNO, {
+    headers: {Authorization: ` Bearer  ${sesion.token}`}
+  })
     .then((res) => res.json())
     .then((res) => {
       if (sesion) {
+
+        res.sort(function (a, b) {
+          return new Date(a.horaInicio) - new Date(b.horaInicio);
+        });
+
+
         for (const turno of res) {
           if (turno.clienteId == user.Id) {
             let horario = new Date(turno.horaInicio);
@@ -155,7 +160,7 @@ const listarTurnos = () => {
             turno.horaInicio = horaTurno;
 
             let fecha = new Date(turno.fecha);
-            turno.fecha = `${fecha.getDay()}/${
+            turno.fecha = `${fecha.getDate()}/${
               fecha.getMonth() + 1
             }/${fecha.getFullYear()}`;
 

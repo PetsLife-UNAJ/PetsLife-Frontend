@@ -1,33 +1,38 @@
-import { getTurnos } from "./adminActions.js"
+import {getTurnos} from './adminActions.js';
 
-var msBody              = document.getElementById("msBody")
-var turnosTableBody     = document.getElementById("turnosTableBody")
-var spinner             = document.getElementById("loadingSpinner")
-var modalVeterinaria    = document.getElementById("modal-content-veterinaria")
-var agregarClienteBtn   = document.getElementById("agregarClienteBtn")
-var agregarMascotaBtn   = document.getElementById("agregarMascotaBtn")
-
+var msBody = document.getElementById('msBody');
+var turnosTableBody = document.getElementById('turnosTableBody');
+var spinner = document.getElementById('loadingSpinner');
+var modalVeterinaria = document.getElementById('modal-content-veterinaria');
+var agregarClienteBtn = document.getElementById('agregarClienteBtn');
+var agregarMascotaBtn = document.getElementById('agregarMascotaBtn');
 
 window.onload = async () => {
-    agregarClienteBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalCliente()  }
-    agregarMascotaBtn.onclick = () => { modalVeterinaria.innerHTML = GetModalMascota()  }
+  agregarClienteBtn.onclick = () => {
+    modalVeterinaria.innerHTML = GetModalCliente();
+  };
+  agregarMascotaBtn.onclick = () => {
+    modalVeterinaria.innerHTML = GetModalMascota();
+  };
 
-    var turnosJson = await getTurnos()
-    spinner.remove()
+  var turnosJson = await getTurnos();
+  spinner.remove();
 
-    if (turnosJson.status === 400) {
-        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los turnos de la base de datos</div>')
-        return
-    }
+  if (turnosJson.status === 400) {
+    msBody.insertAdjacentHTML(
+      'beforeend',
+      '<div class="alert alert-danger">Error al obtener los turnos de la base de datos</div>'
+    );
+    return;
+  }
 
-    turnosJson.forEach((turnoJson) => {
-        turnosTableBody.insertAdjacentHTML('beforeend', GetTurnoTable(turnoJson))
-    })
-}
+  turnosJson.forEach((turnoJson) => {
+    turnosTableBody.insertAdjacentHTML('beforeend', GetTurnoTable(turnoJson));
+  });
+};
 
 const GetModalMascota = () => {
-    return (
-        `
+  return `
         <div class="modal-header">
         <h5 class="modal-title">Ingresar mascota</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -62,13 +67,11 @@ const GetModalMascota = () => {
           </div>
         </form>
       </div>
-        `
-    )
-}
+        `;
+};
 
 const GetModalCliente = () => {
-    return (
-        `
+  return `
         <div class="modal-header">
         <h5 class="modal-title">Ingresar cliente</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -112,33 +115,27 @@ const GetModalCliente = () => {
           </div>
         </form>
         </div>
-        `
-    )
-}
+        `;
+};
 
 const GetTurnoTable = (turnoJson) => {
-    return (
-        `
+  let horario = new Date(turnoJson.horaInicio);
+  let horaTurno = horario.getHours() + ':' + horario.getMinutes();
+  if (horario.getMinutes() == 0) {
+    horaTurno = horaTurno + '0';
+  }
+  turnoJson.horaInicio = horaTurno;
+
+  return `
         <tr>
-            <th scope="row">?</th>
-            <td>${turnoJson.fecha}</td>
+            <th scope="row">${turnoJson.turnoId}</th>
+            <td>${turnoJson.horaInicio}</td>
             <td>${turnoJson.mascotaNombre}</td>
             <td>${turnoJson.veterinarioNombre} ${turnoJson.veterinarioApellido}</td>
             <td>${turnoJson.clienteNombre} ${turnoJson.clienteApellido}</td>
             <td>${turnoJson.clienteTelefono}</td>
             <td>${turnoJson.consultorioNumero}</td>
-            <td>
-            <div class="dropdown">
-                <div id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="bi bi-three-dots-vertical d-pointer"></i>
-                </div>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item d-pointer"><i class="bi bi-pencil"></i> Editar</a></li>
-                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer"><i class="bi bi-trash"></i> Eliminar</a></li>
-                    </ul>
-                </div>
-            </td>
+           
         </tr>
-        `
-    )
-}
+        `;
+};
