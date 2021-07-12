@@ -17,6 +17,11 @@ window.onload = async () => {
 
   var turnosJson = await getTurnos();
   spinner.remove();
+  
+  //Ordenar por horario
+  turnosJson.sort(function (a, b) {
+    return new Date(a.horaInicio) - new Date(b.horaInicio);
+  });
 
   if (turnosJson.status === 400) {
     msBody.insertAdjacentHTML(
