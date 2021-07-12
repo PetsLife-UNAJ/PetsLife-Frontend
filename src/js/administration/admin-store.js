@@ -3,7 +3,8 @@ import { getProductos, getCategorias, updateProductoById, deleteProductoById} fr
 var msBody              = document.getElementById("msBody")
 var tiendaTableBody     = document.getElementById("tiendaTableBody")
 var spinner             = document.getElementById("loadingSpinner")
-var formActualizar      = document.getElementById('formActualizar-producto');
+//var formActualizar      = document.getElementById('formActualizar-producto');
+var modales = document.getElementById('modales');
 
 window.onload = async () => { adminStore() }
 
@@ -21,6 +22,8 @@ const adminStore = async () => {
     productosJson.forEach( (productoJson) => { 
       tiendaTableBody.insertAdjacentHTML('beforeend', GetProductoTable(productoJson));
 
+      modales.insertAdjacentHTML('beforeend', getModalProducto(productoJson)); 
+
         var deleteElem = document.getElementById(`delete-` + productoJson.productoId)
         deleteElem.onclick = () => {
             eliminarProducto(productoJson.productoId);
@@ -28,7 +31,7 @@ const adminStore = async () => {
 
         var editElement = document.getElementById('edit-' + productoJson.productoId);
         editElement.onclick = () => {
-            editarProducto(productoJson.productoId , productoJson);
+            editarProducto(productoJson.productoId);
         }
     });
 }
@@ -51,7 +54,7 @@ const GetProductoTable = (productoJson) => {
                         <i class="bi bi-three-dots-vertical d-pointer" id="tresPuntos"></i>
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item d-pointer" id="edit-${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto" aria-controls="actualizarProducto"><i class="bi bi-pencil"></i> Editar</a></li>
+                        <li><a class="dropdown-item d-pointer" id="edit-${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto-${productoJson.productoId}" aria-controls="actualizarProducto-${productoJson.productoId}"><i class="bi bi-pencil"></i> Editar</a></li>
                         <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="delete-${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
                     </ul>
                 </div>
@@ -61,11 +64,125 @@ const GetProductoTable = (productoJson) => {
     )
 }
 
+const getModalProducto = (product) => {
+  return (
+    `
+    <div class="modal fade" id="actualizarProducto-${product.productoId}" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Actualizar Producto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="needs-validation" id="formActualizar-producto-${product.productoId}" novalidate>
+            <div class="form-floating">       
+            <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre" value="${product.nombre}" required>
+            <label for="nom">Nombre</label> 
+            <div class="valid-feedback">
+              Bien!
+            </div>
+            <div class="invalid-feedback">
+              Ingrese un Nombre.
+            </div>
+          </div>
+  
+          <div class="form-floating">
+            <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example" required>
+              <option value="1" disabled selected>${product.categoria}</option>
+            </select>
+            <label for="categoria">Categoria</label>
+            <div class="valid-feedback">
+              Bien!
+            </div>
+            <div class="invalid-feedback">
+              Por favor elija una opcion valida..
+            </div>
+          </div>
+  
+          <div class="form-floating">
+            <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" value="${product.imagen}" required>
+            <label for="imagen">Imagen</label>
+            <div class="valid-feedback">
+              Bien!
+            </div>
+            <div class="invalid-feedback">
+              Ingrese una Imagen.
+            </div>
+          </div>
+  
+          <div class="form-floating">
+            <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion" value="${product.descripcion}" required>
+            <label for="descripcion">Descripcion</label>
+            <div class="valid-feedback">
+              Bien!
+            </div>
+            <div class="invalid-feedback">
+              Ingrese una Descripcion.
+            </div>
+          </div>
+  
+          <div class="form-floating">
+            <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" min="1" max="10" value="${product.rating}" required>
+            <label for="rating">Rating</label>
+            <div class="valid-feedback">
+              Bien!
+            </div>
+            <div class="invalid-feedback">
+              Ingrese un Rating valido, entre 1 y 10.
+            </div>
+          </div>
+  
+          <div class="form-floating">
+            <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" min="1" value="${product.cantidadStock}" required>
+            <label for="stock">Stock</label>
+            <div class="valid-feedback">
+              Bien!
+            </div>
+            <div class="invalid-feedback">
+              Ingrese un Stock.
+            </div>
+          </div>
+  
+          <div class="form-floating">
+            <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" min="1" value="${product.precio}" required>
+            <label for="precio">Precio</label>
+            <div class="valid-feedback">
+              Bien!
+            </div>
+            <div class="invalid-feedback">
+              Ingrese un Precio.
+            </div>
+          </div>
+  
+          <!--
+          <div class="form-floating">
+            <input type="number" class="form-control" id="tiendaId" name="tiendaId" placeholder="Id Tienda">
+            <label for="tiendaId">Tienda Id</label>
+          </div>
+          -->
+  
+          <div class="form-floating">
+            <button type="submit" class="btn btn-primary mb-3" id="btn-submit-${product.productoId}">Actualizar</button>
+          </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="btn-close" data-bs-dismiss="modal" onclick="location.reload()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  `)
+}
+
+
 const mostrarCategoria = async () => {
     const data = await getCategorias()
 
     data.forEach(opciones => {
-        var categoria = document.getElementById('categoria');
+        var categoria = modales.querySelector('#categoria');
         let element = document.createElement('option');
         element.value = opciones.categoriaId;
         element.innerHTML = opciones.descripcion;
@@ -73,10 +190,12 @@ const mostrarCategoria = async () => {
     });
 }
 
-const editarProducto = async (id , producto) => {
-  formActualizar.innerHTML = " ";
-    formActualizar.innerHTML = getActualizarForm(producto)
-
+const editarProducto = async (id) => {
+  //formActualizar.innerHTML = " ";
+ // formActualizar = document.getElementById("formActualizar-producto-${id}");
+    //formActualizar.innerHTML = getActualizarForm(producto);
+    formActualizar = modales.querySelector(`#formActualizar-producto-${id}`);
+    console.log(id)
     await mostrarCategoria()
     checkForm(id, formActualizar);
 }
@@ -99,7 +218,7 @@ const checkForm = (id, form) => {
 };
 
 const actualizarProducto = async (id) => {
-    var btnSubmit = document.getElementById('btn-submit');
+    var btnSubmit = document.getElementById(`btn-submit-${id}`);
 
     btnSubmit.innerHTML = `<button class="btn btn-primary" type="button" disabled>
     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -175,7 +294,7 @@ const eliminarProducto = async (id) => {
     alert('Se elimino correctamente el producto');
     adminStore()
 }
-
+/*
 const getActualizarForm = (product) => {
     return (
         `
@@ -192,7 +311,7 @@ const getActualizarForm = (product) => {
 
         <div class="form-floating">
           <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example" required>
-            <option value="" disabled selected>Elija una opcion</option>
+            <option value="1" disabled selected>${product.categoria}</option>
           </select>
           <label for="categoria">Categoria</label>
           <div class="valid-feedback">
@@ -266,7 +385,8 @@ const getActualizarForm = (product) => {
         -->
 
         <div class="form-floating">
-          <button type="submit" class="btn btn-primary mb-3" id="btn-submit">Actualizar</button>
+          <button type="submit" class="btn btn-primary mb-3" id="btn-submit-${product.productoId}">Actualizar</button>
         </div>  `
     )
 }
+*/

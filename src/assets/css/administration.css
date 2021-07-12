@@ -27,6 +27,9 @@ input,
 select {
   margin: 10px;
 }
+label {
+  margin: 5px;
+}
 td {
   text-align: center;
 }

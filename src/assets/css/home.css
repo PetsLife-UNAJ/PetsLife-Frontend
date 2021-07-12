@@ -188,6 +188,10 @@ a,
   border-radius: 3rem;
 }
 
+.form-select:not(textarea) {
+  border-radius: 3rem;
+}
+
 @media screen and (min-width: 992px) {
   .bs-header-menu .collapse {
     align-items: start;
