@@ -1,10 +1,4 @@
-import { getAdoptables } from '../administration/adminActions.js';
-import { changeIcon, checkLogin } from '../login/login.js';
-
-window.onload = () => {
-  // changeIcon();
-  // checkLogin();
-};
+import {getAdoptables} from '../administration/adminActions.js';
 
 $(document).ready(function () {
   ListarAdoptables();
@@ -145,7 +139,6 @@ async function ListarAdoptables() {
     );
 
     $(`#btn-actualizar${element.mascotaId}`).click(function () {
-
       var tipo = element.mascotaId;
       var adopcion = {
         nombre: $('#adop_name').val(),
@@ -165,13 +158,11 @@ async function ListarAdoptables() {
         data: JSON.stringify(adopcion),
         dataType: 'json',
         contentType: 'application/json',
-        beforeSend: function () {
-        },
+        beforeSend: function () {},
         success: function (response) {
           alert('Creado con exito');
         },
-        error: function (response) {
-        }
+        error: function (response) {}
       });
 
       /*

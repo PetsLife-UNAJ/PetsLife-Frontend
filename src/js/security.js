@@ -1,5 +1,5 @@
 import {sesion, getPayload} from './sesion.js';
-import {changeIcon} from './login/login.js';
+import {changeIcon, checkLogin} from './login/login.js';
 import {BASE_URL_HOME} from './constants.js';
 let user;
 const navBarCheck = () => {
@@ -46,7 +46,7 @@ const navBarCheck = () => {
 
 const load = () => {
   changeIcon();
-
+  checkLogin();
   navBarCheck();
 };
 

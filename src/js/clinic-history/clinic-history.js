@@ -1,19 +1,14 @@
 import {sesion, getPayload} from '../sesion.js';
 import {URL_API_CLIENTE, URL_API_TURNO, URL_API_MASCOTA} from '../constants.js';
-import {changeIcon, checkLogin} from '../login/login.js';
 
 let user = undefined;
 
 window.onload = () => {
-  // changeIcon();
-  // checkLogin();
   if (sesion) {
     const payload = getPayload(sesion.token);
     user = JSON.parse(payload.User);
-
     getClienteSesion();
     getTurnos();
-
     listarTurnos();
   }
 };
