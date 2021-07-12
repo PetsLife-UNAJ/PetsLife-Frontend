@@ -11,6 +11,7 @@ const navBarCheck = () => {
         document.getElementById("store-cart").hidden = false;
     }
 
+    // inserto boton admin al menu solo si sos admin
     if (sesion && sesion.usuario.rolId === 1 && section !== "admin") {
         // Lo inserto dinamicamente para que no aparezca en el html el boton hidden si no sos admin
         document.getElementById("navBarMenu").insertAdjacentHTML(
