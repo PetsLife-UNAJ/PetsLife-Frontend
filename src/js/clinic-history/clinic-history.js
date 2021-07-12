@@ -157,7 +157,7 @@ const listarTurnos = () => {
             turno.horaInicio = horaTurno;
 
             let fecha = new Date(turno.fecha);
-            turno.fecha = `${fecha.getDay()}/${
+            turno.fecha = `${fecha.getDate()}/${
               fecha.getMonth() + 1
             }/${fecha.getFullYear()}`;
 
