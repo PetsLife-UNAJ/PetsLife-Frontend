@@ -35,7 +35,7 @@ async function ListarAdoptables() {
                           <div class="modal-dialog modal-lg modal-dialog-centered">
                               <div class="modal-content">
                                   <div class="modal-header">
-                                      <h5 class="title" id="exampleModalLabel" style="font-size:35px; font-family= sans-serif;">Formulario de Adopcion</h5>
+                                      <h5 class="modal-title" id="exampleModalLabel">Formulario de Adopcion</h5>
                                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                   </div>
                                   <div class="modal-body">
@@ -48,7 +48,7 @@ async function ListarAdoptables() {
                                       </div>
                                     </div>
                                     <div class="col-md-4">
-                                      <label for="adop_apellido" class="form-label">Last name</label>
+                                      <label for="adop_apellido" class="form-label">Apellido</label>
                                       <input type="text" class="form-control" id="adop_apellido" value="Suarez" placeholder="Suarez" required>
                                       <div class="valid-feedback">
                                         Looks good!
@@ -79,7 +79,7 @@ async function ListarAdoptables() {
                                       </div>
                                     </div>
                                     <div class="col-md-5">
-                                      <label for="adop_dir" class="label">Direccion</label>
+                                      <label for="adop_dir" class="label">Dirección</label>
                                       <input type="text" class="form-control" id="adop_dir" value="Concordia" placeholder="Calle y numero" required>
                                       <div class="valid-feedback">
                                         Looks good!
@@ -89,10 +89,10 @@ async function ListarAdoptables() {
                                     <hr>
                                     
                                     <div class="col-md-5">
-                                      <label for="validationCustom02" class="label">Informacion de la mascota:</label><p></p>
-                                      <label for="validationCustom02" class="label">Nombre: ${element.nombre}</label><p></p>
-                                      <label for="validationCustom02" class="label">Peso: ${element.peso}</label><p></p>
-                                      <label for="validationCustom02" class="label">Edad: ${element.edad}</label><p></p>
+                                      <label for="validationCustom02" class="label">Información de la mascota:</label><p></p>
+                                      <label for="validationCustom02" class="label">Nombre: ${element.nombre}.</label><p></p>
+                                      <label for="validationCustom02" class="label">Peso: ${element.peso} kg.</label><p></p>
+                                      <label for="validationCustom02" class="label">Edad: ${element.edad} año.</label><p></p>
                                       <div class="valid-feedback">
                                         Looks good!
                                       </div>
@@ -164,19 +164,8 @@ async function ListarAdoptables() {
         error: function (response) {}
       });
 
-      /*
-      $.ajax({
-        async: false,
-        url: `https://localhost:44363/api/Adoptante/${tipo}`,
-        type: 'POST',
-        dataType: "json",
-        contentType: "application/json",
-        adopcion: JSON.stringify(adopcion),
-        success: function () {
-          alert('Exitoso!');
-        },
-      });
-        */
     });
   });
 }
+
+
