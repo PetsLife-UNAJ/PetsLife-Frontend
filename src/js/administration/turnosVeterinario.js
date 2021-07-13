@@ -39,14 +39,14 @@ const listarTurnos = async (turnos) => {
         return res;
       })
       .catch((err) => console.log(err));
-    let fecha = new Date(turno.horaInicio);
+    let hora = new Date(turno.horaInicio);
 
-    let fechaTurno = fecha.getHours() + ':' + fecha.getMinutes();
+    let horaTurno = hora.getHours() + ':' + hora.getMinutes();
 
-    if (fecha.getMinutes() == 0) {
-      fechaTurno = fechaTurno + '0';
+    if (hora.getMinutes() == 0) {
+      horaTurno = horaTurno + '0';
     }
-    turno.horaInicio = fechaTurno;
+    turno.horaInicio = horaTurno;
     let element = document.createElement('tr');
     element.classList = 'border';
     element.innerHTML = `
@@ -141,6 +141,11 @@ const crearModal = (turno, historia) => {
   listaModal.appendChild(elementB);
 
   const place = document.getElementById(`modal-historia-${turno.turnoId}`);
+
+  historia.sort(function (a, b) {
+    return new Date(b.fechaCreacion) - new Date(a.fechaCreacion);
+  });
+
   for (let registro of historia) {
     let element = document.createElement('div');
 
@@ -192,7 +197,7 @@ const agregarRegistro = async (data) => {
     .then((res) => {
       return res;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => err);
 
   let tratamiento = {
     registroId: registroResponse.registroId,
@@ -209,20 +214,14 @@ const agregarRegistro = async (data) => {
     body: tratamientoJson
   })
     .then((response) => response.json())
-    .then((res) => {
-      if (res.status == 201) {
-        console.log('Tratamiento registrado con exito');
-      }
-    })
-    .catch((err) => console.log(err));
+    .catch((err) => err);
 
   fetch(`${URL_API_TURNO}/${data.turnoId}`, {
     method: 'DELETE',
     headers: {Authorization: ` Bearer  ${sesion.token}`}
   })
     .then((res) => res.json())
-    .then((res) => console.log(res))
-    .catch((err) => console.log(err));
+    .catch((err) => err);
 
   location.reload();
 };
