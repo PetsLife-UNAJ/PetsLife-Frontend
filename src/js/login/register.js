@@ -57,8 +57,8 @@ const enviarFormRegister = (formRegister) => {
   <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
   Registrando...
   </button>`;
-  let nombre = formRegister.elements.nombre.value;
-  let apellido = formRegister.elements.apellido.value;
+  let nombre = formRegister.elements.nombres.value;
+  let apellido = formRegister.elements.apellidos.value;
   let dni = formRegister.elements.dni.value;
   let email = formRegister.elements.email.value;
   let telefono = formRegister.elements.telefono.value;

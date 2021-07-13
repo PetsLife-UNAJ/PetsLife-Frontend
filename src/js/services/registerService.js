@@ -40,6 +40,7 @@ export const registerUser = ({
       };
       clientData.clienteId = res.id;
       console.log(clientData);
+      console.log(res.id)
       fetch('https://localhost:44314/api/Cliente', {
         method: 'POST',
         headers: {'Content-Type': 'application/json;charset=UTF-8'},
