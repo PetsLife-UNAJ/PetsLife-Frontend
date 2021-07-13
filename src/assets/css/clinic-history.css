@@ -107,3 +107,26 @@
   width: 635px;
   margin-left: -77px;
 }
+
+.inner-text-veterinaria {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-flow: column wrap;
+  padding: 0px;
+  width: 300px;
+  margin: 4px 0 10px 0;
+  transition: all 450ms ease;
+}
+.inner-text-veterinaria:hover {
+  cursor: pointer;
+  box-shadow: -1px 6.5px 15px rgba(208, 211, 214, 0.75);
+}
+
+.offices {
+  margin-top: 200px;
+}
+
+.fa-list-alt {
+  color: #f76700;
+}

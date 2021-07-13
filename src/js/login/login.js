@@ -31,10 +31,18 @@ formLogin.onsubmit = async (e) => {
 
   let response = await login(cuenta);
   if (response) {
-    console.log(response);
     localStorage.setItem('usuario', JSON.stringify(response));
 
-    location.reload();
+    let lsUser = JSON.parse(localStorage.getItem('usuario'));
+
+    const payload = getPayload(lsUser.token);
+    let user = JSON.parse(payload.User);
+
+    if (user.RolId == 2) {
+      location.href = '/admin/clinic';
+    } else {
+      location.reload();
+    }
   } else {
     document.getElementById('estado-login').innerHTML = 'No se ha podido registrar.';
   }
