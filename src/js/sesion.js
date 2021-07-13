@@ -25,3 +25,11 @@ function parseJwt(token) {
 
   return JSON.parse(jsonPayload);
 }
+
+export const getUser = () => {
+  if (sesion) {
+    const payload = getPayload(sesion.token);
+    const user = JSON.parse(payload.User);
+    return user
+  }
+}

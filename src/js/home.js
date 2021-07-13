@@ -22,13 +22,15 @@ contactForm.addEventListener('submit', (event) => {
     mensaje: document.getElementById('mensaje').value
   };
 
+  let message = {message: `Mensaje de *${info.nombre}* - *${info.telefono}* : ${info.mensaje}`}
+
   const settings = {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(info)
+    body: JSON.stringify(message)
   };
 
   var resp = fetch('/send-whatsapp', settings);
