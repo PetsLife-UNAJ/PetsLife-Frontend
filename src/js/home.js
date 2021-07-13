@@ -1,9 +1,16 @@
-import {changeIcon, checkLogin} from '../login/login.js';
+import {sesion, getPayload} from '../sesion.js';
 
 window.onload = () => {
 
-  // changeIcon();
-  // checkLogin();
+  if (sesion) {
+    const payload = getPayload(sesion.token);
+    let user = JSON.parse(payload.User);
+    if (user.RolId==2) {
+      location.href = '/admin/clinic';
+    }
+    
+  }
+ 
 };
 
 contactForm.addEventListener('submit', (event) => {

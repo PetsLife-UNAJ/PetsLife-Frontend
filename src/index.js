@@ -47,9 +47,6 @@ app.post('/send-email', jsonParser, (req, res) => {
 
   transporter.sendMail(mailOptions, (error, info) => {
     if (error) res.status(500).send(error.message);
-    else {
-      console.log('Email enviado');
-    }
   });
 });
 

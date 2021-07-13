@@ -49,7 +49,7 @@ $(document).ready(function () {
                                     <div class="modal-dialog modal-lg modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="title" id="exampleModalLabel" style="font-size:35px; font-family= sans-serif;">Datos de ${mascota.nombre}</h5>
+                                                <h5 class="modal-title" id="exampleModalLabel">Datos de ${mascota.nombre}</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
