@@ -7,14 +7,8 @@ const nodeMailer = require('nodemailer');
 require('dotenv').config();
 const TWILIO_ACCOUNT_SID = 'AC9b98ce652e60c2b92cf3c1f5e50c2be0';
 
-// dividir token para que no lo bloqueen
-const TWILIO_AUTH_TOKEN_P1 = '3c26e3d4bc15ab';
-const TWILIO_AUTH_TOKEN_P2 = '0b338acecb4be82678';
-TWILIO_AUTH_TOKEN = TWILIO_AUTH_TOKEN_P1 + TWILIO_AUTH_TOKEN_P2
-
-
 const twilio = require('twilio');
-const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
+const client = twilio(TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 app.use(express.static(__dirname));
 
