@@ -1426,35 +1426,6 @@ body {
   z-index: 998;
 }
 
-.content {
-  width: 100%;
-  min-height: 800px;
-  position: relative;
-  z-index: 1;
-}
-
-.content:before {
-  content: '';
-  width: 50%;
-  height: 110px;
-  position: absolute;
-  top: -48px;
-  left: 0;
-  background-color: #feffff;
-  transform: skewY(5.5deg); /*8*/
-}
-
-.content:after {
-  content: '';
-  width: 50%;
-  height: 110px;
-  position: absolute;
-  top: -48px;
-  right: 0;
-  background-color: #feffff;
-  transform: skewY(-5.5deg); /*8*/
-}
-
 .grand-title {
   display: flex;
   justify-content: center;

@@ -14,9 +14,8 @@ async function ListarAdoptables() {
                       <div class = " d-flex justify-content-end"></div>
                       <div class="col-md-7 order-md-2">
                       <div class="d-flex bd-highlight">
-                          
-                          <div class="p-2 w-25 bd-highlight" ><h2 class="featurette-heading">${element.nombre}</h2></div>
-                          <div class="p-2 flex-shrink-1 bd-highlight"><h2 class="text-muted">Su Historia:</h2></div>
+                          <div class="p-2 w-25 bd-highlight" ><h3 class="featurette-heading">${element.nombre}</h3></div>
+                          <div class="p-2 flex-shrink-1 bd-highlight"><h3 class="text-muted">Su Historia:</h3></div>
                           
                       </div>
                       
