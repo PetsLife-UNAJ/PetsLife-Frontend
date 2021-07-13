@@ -1,6 +1,7 @@
 import {registerUser} from '../services/registerService.js';
 
 const formRegister = document.getElementById('form-register');
+const btnRegistrar = document.getElementById('btn-registrar');
 
 const checkForm = (form) => {
   form.addEventListener("submit", (event) => {
@@ -52,6 +53,10 @@ formRegister.onsubmit = async (e) => {
 
 
 const enviarFormRegister = (formRegister) => {
+  btnRegistrar.innerHTML = `<button class="btn btn-primary" type="button" disabled>
+  <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+  Registrando...
+  </button>`;
   let nombre = formRegister.elements.nombre.value;
   let apellido = formRegister.elements.apellido.value;
   let dni = formRegister.elements.dni.value;
