@@ -1,15 +1,19 @@
-import { getAdoptables, getTiposMascota, addAdoptable } from "./adminActions.js"
+import { getAdoptables, getTiposMascota, addAdoptable, updateMascota, deleteMascota } from "./adminActions.js"
 
 var msBody              = document.getElementById("msBody")
 var modalAdopciones     = document.getElementById("modal-content-adopciones")
 var spinner             = document.getElementById("loadingSpinner")
 var adopcionesTableBody = document.getElementById("adopcionesTableBody")
 var agregarAnimalBtn    = document.getElementById("agregarAnimalBtn")
+var formActualizarAnimal    = document.getElementById('formActualizarAnimal');
+var tiposMascotaJson
 
+window.onload = async () => { adminAdoptions()}
 
-window.onload = async () => {
-    var tiposMascotaJson = await getTiposMascota()
-    spinner.remove()
+const adminAdoptions = async () => {
+    spinner.style.display = 'none'
+    adopcionesTableBody.innerHTML = ""
+    tiposMascotaJson = await getTiposMascota()
 
     agregarAnimalBtn.onclick = () => {
         modalAdopciones.innerHTML = getModalAdopciones()
@@ -23,7 +27,7 @@ window.onload = async () => {
         var registrarMascotaBtn = document.getElementById("registrarMascotaBtn")
         registrarMascotaBtn.onclick = (e) => {
             e.preventDefault()
-            registrarAdoptable(tiposMascotaJson)
+            registrarAdoptable()
         }
     }
 
@@ -35,23 +39,27 @@ window.onload = async () => {
 
     adoptablesJson.forEach((adoptableJson) => {
         adopcionesTableBody.insertAdjacentHTML('beforeend', getAdoptableTable(adoptableJson))
+
+        var deleteElem = document.getElementById(`delete-` + adoptableJson.mascotaId)
+        deleteElem.onclick = () => {
+            deleteAnimal(adoptableJson.mascotaId);
+        };
+
+        var editElement = document.getElementById('edit-' + adoptableJson.mascotaId);
+        editElement.onclick = () => {
+            editAnimal(adoptableJson);
+        }
     })
 }
 
-const registrarAdoptable = async (tiposMascotaJson) => {
+const registrarAdoptable = async () => {
     var adoptableNombre         = document.getElementById("adoptableNombre")
     var adoptableImagen         = document.getElementById("adoptableImagen")
     var adoptableHistoria       = document.getElementById("adoptableHistoria")
-    var adoptableTipoMascota    = document.getElementById("adoptableTipoMascota")
     var adoptablePeso           = document.getElementById("adoptablePeso")
     var adoptableEdad           = document.getElementById("adoptableEdad")
 
-    var tipoMascotaId = 1
-    tiposMascotaJson.forEach((tipoMascotaJson) => {
-        if (tipoMascotaJson.tipoAnimal === adoptableTipoMascota.value) {
-            tipoMascotaId = tipoMascotaJson.tipoAnimalId
-        }
-    })
+    let tipoMascotaId = await getTipoMascotaId(adoptableTipoMascota.value)
 
     var data = {
         TipoAnimalId : tipoMascotaId,
@@ -96,6 +104,82 @@ const registrarAdoptable = async (tiposMascotaJson) => {
     `
 }
 
+const editAnimal = async (animalJson) => {
+    formActualizarAnimal.innerHTML = getActualizarForm()
+    console.log(animalJson)
+
+    let nombreAnimal = document.getElementById('nombreAnimal')
+    let adoptadoAnimal = document.getElementById('adoptadoAnimal')
+    let imagenAnimal = document.getElementById('imagenAnimal')
+    let pesoAnimal = document.getElementById('pesoAnimal')
+    let edadAnimal = document.getElementById('edadAnimal')
+    let historiaAnimal = document.getElementById('historiaAnimal')
+
+    // inserto tipo mascota en selects
+    let tipoAnimalSelect = document.getElementById('tipoAnimal')
+    tiposMascotaJson.forEach((tipo) => {
+        tipoAnimalSelect.insertAdjacentHTML('beforeend',  `<option>${tipo.tipoAnimal}</option>`)
+    })
+
+        // Cargo valores de la mascota que se esta editando en el form
+        nombreAnimal.value = animalJson.nombre
+        adoptadoAnimal.value = animalJson.adoptado ? "Si": "No"
+        imagenAnimal.value = animalJson.imagen
+        pesoAnimal.value = animalJson.peso
+        edadAnimal.value = animalJson.edad
+        historiaAnimal.value = animalJson.historia
+        tipoAnimalSelect.value = animalJson.tipoAnimal
+
+    document.getElementById('editSubmitBtn').onclick = async (e) => {
+        e.preventDefault()
+        let tipoMascotaId = await getTipoMascotaId(tipoAnimalSelect.value)
+
+        let dataJson = {
+            mascotaId: animalJson.mascotaId,
+            tipoAnimal: document.getElementById('tipoAnimal').value,
+            tipoAnimalId: tipoMascotaId,
+            adoptado: adoptadoAnimal.value === "Si" ? true : false,
+            imagen: imagenAnimal.value,
+            nombre: nombreAnimal.value,
+            historia: historiaAnimal.value,
+            edad: parseInt(edadAnimal.value),
+            peso: parseInt(pesoAnimal.value)
+        }
+
+        var response = await updateMascota(dataJson)
+        if (response.status == 400) {
+            formActualizarAnimal.innerHTML = 
+            ` 
+            <div class="card text-center p-0 my-2 ">
+                <div class="card-header bg-transparent text-danger border-0">
+                <i class="fas fa-exclamation-triangle"></i>
+                    <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text lead">El Producto no se ha actualizado.</p>
+                </div>
+            </div>  
+            `
+        }
+        document.getElementById("actualizarAnimalCloseBtn").click()
+        adminAdoptions()
+    }
+}
+
+const deleteAnimal = async (id) => {
+
+    var response = await deleteMascota(id)
+
+    // todo: cambiar por mejor forma de mostrar los mensajes
+    if (response.status === 400) {
+        alert('No se pudo eliminar la mascota');
+        adminAdoptions();
+        return
+    }
+    alert('Se elimino correctamente la mascota');
+    adminAdoptions()
+}
+
 const getAdoptableTable = (adoptableJson) => {
     return (
         `
@@ -113,14 +197,25 @@ const getAdoptableTable = (adoptableJson) => {
                         <i class="bi bi-three-dots-vertical d-pointer" id="tresPuntos"></i>
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><a class="dropdown-item d-pointer" id="edit-${adoptableJson.mascotaId}"><i class="bi bi-pencil"></i> Editar</a></li>
-                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="${adoptableJson.mascotaId}"><i class="bi bi-trash"></i> Eliminar</a></li>
-                    </ul>
+                    <li><a class="dropdown-item d-pointer" id="edit-${adoptableJson.mascotaId}" data-bs-toggle="modal" href="#actualizarAnimal" aria-controls="actualizarAnimal"><i class="bi bi-pencil"></i> Editar</a></li>
+                    <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="delete-${adoptableJson.mascotaId}"><i class="bi bi-trash"></i> Eliminar</a></li>
+                </ul>
                 </div>
             </td>
         </tr>
         `
     )
+}
+
+const getTipoMascotaId = async (mascotaTipo) => {
+    var tipoMascotaId = 1
+    tiposMascotaJson.forEach((tipoMascotaJson) => {
+        if (tipoMascotaJson.tipoAnimal === mascotaTipo) {
+            tipoMascotaId = tipoMascotaJson.tipoAnimalId
+        }
+    })
+
+    return tipoMascotaId
 }
 
 const getModalAdopciones = () => {
@@ -133,7 +228,7 @@ const getModalAdopciones = () => {
       <div class="modal-body">
         <form class="row g-3" id="registro">
         <div class="col-md-6">
-            <label for="validationDefault01" class="form-label">Nombre</label>
+            <label for="adoptableNombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="adoptableNombre" required>
         </div>
         <div class="col-md-6">
@@ -168,5 +263,98 @@ const getModalAdopciones = () => {
         </form>
       </div>
         `
+    )
+}
+
+const getActualizarForm = () => {
+    return (
+        `
+        <div class="form-floating">       
+          <input type="text" class="form-control" id="nombreAnimal" name="nombre" placeholder="Nombre" required>
+          <label for="nombreAnimal">Nombre</label> 
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un Nombre.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="text" class="form-control" id="imagenAnimal" name="imagen animal" placeholder="imagen" required>
+          <label for="imagenAnimal">Imagen</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese una Imagen.
+          </div>
+        </div>
+
+        <div class="form-floating">
+            <select class="form-select" name="tipo animal" id="tipoAnimal" aria-label="Floating label select example" required>
+                <option value="" disabled selected>Elija una opcion</option>
+            </select>
+            <label for="tipoAnimal">tipoAnimal</label>
+            <div class="valid-feedback">
+            Bien!
+            </div>
+            <div class="invalid-feedback">
+            Por favor elija una opcion valida..
+            </div>
+        </div>
+
+        <div class="form-floating">
+        <div class="mb-3">
+            <label for="historiaAnimal" class="form-label">Historia</label>
+            <textarea class="form-control" id="historiaAnimal" rows="3"></textarea>
+        </div>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingresa la historia de animal.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="number" class="form-control" id="pesoAnimal" name="peso" placeholder="Peso animal" min="1" max="100" required>
+          <label for="pesoAnimal">Peso</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese un peso valido mayor que cero.
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <input type="number" class="form-control" id="edadAnimal" name="edad" placeholder="Edad" min="0" max="50" required>
+          <label for="edadAnimal">Edad</label>
+          <div class="valid-feedback">
+            Bien!
+          </div>
+          <div class="invalid-feedback">
+            Ingrese la edad del animal.
+          </div>
+        </div>
+
+        <div class="form-floating">
+        <select class="form-select" name="adoptado" id="adoptadoAnimal" aria-label="Floating label select example" required>
+          <option>Si</option>
+          <option>No</option>
+        </select>
+        <label for="adoptadoAnimal">Adoptado</label>
+        <div class="valid-feedback">
+          Bien!
+        </div>
+        <div class="invalid-feedback">
+          Por favor elija una opcion valida..
+        </div>
+      </div>
+
+        <div class="form-floating">
+          <button type="submit" class="btn btn-primary mx-3 my-3 w-100" id="editSubmitBtn">Actualizar</button>
+        </div>  `
     )
 }

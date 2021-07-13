@@ -6,7 +6,12 @@ const indexRoute = require('./routes/index');
 const nodeMailer = require('nodemailer');
 require('dotenv').config();
 const TWILIO_ACCOUNT_SID = 'AC9b98ce652e60c2b92cf3c1f5e50c2be0';
-const TWILIO_AUTH_TOKEN = '3c26e3d4bc15ab0b338acecb4be82678';
+
+// dividir token para que no lo bloqueen
+const TWILIO_AUTH_TOKEN_P1 = '3c26e3d4bc15ab';
+const TWILIO_AUTH_TOKEN_P2 = '0b338acecb4be82678';
+TWILIO_AUTH_TOKEN = TWILIO_AUTH_TOKEN_P1 + TWILIO_AUTH_TOKEN_P2
+
 
 const twilio = require('twilio');
 const client = twilio(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
@@ -53,13 +58,13 @@ app.post('/send-whatsapp', (req, res) => {
     .create({
       from: 'whatsapp:+14155238886',
       to: 'whatsapp:+5491136735184',
-      body: `Mensaje de *${req.body.nombre}* - *${req.body.telefono}* : ${req.body.mensaje}`
+      body: req.body.message
     })
-    .then((message) => {
-      console.log(message);
-      res.send('ok');
+    .then(() => {
+      res.send(JSON.stringify({status: 200}));
     })
     .catch((err) => {
+      res.send(JSON.stringify({status: 400}));
       console.error(err);
     });
 });

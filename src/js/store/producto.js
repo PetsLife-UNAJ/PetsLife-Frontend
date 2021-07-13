@@ -5,7 +5,6 @@ import {LoadCarrito} from './carrito.js'
 
 var productoDiv     = document.getElementById("productDetail")
 var loaderDiv       = document.getElementById("loader")
-var actualProduct   = document.getElementById("actualProduct")
 
 window.onload = async () => {
 	document.getElementById("store-cart").hidden = false
@@ -19,8 +18,6 @@ window.onload = async () => {
         productoDiv.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los productos de la base de datos</div>')
         return
     }
-    actualProduct.innerHTML = productoJson.nombre
-
 
     var productoHtml = ProductDetail(productoJson)
     productoDiv.insertAdjacentHTML('beforeend', productoHtml)
@@ -42,7 +39,6 @@ window.onload = async () => {
 
 
 const ProductDetail = (data) => {
-
     var starHtml = Rating(data.rating)
 
     return (

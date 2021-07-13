@@ -1,7 +1,12 @@
+import {sendWhatsapp} from '../../js/administration/adminActions.js'
+import {getUser, sesion} from '../sesion.js'
+
 var productListDiv  = document.getElementById("productoList")
 var totalPriceDiv   = document.getElementById("totalPrice")
 var comprarBtn      = document.getElementById("comprarBtn")
 var totalTextElem   = document.getElementById("totalText")
+var productoAlert   = document.getElementById("productoAlert")
+var logginBtn       = document.getElementById("btn-log")
 
 export const LoadCarrito = () => {
     resetCart()
@@ -27,7 +32,13 @@ export const LoadCarrito = () => {
 
     totalPriceDiv.innerHTML = `$ ${totalPrice.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}`
     comprarBtn.onclick = () => {
-        buyProducts()
+        if (sesion) {
+            sendOrder()
+        }
+        else {
+            logginBtn.click()
+        }
+
     }
 }
 
@@ -82,23 +93,46 @@ const removeFromCart = (product) => {
     }
 }
 
-const buyProducts = () => {
+const sendOrder = async () => {
     if (localStorage.cart && localStorage.cart.length > 0 ) {
-        // fake buy
-
-        let delayMS = Math.floor((Math.random() * 3) * 1000)
         comprarBtn.disabled = true
+        productoAlert.innerHTML = ""
+        comprarBtn.innerHTML = ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> `
 
-        comprarBtn.innerHTML = 
-        `
-        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        var user = getUser()
+        var cart = JSON.parse(localStorage.cart)
+
+        var pedido = ''
+        var total = 0
+        cart.forEach((producto) => {
+            pedido += `${producto.name} - *$${producto.price}*\n`
+            total += parseInt(producto.price)
+        })
+
+        var message = `
+        Se registro nuevo pedido:\n 
+        *Usuario:* ${user.Email} \n
+        *Nombre:* ${user.Nombres} ${user.Apellidos}\n
+        *Telefono:* ${user.Telefono} \n
+        -------------------------------------
+        *Pedido:*\n
+        ${pedido}
+        *Total pedido:* ${total}
         `
 
-        setTimeout(() => {
+        console.log(message)
+
+        var response = await sendWhatsapp({message: message})
+        if (response.status === 200) {
+            productoAlert.innerHTML = `<div class="alert alert-success" role="alert">El pedido fue enviado a la veterinaria con exito!</a></div>`
             showEmptyCart()
-            productListDiv.innerHTML = `<div class="alert alert-success" role="alert">Se realizo la compra con exito!</a></div>`
             localStorage.removeItem("cart")
-        }, delayMS)
+        }
+        else {
+            productoAlert.innerHTML = `<div class="alert alert-danger" role="alert">Hubo un error al enviar el pedido</a></div>`
+            comprarBtn.disabled = false
+            comprarBtn.innerHTML = 'Enviar Pedido'
+        }
     }
 }
 
