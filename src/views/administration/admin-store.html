@@ -22,7 +22,7 @@
                 
                 <div id="msBody">
                   <div>
-                    <a href="/add-producto" class="btn btn-petslife">Agregar Producto</a>
+                    <a href="#registrarProducto" data-bs-toggle="modal" class="btn btn-petslife">Agregar Producto</a>
                     <table class="table table-striped table-hover mt-4 caption-top">
                       <caption>Listado de Productos</caption>
                             <thead>
@@ -52,6 +52,108 @@
     </div>
     
     <div id="modales"></div>
+
+        <!--Modal para registrar un producto-->
+        <div class="modal fade" id="registrarProducto" tabindex="-1">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="staticBackdropLabel">Registrar Producto</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload()"></button>
+                </div>
+                <div class="modal-body">
+                  
+                  <form class="needs-validation" id="formulario-producto" novalidate>
+                    <div class="form-floating">       
+                      <input type="text" class="form-control" id="nom" name="nombre" placeholder="Nombre" required>
+                      <label for="nom">Nombre</label> 
+                      <div class="valid-feedback">
+                        Bien!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese un Nombre.
+                      </div>
+                    </div>
+          
+                    <div class="form-floating">
+                      <select class="form-select" name="categoria" id="categoria" aria-label="Floating label select example" required>
+                        <option value="" disabled selected>Elija una opcion</option>
+                      </select>
+                      <label for="categoria">Categoria</label>
+                      <div class="valid-feedback">
+                        Bien!
+                      </div>
+                      <div class="invalid-feedback">
+                        Por favor elija una opcion valida..
+                      </div>
+                    </div>
+          
+                    <div class="form-floating">
+                      <input type="text" class="form-control" id="imagen" name="imagen" placeholder="imagen" required>
+                      <label for="imagen">Imagen</label>
+                      <div class="valid-feedback">
+                        Bien!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese una Imagen.
+                      </div>
+                    </div>
+          
+                    <div class="form-floating">
+                      <input type="text" class="form-control" id="descripcion" name="descripcion" placeholder="descripcion" required>
+                      <label for="descripcion">Descripcion</label>
+                      <div class="valid-feedback">
+                        Bien!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese una Descripcion.
+                      </div>
+                    </div>
+          
+                    <div class="form-floating">
+                      <input type="number" class="form-control" id="rating" name="rating" placeholder="Rating" min="1" max="10" required>
+                      <label for="rating">Rating</label>
+                      <div class="valid-feedback">
+                        Bien!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese un Rating valido, entre 1 y 10.
+                      </div>
+                    </div>
+          
+                    <div class="form-floating">
+                      <input type="number" class="form-control" id="stock" name="cantidadStock" placeholder="Stock" min="1" required>
+                      <label for="stock">Stock</label>
+                      <div class="valid-feedback">
+                        Bien!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese un Stock.
+                      </div>
+                    </div>
+          
+                    <div class="form-floating">
+                      <input type="number" class="form-control" id="precio" name="precio" placeholder="Precio" min="1" required>
+                      <label for="precio">Precio</label>
+                      <div class="valid-feedback">
+                        Bien!
+                      </div>
+                      <div class="invalid-feedback">
+                        Ingrese un Precio.
+                      </div>
+                    </div>
+            
+                    <div class="form-floating">
+                      <button type="submit" class="btn btn-primary mb-3" id="btn-submit">Registrar</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" id="btn-close" data-bs-dismiss="modal" onclick="location.reload()">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
     <%- include ('../partials/footer.html')%>
 </body>
