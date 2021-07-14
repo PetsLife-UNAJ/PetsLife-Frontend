@@ -46,7 +46,17 @@ formLogin.onsubmit = async (e) => {
       location.reload();
     }
   } else {
-    document.getElementById('estado-login').innerHTML = 'No se ha podido registrar.';
+    document.getElementById('estado-login').innerHTML =             ` 
+    <div class="card text-center p-0 my-2 ">
+        <div class="card-header bg-transparent text-danger border-0">
+        <i class="fas fa-exclamation-triangle display-6"></i>
+            <h5 class="card-title text-danger display-6 d-block">Registro Fallido</h5>
+        </div>
+        <div class="card-body">
+            <p class="card-text lead">No se pudo iniciar sesion.</p>
+        </div>
+    </div>  
+    `;
   }
 };
 
