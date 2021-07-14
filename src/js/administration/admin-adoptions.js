@@ -106,7 +106,6 @@ const registrarAdoptable = async () => {
 
 const editAnimal = async (animalJson) => {
     formActualizarAnimal.innerHTML = getActualizarForm()
-    console.log(animalJson)
 
     let nombreAnimal = document.getElementById('nombreAnimal')
     let adoptadoAnimal = document.getElementById('adoptadoAnimal')
@@ -121,14 +120,14 @@ const editAnimal = async (animalJson) => {
         tipoAnimalSelect.insertAdjacentHTML('beforeend',  `<option>${tipo.tipoAnimal}</option>`)
     })
 
-        // Cargo valores de la mascota que se esta editando en el form
-        nombreAnimal.value = animalJson.nombre
-        adoptadoAnimal.value = animalJson.adoptado ? "Si": "No"
-        imagenAnimal.value = animalJson.imagen
-        pesoAnimal.value = animalJson.peso
-        edadAnimal.value = animalJson.edad
-        historiaAnimal.value = animalJson.historia
-        tipoAnimalSelect.value = animalJson.tipoAnimal
+    // Cargo valores de la mascota que se esta editando en el form
+    nombreAnimal.value = animalJson.nombre
+    adoptadoAnimal.value = animalJson.adoptado ? "Si": "No"
+    imagenAnimal.value = animalJson.imagen
+    pesoAnimal.value = animalJson.peso
+    edadAnimal.value = animalJson.edad
+    historiaAnimal.value = animalJson.historia
+    tipoAnimalSelect.value = tiposMascotaJson[animalJson.tipoAnimalId - 1].tipoAnimal
 
     document.getElementById('editSubmitBtn').onclick = async (e) => {
         e.preventDefault()
@@ -187,7 +186,7 @@ const getAdoptableTable = (adoptableJson) => {
             <th scope="row">${adoptableJson.mascotaId}</th>
             <td style="margin:10%">${adoptableJson.nombre}</td>
             <td>${adoptableJson.imagen.slice(0, 16)}</td>
-            <td>${adoptableJson.tipoAnimal}</td>
+            <td>${tiposMascotaJson[adoptableJson.tipoAnimalId - 1].tipoAnimal}</td>
             <td>${adoptableJson.peso}</td>
             <td>${adoptableJson.edad}</td>
             <td>${adoptableJson.adoptado ? "Si" : "No"}</td>
