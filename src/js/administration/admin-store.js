@@ -71,7 +71,7 @@ const getModalProducto = (product) => {
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Actualizar Producto con Id: ${product.productoId}</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="location.reload()"></button>
         </div>
         <div class="modal-body">
             <form class="needs-validation" id="formActualizar-producto-${product.productoId}" novalidate>
@@ -88,7 +88,7 @@ const getModalProducto = (product) => {
   
           <div class="form-floating">
             <select class="form-select" name="categoria" id="categoria-${product.productoId}" aria-label="Floating label select example" required>
-              <option value="1" disabled selected>${product.categoria}</option>
+              <option value="${product.categoriaId}" disabled selected>${product.categoria}</option>
             </select>
             <label for="categoria">Categoria</label>
             <div class="valid-feedback">
@@ -179,7 +179,7 @@ const getModalProducto = (product) => {
 const mostrarCategoriaById = async (id) => {
     const data = await getCategorias()
     var categoria = document.getElementById(`categoria-${id}`);
-    categoria.innerHTML = '';
+    //categoria.innerHTML = '';
     //var categoria = modales.querySelectorAll('#categoria');
     data.forEach(opciones => {
         let element = document.createElement('option');
