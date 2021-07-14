@@ -15,68 +15,58 @@
         <form id="form-register" class="row g-3">
           <div class="col-md-6">
             <label for="nombre" class="form-label">Ingrese su nombre:</label>
-            <input type="text" name="nombres" class="form-control mb-3" required >
-            <div class="valid-feedback">
-              Bien!
-            </div>
-            <div class="invalid-feedback">
-              Ingrese un Nombre.
-            </div>
+            <input type="text" name="nombres" class="form-control mb-3" required />
+            <div class="valid-feedback"> Bien! </div>
+            <div class="invalid-feedback"> Ingrese un Nombre. </div>
           </div>
 
           <div class="col-md-6">
             <label for="apellido" class="form-label">Ingrese su apellido:</label>
-            <input type="text" name="apellidos" class="form-control mb-3" required >
-            <div class="valid-feedback">
-              Bien!
-            </div>
-            <div class="invalid-feedback">
-              Ingrese un Apellido.
-            </div>
+            <input type="text" name="apellidos" class="form-control mb-3" required />
+            <div class="valid-feedback"> Bien! </div>
+            <div class="invalid-feedback"> Ingrese un Apellido. </div>
           </div>
 
           <div class="col-md-6">
             <label for="dni" class="form-label">Ingrese su dni:</label>
-            <input type="number" name="dni" class="form-control mb-3" required >
-            <div class="valid-feedback">
-              Bien!
-            </div>
-            <div class="invalid-feedback">
-              Ingrese un DNI.
-            </div>
+            <input
+              type="number"
+              name="dni"
+              min="1"
+              max="99999999"
+              class="form-control mb-3"
+              required
+            />
+            <div class="valid-feedback"> Bien! </div>
+            <div class="invalid-feedback"> Ingrese un DNI. </div>
           </div>
 
           <div class="col-md-6">
             <label for="telefono" class="form-label">Ingrese su telefono:</label>
-            <input type="number" name="telefono" class="form-control" required >
-            <div class="valid-feedback">
-              Bien!
-            </div>
-            <div class="invalid-feedback">
-              Ingrese un Telefono.
-            </div>
+            <input
+              type="number"
+              name="telefono"
+              class="form-control"
+              min="9999999"
+              max="9999999999"
+              required
+            />
+            <div class="valid-feedback"> Bien! </div>
+            <div class="invalid-feedback"> Ingrese un Telefono. </div>
           </div>
 
           <div class="col-12">
             <label for="direccion" class="form-label">Ingrese su dirección:</label>
-            <input type="text" name="direccion" class="form-control" required >
-            <div class="valid-feedback">
-              Bien!
-            </div>
-            <div class="invalid-feedback">
-              Ingrese una Direccion.
-            </div>
+            <input type="text" name="direccion" class="form-control" required />
+            <div class="valid-feedback"> Bien! </div>
+            <div class="invalid-feedback"> Ingrese una Direccion. </div>
           </div>
 
           <div class="col-md-6">
             <label for="email" class="form-label">Ingrese su email:</label>
-            <input type="email" name="email" class="form-control mb-3" required >
-            <div class="valid-feedback">
-              Bien!
-            </div>
-            <div class="invalid-feedback">
-              Ingrese un Mail valido.
-            </div>
+            <input type="email" name="email" class="form-control mb-3" required />
+            <div class="valid-feedback"> Bien! </div>
+            <div class="invalid-feedback"> Ingrese un Mail valido. </div>
           </div>
 
           <div class="col-md-6">
@@ -86,13 +76,9 @@
               name="contraseña"
               class="form-control mb-3"
               required
-            >
-            <div class="valid-feedback">
-              Bien!
-            </div>
-            <div class="invalid-feedback">
-              Ingrese una Contraseña.
-            </div>
+            />
+            <div class="valid-feedback"> Bien! </div>
+            <div class="invalid-feedback"> Ingrese una Contraseña. </div>
           </div>
 
           <div class="col-12">
@@ -132,9 +118,13 @@
               <label for="otro" class="form-check-label">Otro</label>
             </div>
             <div class="row justify-content-center">
-              <button class="btn btn-primary my-3 w-50 " type="submit" id="btn-registrar"
+              <button
+                class="btn btn-primary my-3 w-50"
+                type="submit"
+                id="btn-registrar"
                 >Registrarse</button
-              ></div>
+              ></div
+            >
           </div>
         </form>
       </div></div
