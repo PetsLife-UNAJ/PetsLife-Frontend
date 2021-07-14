@@ -1,4 +1,4 @@
-import { getAdoptables, getTiposMascota, addAdoptable, updateMascota, deleteMascota } from "./adminActions.js"
+import { getMascotas, getTiposMascota, addAdoptable, updateMascota, deleteMascota } from "./adminActions.js"
 
 var msBody              = document.getElementById("msBody")
 var modalAdopciones     = document.getElementById("modal-content-adopciones")
@@ -31,7 +31,7 @@ const adminAdoptions = async () => {
         }
     }
 
-    var adoptablesJson = await getAdoptables()
+    var adoptablesJson = await getMascotas()
     if (adoptablesJson.status === 400) {
         msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los adoptantes de la base de datos</div>')
         return
@@ -190,7 +190,7 @@ const getAdoptableTable = (adoptableJson) => {
             <td>${adoptableJson.tipoAnimal}</td>
             <td>${adoptableJson.peso}</td>
             <td>${adoptableJson.edad}</td>
-            <td>${adoptableJson.adoptado}</td>
+            <td>${adoptableJson.adoptado ? "Si" : "No"}</td>
             <td>
                 <div class="dropdown">
                     <div id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">

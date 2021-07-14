@@ -34,6 +34,15 @@ export const getAdoptables = async () => {
     return data
 };
 
+export const getMascotas = async () => {
+    let response = await fetch(BASE_URL_ADOPTIONS + `/mascotas/all`, {
+        headers: { Authorization: ` Bearer  ${sesion.token}` }
+    }).catch(handleError)
+    let data = await response.json()
+
+    return data
+}
+
 export const getTiposMascota = async () => {
     let response = await fetch(BASE_URL_ADOPTIONS + '/Tipos', {
         headers: { Authorization: ` Bearer  ${sesion.token}` }
