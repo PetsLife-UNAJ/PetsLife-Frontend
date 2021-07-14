@@ -144,11 +144,9 @@ const listarTurnos = () => {
     .then((res) => res.json())
     .then((res) => {
       if (sesion) {
-
         res.sort(function (a, b) {
           return new Date(a.horaInicio) - new Date(b.horaInicio);
         });
-
 
         for (const turno of res) {
           if (turno.clienteId == user.Id) {

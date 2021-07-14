@@ -8,6 +8,10 @@ import {sesion, getPayload} from '../sesion.js';
 
 let user;
 if (sesion) {
+  document.getElementById('navBarMenu').hidden = true;
+
+  document.getElementById('logo-link').href = 'lista-turnos';
+
   const payload = getPayload(sesion.token);
   user = JSON.parse(payload.User);
 }
@@ -20,7 +24,7 @@ const getTurnosVeterinario = async () => {
     .then((res) => {
       listarTurnos(res);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => err);
 };
 
 const listarTurnos = async (turnos) => {

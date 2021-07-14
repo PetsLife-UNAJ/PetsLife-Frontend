@@ -38,13 +38,11 @@ formLogin.onsubmit = async (e) => {
     const payload = getPayload(lsUser.token);
     let user = JSON.parse(payload.User);
 
-    if ( user.RolId === 1) {
-      location.href = '/home'
-    }
-    else if (user.RolId == 2) {
-      location.href = '/admin/clinic';
-    } 
-    else {
+    if (user.RolId === 1) {
+      location.href = '/home';
+    } else if (user.RolId === 2) {
+      location.href = '/lista-turnos';
+    } else {
       location.reload();
     }
   } else {

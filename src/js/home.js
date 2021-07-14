@@ -6,7 +6,7 @@ window.onload = () => {
     const payload = getPayload(sesion.token);
     let user = JSON.parse(payload.User);
     if (user.RolId==2) {
-      location.href = '/admin/clinic';
+      location.href = '/lista-turnos';
     }
     
   }
