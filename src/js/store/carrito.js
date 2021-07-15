@@ -117,7 +117,7 @@ const sendOrder = async () => {
         -------------------------------------
         *Pedido:*\n
         ${pedido}
-        *Total pedido:* ${total}
+        *Total pedido:* $${total}
         `
 
         //console.log(message)
