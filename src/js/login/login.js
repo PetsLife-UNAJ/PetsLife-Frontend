@@ -9,11 +9,14 @@ export const checkLogin = () => {
   document.getElementById('btn-register').onclick = () => {
     location.href = '/register';
   };
+  console.log(location.pathname);
+
   if (
     !(location.pathname == '/home') &&
     !(location.pathname == '/register') &&
     !(location.pathname == '/adoptions') &&
     !(location.pathname == '/store') &&
+    !location.pathname.substring(0, 10) == '/producto/' &&
     !sesion
   ) {
     document.getElementById('btn-log').click();
