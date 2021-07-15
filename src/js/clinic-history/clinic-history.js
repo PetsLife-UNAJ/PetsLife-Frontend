@@ -144,7 +144,9 @@ const listarTurnos = () => {
     .then((res) => {
       if (sesion) {
         res.sort(function (a, b) {
-          return new Date(a.horaInicio) - new Date(b.horaInicio);
+          return (
+            new Date(a.horaInicio).getHours() - new Date(b.horaInicio).getHours()
+          );
         });
 
         for (const turno of res) {
