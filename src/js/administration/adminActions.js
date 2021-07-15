@@ -43,11 +43,19 @@ export const getMascotas = async () => {
     return data
 }
 
+export const getPosiblesAdoptantes = async () => {
+    let response = await fetch(BASE_URL_ADOPTIONS + `/PosiblesAdoptantes`, {
+        headers: { Authorization: ` Bearer  ${sesion.token}` }
+    }).catch(handleError)
+    let data = await response.json()
+
+    return data
+}
+
 export const getTiposMascota = async () => {
     let response = await fetch(BASE_URL_ADOPTIONS + '/Tipos', {
         headers: { Authorization: ` Bearer  ${sesion.token}` }
     }).catch(handleError)
-    console.log(response)
     let data = await response.json()
 
     return data
