@@ -103,11 +103,6 @@
   padding-top: 10px;
 }
 
-.modal-listado-content {
-  width: 635px;
-  margin-left: -77px;
-}
-
 .inner-text-veterinaria {
   display: flex;
   justify-content: center;
@@ -234,11 +229,6 @@
 
 .services {
   padding-top: 10px;
-}
-
-.modal-listado-content {
-  width: 635px;
-  margin-left: -77px;
 }
 
 .inner-text-veterinaria {
@@ -597,4 +587,7 @@ video {
 #name {
   border-top-left-radius: 50px !important;
   border-bottom-left-radius: 50px !important;
+}
+#navBarMenu {
+  margin-top: -8px;
 }

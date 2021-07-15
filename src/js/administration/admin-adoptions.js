@@ -117,6 +117,7 @@ const registrarAdoptable = async () => {
         </div>
     </div>
     `;
+    location.href="/admin/adoptions"
 };
 
 const editAnimal = async (animalJson) => {

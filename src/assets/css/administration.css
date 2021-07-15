@@ -55,6 +55,11 @@ td {
   margin-top: 80px;
   margin-bottom: 60px;
 }
-.label-floating-modal{
+.label-floating-modal {
   margin-left: 12px !important;
+}
+
+.modal-listado-content {
+  width: 635px;
+  margin-left: -77px !important;
 }

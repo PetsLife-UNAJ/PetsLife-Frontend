@@ -184,16 +184,17 @@ const getModalProducto = (product) => {
             <label for="tiendaId">Tienda Id</label>
           </div>
           -->
-  
+          <div class="modal-footer justify-content-center">
           <div class="form-floating">
-            <button type="submit" class="btn btn-primary mb-3" id="btn-submit-${
+            <button type="submit" class="btn btn-primary " id="btn-submit-${
               product.productoId
             }">Actualizar</button>
+            <button type="button" class="btn btn-secondary" id="btn-close" data-bs-dismiss="modal" onclick="location.reload()">Close</button>
           </div>
             </form>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" id="btn-close" data-bs-dismiss="modal" onclick="location.reload()">Close</button>
+      
+        
         </div>
       </div>
     </div>
