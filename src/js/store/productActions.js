@@ -68,7 +68,9 @@ export const deleteProductoById = async (id) => {
     };
 
     let data = await fetch(BASE_URL_STORE + `api/Producto/${id}`, settings).catch(handleError)
-    if (data.status === undefined) data.status = 200
+    if (data.status < 300) {
+        return {status: 200}
+    }
 
     return data
 }

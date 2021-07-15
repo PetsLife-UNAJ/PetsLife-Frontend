@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway:300,400,900');
 
+.form-floating>.form-control, .form-floating>.form-select {
+  padding-left: 1.5rem !important;
+}
+
 .bg-principal {
   background-color: #f86a02 !important;
 }
@@ -183,7 +187,6 @@ a,
 .bs-header input[type='search'] {
   border-radius: 3rem 0 0 3rem;
 }
-
 .form-control:not(textarea) {
   border-radius: 3rem;
 }

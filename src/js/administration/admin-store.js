@@ -10,6 +10,7 @@ var tiendaTableBody = document.getElementById('tiendaTableBody');
 var spinner = document.getElementById('loadingSpinner');
 //var formActualizar      = document.getElementById('formActualizar-producto');
 var modales = document.getElementById('modales');
+var infoModalContent = document.getElementById('infoModalContent')
 
 window.onload = async () => {
   adminStore();
@@ -60,7 +61,7 @@ const GetProductoTable = (productoJson) => {
                     </div>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><a class="dropdown-item d-pointer" id="edit-${productoJson.productoId}" data-bs-toggle="modal" href="#actualizarProducto-${productoJson.productoId}" aria-controls="actualizarProducto-${productoJson.productoId}"><i class="bi bi-pencil"></i> Editar</a></li>
-                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="delete-${productoJson.productoId}"><i class="bi bi-trash"></i> Eliminar</a></li>
+                        <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="delete-${productoJson.productoId}" data-bs-toggle="modal" data-bs-target="#infoModal"><i class="bi bi-trash"></i> Eliminar</a></li>
                     </ul>
                 </div>
             </td>
@@ -320,53 +321,23 @@ const eliminarProducto = async (id) => {
   var response = await deleteProductoById(id);
 
   // todo: cambiar por mejor forma de mostrar los mensajes
-  if (response.status === 400) {
-    alert('No se pudo eliminar el producto');
-    adminStore();
-    return;
+  if (response.status >= 300) {
+    adminStore()
+    infoModalContent.innerHTML = getInfoModalFail()
+    return
   }
-  alert('Se elimino correctamente el producto');
-  adminStore();
-};
 
-// Add producto
-//var formulario = document.getElementById('formulario-producto');
+  infoModalContent.innerHTML = getInfoModalSuccess()
+  adminStore()
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   mostrarCategoria();
 });
 
-/*
-const mostrarCategoria = async () => {
-  try {
-    const res = await fetch('http://localhost:27459/api/Categoria');
-    const data = await res.json();
-   
-    selectCategoria(data);
-  } catch (error) {
-  
-  }
-}
-
-
-const selectCategoria = data => {
-  data.forEach(opciones => {
-    var categoria = document.getElementById('categoria');
-    let element = document.createElement('option');
-    element.value = opciones.categoriaId;
-    element.innerHTML = opciones.descripcion;
-    categoria.appendChild(element);
-  });
-}
-*/
-
-// Validacion de formulario con Bootstrap
-// Example starter JavaScript for disabling form submissions if there are invalid fields
 (function () {
   'use strict';
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  //var form = document.querySelector('.needs-validation')
   var form = document.getElementById('formulario-producto');
   form.addEventListener(
     'submit',
@@ -375,7 +346,6 @@ const selectCategoria = data => {
         event.preventDefault();
         event.stopPropagation();
       } else {
-        //form.classList.add('was-validated');
         event.preventDefault();
         enviarFormulario(form);
       }
@@ -452,6 +422,37 @@ const enviarFormulario = (formulario) => {
       })
       .then((data) => data);
   } catch (error) {}
-};
+}
 
 // Fin Add Producto
+const getInfoModalSuccess = () => {
+  return (
+    `
+    <div class="card text-center p-0 my-2 ">
+      <div class="card-header bg-transparent text-success border-0">
+        <i class="far fa-check-circle display-4 d-block"></i>
+        <h5 class="card-title text-success display-4 d-block">Producto eliminado</h5>
+      </div>
+      <div class="card-body">
+        <button type="button" class="btn btn-petslife w-100" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+    `
+  )
+}
+
+const getInfoModalFail = () => {
+  return (
+    `
+    <div class="card text-center p-0 my-2 ">
+    <div class="card-header bg-transparent text-danger border-0">
+    <i class="fas fa-exclamation-triangle"></i>
+      <h5 class="card-title text-danger display-4 d-block">Error</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text lead">No se ha podido eliminar el producto.</p>
+      <button type="button" class="btn btn-petslife w-100" data-bs-dismiss="modal">Cerrar</button>
+    </div>
+    `
+  )
+}

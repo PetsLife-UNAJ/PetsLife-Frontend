@@ -6,12 +6,14 @@ import {
   deleteMascota
 } from './adminActions.js';
 
-var msBody = document.getElementById('msBody');
-var modalAdopciones = document.getElementById('modal-content-adopciones');
-var spinner = document.getElementById('loadingSpinner');
-var adopcionesTableBody = document.getElementById('adopcionesTableBody');
-var agregarAnimalBtn = document.getElementById('agregarAnimalBtn');
-var formActualizarAnimal = document.getElementById('formActualizarAnimal');
+var msBody                = document.getElementById('msBody');
+var modalAdopciones       = document.getElementById('modal-content-adopciones');
+var spinner               = document.getElementById('loadingSpinner');
+var adopcionesTableBody   = document.getElementById('adopcionesTableBody');
+var agregarAnimalBtn      = document.getElementById('agregarAnimalBtn');
+var formActualizarAnimal  = document.getElementById('formActualizarAnimal');
+var infoModalContent      = document.getElementById('infoModalContent')
+
 var tiposMascotaJson;
 
 window.onload = async () => {
@@ -188,12 +190,12 @@ const deleteAnimal = async (id) => {
 
   // todo: cambiar por mejor forma de mostrar los mensajes
   if (response.status === 400) {
-    alert('No se pudo eliminar la mascota');
     adminAdoptions();
+    infoModalContent.innerHTML = getInfoModalFail()
     return;
   }
-  alert('Se elimino correctamente la mascota');
   adminAdoptions();
+  infoModalContent.innerHTML = getInfoModalSuccess()
 };
 
 const getAdoptableTable = (adoptableJson) => {
@@ -215,9 +217,8 @@ const getAdoptableTable = (adoptableJson) => {
                     <li><a class="dropdown-item d-pointer" id="edit-${
                       adoptableJson.mascotaId
                     }" data-bs-toggle="modal" href="#actualizarAnimal" aria-controls="actualizarAnimal"><i class="bi bi-pencil"></i> Editar</a></li>
-                    <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" id="delete-${
-                      adoptableJson.mascotaId
-                    }"><i class="bi bi-trash"></i> Eliminar</a></li>
+                    <li><a class="dropdown-item text-danger bg-danger text-white d-pointer" data-bs-toggle="modal" data-bs-target="#infoModal"
+                     id="delete-${ adoptableJson.mascotaId}"><i class="bi bi-trash"></i> Eliminar</a></li>
                 </ul>
                 </div>
             </td>
@@ -255,7 +256,7 @@ const getModalAdopciones = () => {
         
         <div class="col-md-6">
             <label for="validationDefault03" class="form-label">Historia</label>
-            <textarea class="form-control border rounded-3" id="adoptableHistoria" style="height: 200; margin-left:12px;" required></textarea>
+            <textarea class="form-control" border rounded-3" id="adoptableHistoria" style="height: 200; margin-left:12px;"" required></textarea>
             
         </div>
         <div class="col-md-2">
@@ -308,7 +309,6 @@ const getActualizarForm = () => {
 
         <div class="form-floating">
             <select class="form-select" name="tipo animal" id="tipoAnimal" aria-label="Floating label select example" required>
-                <option value="" disabled selected>Elija una opcion</option>
             </select>
             <label for="tipoAnimal" class="label-floating-modal">Tipo Animal</label>
             <div class="valid-feedback">
@@ -319,10 +319,10 @@ const getActualizarForm = () => {
             </div>
         </div>
 
-        <div class="form-floating">
+        <div class="form-floating ms-2 w-100">
         <div class="mb-3">
             <label for="historiaAnimal" class="form-label">Historia</label>
-            <textarea class="form-control" id="historiaAnimal" rows="3"></textarea>
+            <textarea class="form-control" id="historiaAnimal" style="border-radius: 1rem" rows="3"></textarea>
         </div>
           <div class="valid-feedback">
             Bien!
@@ -333,7 +333,7 @@ const getActualizarForm = () => {
         </div>
 
         <div class="form-floating">
-          <input type="number" class="form-control w-25" id="pesoAnimal" name="peso" placeholder="Peso animal" min="1" max="100" required>
+          <input type="number" class="form-control" id="pesoAnimal" name="peso" placeholder="Peso animal" min="1" max="100" required>
           <label for="pesoAnimal" class="label-floating-modal">Peso</label>
           <div class="valid-feedback">
             Bien!
@@ -344,7 +344,7 @@ const getActualizarForm = () => {
         </div>
 
         <div class="form-floating">
-          <input type="number" class="form-control  w-25" id="edadAnimal" name="edad" placeholder="Edad" min="0" max="50" required>
+          <input type="number" class="form-control" id="edadAnimal" name="edad" placeholder="Edad" min="0" max="50" required>
           <label for="edadAnimal" class="label-floating-modal">Edad</label>
           <div class="valid-feedback">
             Bien!
@@ -355,7 +355,7 @@ const getActualizarForm = () => {
         </div>
 
         <div class="form-floating">
-        <select class="form-select w-25" name="adoptado" id="adoptadoAnimal" aria-label="Floating label select example" required>
+        <select class="form-select" name="adoptado" id="adoptadoAnimal" aria-label="Floating label select example" required>
           <option>Si</option>
           <option>No</option>
         </select>
@@ -372,3 +372,36 @@ const getActualizarForm = () => {
           <button type="submit" class="btn btn-primary mx-3 my-3 w-100" id="editSubmitBtn">Actualizar</button>
         </div>  `;
 };
+
+// Fin Add Producto
+const getInfoModalSuccess = () => {
+  return (
+    `
+    <div class="card text-center p-0 my-2 ">
+      <div class="card-header bg-transparent text-success border-0">
+        <i class="far fa-check-circle display-4 d-block"></i>
+        <h5 class="card-title text-success display-4 d-block">Producto eliminado</h5>
+      </div>
+      <div class="card-body">
+        <button type="button" class="btn btn-petslife w-100" data-bs-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+    `
+  )
+}
+
+const getInfoModalFail = () => {
+  return (
+    `
+    <div class="card text-center p-0 my-2 ">
+    <div class="card-header bg-transparent text-danger border-0">
+    <i class="fas fa-exclamation-triangle"></i>
+      <h5 class="card-title text-danger display-4 d-block">Error</h5>
+    </div>
+    <div class="card-body">
+      <p class="card-text lead">No se ha podido eliminar el producto.</p>
+      <button type="button" class="btn btn-petslife w-100" data-bs-dismiss="modal">Cerrar</button>
+    </div>
+    `
+  )
+}
