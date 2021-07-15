@@ -22,7 +22,7 @@ window.onload = async () => {
 
   //Ordenar por horario
   turnosJson.sort(function (a, b) {
-    return new Date(a.horaInicio) - new Date(b.horaInicio);
+    return new Date(a.horaInicio).getHours() - new Date(b.horaInicio).getHours();
   });
 
   if (turnosJson.status === 400) {

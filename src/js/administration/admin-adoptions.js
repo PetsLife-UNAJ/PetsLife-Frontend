@@ -409,7 +409,7 @@ const getInfoModalSuccess = () => {
     <div class="card text-center p-0 my-2 ">
       <div class="card-header bg-transparent text-success border-0">
         <i class="far fa-check-circle display-4 d-block"></i>
-        <h5 class="card-title text-success display-4 d-block">Producto eliminado</h5>
+        <h5 class="card-title text-success display-4 d-block">Mascota eliminada</h5>
       </div>
       <div class="card-body">
         <button type="button" class="btn btn-petslife w-100" data-bs-dismiss="modal">Cerrar</button>

@@ -112,7 +112,7 @@ const sendOrder = async () => {
         var message = `
         Se registro nuevo pedido:\n 
         *Usuario:* ${user.Email} \n
-        *Nombre:* ${user.Nombres} ${user.Apellidos}\n
+        *Nombre:* ${user.Nombre} ${user.Apellido}\n
         *Telefono:* ${user.Telefono} \n
         -------------------------------------
         *Pedido:*\n
