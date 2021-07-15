@@ -120,7 +120,7 @@ const sendOrder = async () => {
         *Total pedido:* ${total}
         `
 
-        console.log(message)
+        //console.log(message)
 
         var response = await sendWhatsapp({message: message})
         if (response.status === 200) {
@@ -137,7 +137,7 @@ const sendOrder = async () => {
 }
 
 const isProductInCart = (productJson) => {
-    console.log(productJson)
+   
     if (localStorage.cart && localStorage.cart.length > 0 ) {
         let cart = JSON.parse(localStorage.cart)
 

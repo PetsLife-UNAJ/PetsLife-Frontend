@@ -42,7 +42,7 @@ const listarTurnos = async (turnos) => {
       .then((res) => {
         return res;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
     let hora = new Date(turno.horaInicio);
 
     let horaTurno = hora.getHours() + ':' + hora.getMinutes();

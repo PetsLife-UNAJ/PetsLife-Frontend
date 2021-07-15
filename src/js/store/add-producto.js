@@ -9,10 +9,10 @@ const mostrarCategoria = async () => {
   try {
     const res = await fetch('http://localhost:27459/api/Categoria');
     const data = await res.json();
-    console.log(data);
+
     selectCategoria(data);
   } catch (error) {
-    console.log(error);
+  
   }
 }
 
@@ -38,7 +38,7 @@ const selectCategoria = data => {
   Array.prototype.slice.call(forms)
     .forEach(function (form) {
       form.addEventListener('submit', function (event) {
-        console.log(form.checkValidity())
+       
         if (!form.checkValidity()) {
           event.preventDefault()
           event.stopPropagation()
@@ -82,7 +82,7 @@ const enviarFormulario = (formulario) => {
     }
     
     let datosJson = JSON.stringify(datos)
-    console.log(datosJson)
+   
     try {
         fetch('http://localhost:27459/api/Producto', {
             method: 'POST',
@@ -93,7 +93,7 @@ const enviarFormulario = (formulario) => {
                 }
         }).then((response) => {
             response.json();
-            console.log(response)
+      
             if(response.status === 201){
                 formulario.innerHTML = `   <div class="card text-center p-0 my-2 ">
                 <div class="card-header bg-transparent text-success border-0">
@@ -120,10 +120,10 @@ const enviarFormulario = (formulario) => {
                 </div>
               </div>  `;
               }
-        }).then(data => console.log(data))
+        }).then(data => {})
         
     } catch (error) {
-        console.log(error)
+        
     }
 }
 

@@ -9,5 +9,5 @@ export const login = (cuenta) => {
     body: JSON.stringify(cuenta)
   })
     .then((res) => res.json())
-    .catch((err) => console.log(err));
+    .catch((err) => err);
 };

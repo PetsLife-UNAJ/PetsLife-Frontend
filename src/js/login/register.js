@@ -5,7 +5,6 @@ const btnRegistrar = document.getElementById('btn-registrar');
 
 const checkForm = (form) => {
   form.addEventListener("submit", (event) => {
-    console.log(form.checkValidity());
     if (!form.checkValidity()) {
         event.preventDefault();
         event.stopPropagation();

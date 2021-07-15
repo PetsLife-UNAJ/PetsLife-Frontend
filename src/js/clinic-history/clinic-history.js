@@ -34,7 +34,7 @@ const getClienteSesion = async () => {
           }
         }
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }
 };
 
@@ -54,7 +54,7 @@ const getTurnos = async () => {
       .then((response) => {
         return response;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {});
   }
 };
 
@@ -106,8 +106,8 @@ const createTurno = (data) => {
           body: turnoMessageJson
         })
           .then((res) => res.json())
-          .then((response) => console.log(response))
-          .catch((err) => console.log(err));
+
+          .catch((err) => {});
       } else {
         formTurno.innerHTML = ` <div class="card text-center p-0 my-2 ">
         <div class="card-header bg-transparent text-danger border-0">
@@ -123,7 +123,6 @@ const createTurno = (data) => {
     })
 
     .catch((err) => {
-      console.log(err);
       formTurno.innerHTML = ` <div class="card text-center p-0 my-2 ">
       <div class="card-header bg-transparent text-danger border-0">
       <i class="fas fa-exclamation-triangle"></i>
@@ -177,7 +176,7 @@ const listarTurnos = () => {
         }
       }
     })
-    .catch((err) => console.log(err));
+    .catch((err) => err);
 };
 
 const formTurno = document.getElementById('formTurno');
@@ -233,9 +232,7 @@ const createMascota = (datos) => {
         </div>`;
       }
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch((err) => {});
 };
 
 var formMascota = document.getElementById('formMascota');
