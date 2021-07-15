@@ -89,7 +89,7 @@ async function ListarAdoptables() {
                                     <hr>
                                     
                                     <div class="col-md-5">
-                                      <label for="validationCustom02" class="label">Información de la mascota:</label><p></p>
+                                      <label for="validationCustom02" class="label fs-5">Información de la mascota:</label><p></p>
                                       <label for="validationCustom02" class="label">Nombre: ${element.nombre}.</label><p></p>
                                       <label for="validationCustom02" class="label">Peso: ${element.peso} kg.</label><p></p>
                                       <label for="validationCustom02" class="label">Edad: ${element.edad} año.</label><p></p>
@@ -128,7 +128,7 @@ async function ListarAdoptables() {
               `
     );
 
-    $(`#form${element.mascotaId}`).bind("submit",(event)=>{
+    $(`#form${element.mascotaId}`).bind('submit', (event) => {
       event.preventDefault();
       var tipo = element.mascotaId;
       var adopcion = {
@@ -165,17 +165,9 @@ async function ListarAdoptables() {
               <a href="javascript:location.reload()" class="btn btn-primary m-auto">Volver al Foro </a>
             </div>
           </div>`
-            
           );
-          
         }
-       
       });
-
     });
-
-    
   });
 }
-
-
