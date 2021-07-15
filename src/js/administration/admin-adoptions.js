@@ -1,73 +1,77 @@
-import {
-  getMascotas,
-  getTiposMascota,
-  addAdoptable,
-  updateMascota,
-  deleteMascota
-} from './adminActions.js';
+import { getMascotas, getTiposMascota, addAdoptable, updateMascota, deleteMascota, getPosiblesAdoptantes } from "./adminActions.js"
 
-var msBody = document.getElementById('msBody');
-var modalAdopciones = document.getElementById('modal-content-adopciones');
-var spinner = document.getElementById('loadingSpinner');
-var adopcionesTableBody = document.getElementById('adopcionesTableBody');
-var agregarAnimalBtn = document.getElementById('agregarAnimalBtn');
-var formActualizarAnimal = document.getElementById('formActualizarAnimal');
-var tiposMascotaJson;
+var msBody              = document.getElementById("msBody")
+var modalAdopciones     = document.getElementById("modal-content-adopciones")
+var spinner             = document.getElementById("loadingSpinner")
+var spinnerAdoptantes   = document.getElementById("spinnerAdoptantes")
+var adopcionesTableBody = document.getElementById("adopcionesTableBody")
+var adoptantesTableBody = document.getElementById("adoptantesTableBody")
+var agregarAnimalBtn    = document.getElementById("agregarAnimalBtn")
+var formActualizarAnimal    = document.getElementById('formActualizarAnimal');
+var formActualizarAdoptante  = document.getElementById('formActualizarAdoptante');
+var tiposMascotaJson
 
-window.onload = async () => {
-  adminAdoptions();
-};
+window.onload = async () => { adminAdoptions()}
 
 const adminAdoptions = async () => {
-  spinner.style.display = 'none';
-  adopcionesTableBody.innerHTML = '';
-  tiposMascotaJson = await getTiposMascota();
+    spinner.style.display = 'none'
+    spinnerAdoptantes.style.display = 'none'
+    adopcionesTableBody.innerHTML = ""
+    adoptantesTableBody.innerHTML = ""
+    tiposMascotaJson = await getTiposMascota()
 
-  agregarAnimalBtn.onclick = () => {
-    modalAdopciones.innerHTML = getModalAdopciones();
-    // agrego tipo mascota al form-select
-    var tipoMascotaElem = document.getElementById('adoptableTipoMascota');
-    tiposMascotaJson.forEach((tipoMascotaJson) => {
-      tipoMascotaElem.insertAdjacentHTML(
-        'beforeend',
-        `<option>${tipoMascotaJson.tipoAnimal}</option>`
-      );
-    });
+    agregarAnimalBtn.onclick = () => {
+        modalAdopciones.innerHTML = getModalAdopciones()
+        // agrego tipo mascota al form-select
+        var tipoMascotaElem = document.getElementById("adoptableTipoMascota")
+        tiposMascotaJson.forEach((tipoMascotaJson) => {
+            tipoMascotaElem.insertAdjacentHTML('beforeend', `<option>${tipoMascotaJson.tipoAnimal}</option>`)
+        })
 
-    // registro mascota
-    var registrarMascotaBtn = document.getElementById('registrarMascotaBtn');
-    registrarMascotaBtn.onclick = (e) => {
-      e.preventDefault();
-      registrarAdoptable();
-    };
-  };
+        // registro mascota
+        var registrarMascotaBtn = document.getElementById("registrarMascotaBtn")
+        registrarMascotaBtn.onclick = (e) => {
+            e.preventDefault()
+            registrarAdoptable()
+        }
+    }
 
-  var adoptablesJson = await getMascotas();
-  if (adoptablesJson.status === 400) {
-    msBody.insertAdjacentHTML(
-      'beforeend',
-      '<div class="alert alert-danger">Error al obtener los adoptantes de la base de datos</div>'
-    );
-    return;
-  }
+    var adoptablesJson = await getMascotas()
+    var posiblesAdoptantesJson = await getPosiblesAdoptantes()
+    
+    if (adoptablesJson.status === 400) {
+        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener las mascotas de la base de datos</div>')
+        return
+    }
+    if (posiblesAdoptantesJson.status === 400) {
+        msBody.insertAdjacentHTML('beforeend', '<div class="alert alert-danger">Error al obtener los adoptantes de la base de datos</div>')
+        return
+    }
 
-  adoptablesJson.forEach((adoptableJson) => {
-    adopcionesTableBody.insertAdjacentHTML(
-      'beforeend',
-      getAdoptableTable(adoptableJson)
-    );
+    adoptablesJson.forEach((adoptableJson) => {
+        adopcionesTableBody.insertAdjacentHTML('beforeend', getAdoptableTable(adoptableJson))
 
-    var deleteElem = document.getElementById(`delete-` + adoptableJson.mascotaId);
-    deleteElem.onclick = () => {
-      deleteAnimal(adoptableJson.mascotaId);
-    };
+        var deleteElem = document.getElementById(`delete-` + adoptableJson.mascotaId)
+        deleteElem.onclick = () => {
+            deleteAnimal(adoptableJson.mascotaId);
+        };
 
-    var editElement = document.getElementById('edit-' + adoptableJson.mascotaId);
-    editElement.onclick = () => {
-      editAnimal(adoptableJson);
-    };
-  });
-};
+        var editElement = document.getElementById('edit-' + adoptableJson.mascotaId);
+        editElement.onclick = () => {
+            editAnimal(adoptableJson);
+        }
+    })
+
+    posiblesAdoptantesJson.forEach((adoptantesJson) => {
+        adoptantesTableBody.insertAdjacentHTML('beforeend', getPosiblesAdoptantesTable(adoptantesJson))
+
+        var editElement = document.getElementById('aceptar-' + adoptantesJson.adoptanteId);
+        
+        editElement.onclick = () => {
+            editAdoptante(adoptantesJson);
+        }
+    })
+}
 
 const registrarAdoptable = async () => {
   var adoptableNombre = document.getElementById('adoptableNombre');
@@ -225,6 +229,34 @@ const getAdoptableTable = (adoptableJson) => {
         `;
 };
 
+const getPosiblesAdoptantesTable = (adoptantesJson) => {
+    return (
+        `
+        <tr>
+            <th scope="row">${adoptantesJson.adoptanteId}</th>
+            <th>${adoptantesJson.nombre}&nbsp;${adoptantesJson.apellido}</th>
+            <td>${adoptantesJson.dni}</td>
+            <td>${adoptantesJson.direccion}</td>
+            <td>${adoptantesJson.telefono}</td>
+            <td>${adoptantesJson.email}</td>
+            <td>${adoptantesJson.nombreAnimal}</td>
+        </tr>
+        `
+    )
+}
+
+
+/* <td>
+                <div class="dropdown">
+                    <div id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical d-pointer" id="tresPuntos"></i>
+                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item d-pointer" id="aceptar-${adoptantesJson.adoptanteId}" data-bs-toggle="modal" href="#actualizarAdoptante" aria-controls="actualizarAdoptante"><i class="bi bi-pencil"></i>Aceptar</a></li>
+                </ul>
+                </div>
+            </td> */
+
 const getTipoMascotaId = async (mascotaTipo) => {
   var tipoMascotaId = 1;
   tiposMascotaJson.forEach((tipoMascotaJson) => {
@@ -370,5 +402,58 @@ const getActualizarForm = () => {
 
         <div class="form-floating">
           <button type="submit" class="btn btn-primary mx-3 my-3 w-100" id="editSubmitBtn">Actualizar</button>
-        </div>  `;
-};
+        </div>  `
+}
+
+const editAdoptante = async (adoptanteJson) => {
+    formActualizarAdoptante.innerHTML = getActualizarFormAdoptante()
+
+    let adoptadoAnimal = document.getElementById('adoptadoAnimal')
+
+    adoptadoAnimal.value = animalJson.adoptado ? "Si": "No"
+
+    document.getElementById('editSubmitBtn').onclick = async (e) => {
+        e.preventDefault()
+
+        var response = await updateMascota(dataJson)
+        if (response.status == 400) {
+            formActualizarAnimal.innerHTML = 
+            ` 
+            <div class="card text-center p-0 my-2 ">
+                <div class="card-header bg-transparent text-danger border-0">
+                <i class="fas fa-exclamation-triangle"></i>
+                    <h5 class="card-title text-danger display-4 d-block">Registro Fallido</h5>
+                </div>
+                <div class="card-body">
+                    <p class="card-text lead">El Producto no se ha actualizado.</p>
+                </div>
+            </div>  
+            `
+        }
+        document.getElementById("actualizarAdoptanteCloseBtn").click()
+        adminAdoptions()
+    }
+}
+
+const getActualizarFormAdoptante = () => {
+    return (
+        `
+        <div class="form-floating">
+        <select class="form-select" name="adoptado" id="adoptadoAnimal" aria-label="Floating label select example" required>
+          <option>Si</option>
+          <option>No</option>
+        </select>
+        <label for="adoptadoAnimal">¿Aceptar adopción?</label>
+        <div class="valid-feedback">
+          Bien!
+        </div>
+        <div class="invalid-feedback">
+          Por favor elija una opcion valida..
+        </div>
+      </div>
+
+        <div class="form-floating">
+          <button type="submit" class="btn btn-primary mx-3 my-3 w-100" id="editSubmitBtn">Actualizar</button>
+        </div>  `
+    )
+}
