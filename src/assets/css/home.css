@@ -68,7 +68,7 @@ input[type='number'] {
 
 a,
 .btn-link {
-  color: #F2CA50;
+  color: #f2ca50;
 }
 
 .navbar-brand {
@@ -191,7 +191,6 @@ a,
 .form-select:not(textarea) {
   border-radius: 3rem;
 }
-
 
 @media screen and (min-width: 992px) {
   .bs-header-menu .collapse {
@@ -503,7 +502,7 @@ a,
 *********************/
 .noUi-connect {
   height: 50%;
-  background-color: #F2CA50;
+  background-color: #f2ca50;
 }
 
 .noUi-target {
@@ -826,6 +825,9 @@ aside a {
 /**********************************
     footer
 ***********************************/
+footer {
+  margin-top: 130px !important;
+}
 .bs-footer {
   padding: 1rem 0;
   background: #2f2f2f;
@@ -901,10 +903,6 @@ aside a {
     font-size: 0.8em;
   }
 
-  .btn-facebook,
-  .btn-whatsapp {
-  }
-
   .btn-facebook:hover,
   .btn-whatsapp:hover {
     background: #2f2f2f;
@@ -938,13 +936,6 @@ elementos de formulario y botones
 .btn.btn-secondary:hover {
   background: #243a84;
   border-color: #243a84;
-}
-
-/*danger*/
-.btn.btn-danger {
-}
-
-.btn.btn-danger:hover {
 }
 
 .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -1149,10 +1140,10 @@ Banners
 
 a,
 .btn-link {
-  color: #BF7C2A;
+  color: #bf7c2a;
 }
 a:hover {
-  color: #59332A;
+  color: #59332a;
 }
 
 .badge-secondary {
@@ -1266,7 +1257,7 @@ a:hover {
   color: #000000;
 }
 .btn-link-term:hover {
-  color: #F2CA50;
+  color: #f2ca50;
 }
 .custom-control-input:checked ~ .custom-control-label::before {
   color: #fff;
@@ -1299,7 +1290,7 @@ body {
 
 *::selection {
   color: white;
-  background:rgba(220, 155, 76, 1);
+  background: rgba(220, 155, 76, 1);
 }
 
 /*MENU*/
@@ -1940,7 +1931,7 @@ input {
 }
 
 .btn-link:hover {
-  color: #F2CA50;
+  color: #f2ca50;
 }
 
 .btn-link {
