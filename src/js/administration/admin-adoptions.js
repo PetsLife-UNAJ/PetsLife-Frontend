@@ -63,12 +63,12 @@ const adminAdoptions = async () => {
 
     posiblesAdoptantesJson.forEach((adoptantesJson) => {
         adoptantesTableBody.insertAdjacentHTML('beforeend', getPosiblesAdoptantesTable(adoptantesJson))
-
+      /*
         var editElement = document.getElementById('aceptar-' + adoptantesJson.adoptanteId);
         
         editElement.onclick = () => {
             editAdoptante(adoptantesJson);
-        }
+        }*/
     })
 }
 
